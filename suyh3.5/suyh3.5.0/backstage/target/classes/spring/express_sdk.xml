@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="tsHtExpressOpenRegionRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TsHtExpressOpenRegionRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="tsHtExpressSdkRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TsHtExpressSdkRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="expressSdkService" class="cn.hotol.app.service.express.sdk.ExpressSdkServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtExpressSdkRepository" ref="tsHtExpressSdkRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+    </bean>
+
+    <bean id="expressSdkTianTianService" class="cn.hotol.app.service.express.sdk.tiantian.ExpressSdkTianTianServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtExpressSdkRepository" ref="tsHtExpressSdkRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+    </bean>
+
+    <bean id="expressSdkDeBangService" class="cn.hotol.app.service.express.sdk.debang.ExpressSdkDeBangServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtExpressSdkRepository" ref="tsHtExpressSdkRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+    </bean>
+
+    <bean id="expressSdkJingDongService" class="cn.hotol.app.service.express.sdk.jingdong.ExpressSdkJingDongServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtExpressSdkRepository" ref="tsHtExpressSdkRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+    </bean>
+
+    <bean id="expressSdkShenTongService" class="cn.hotol.app.service.express.sdk.shentong.ExpressSdkShenTongServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtExpressSdkRepository" ref="tsHtExpressSdkRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+    </bean>
+
+    <bean id="expressSdkZhongTongService" class="cn.hotol.app.service.express.sdk.zhongtong.ExpressSdkZhongTongServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtExpressSdkRepository" ref="tsHtExpressSdkRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+    </bean>
+
+</beans>

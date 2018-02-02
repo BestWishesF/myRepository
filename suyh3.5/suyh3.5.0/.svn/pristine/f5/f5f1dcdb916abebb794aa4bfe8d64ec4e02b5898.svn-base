@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>期望上门时间</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/homeTime.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/lib/aes.js"></script>
+		<script src="../js/lib/header.js"></script>
+		<script src="../js/lib/mode-ecb.js"></script>
+		<script type="text/javascript" src="../js/jquery.form.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script src="../js/homeTime.js"></script>
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	</head>
+	<body>
+	<!----------------------------------header-------------------------------------->
+	<header class="head">
+		<a href="send.html"><img src="../img/order/1.png"></a>
+		<p>期望上门时间</p>
+	</header>
+	<!----------------------------------list-------------------------------------->
+	<section class="list">
+		<div id="yi" class="short ban">
+			<input id="a" type="radio"  name="opt" class="input" value="2小时内取件" />
+			<label class="radio home1"><span class="hometime">2小时内取件</span></label>
+		</div>
+		<div id="er" class="short ban">
+			<input id="b" type="radio" checked="" name="opt" class="input" value="30分钟内取件" />
+			<label class="radio home2"><span class="hometime">30分钟内取件</span></label>
+			<i class="biao">
+				<button id="minus"><img src="../img/minus.png"></button>
+				<input type="text" id="txt" value="2元">
+				<button id="plus"><img src="../img/plus.png"></button>
+			</i>
+		</div>
+		<div id="san" class="long Box ban">
+			<input id="c" type="radio" checked="" name="opt" class="input" value="今天"  />
+			<label class="radio home3 select"><span class="hometime">今天</span></label>
+			<div class="pull" id="pull_t">
+			</div>
+		</div>
+		<div id="si" class="long">
+			<input id="d" type="radio" name="opt" class="input" value="明天" />
+			<label class="radio home4 select"><span class="hometime">明天</span></label>
+			<div class="pull tele" id="pull_w"></div>
+		</div>
+	</section>
+	<!----------------------------------footer-------------------------------------->
+	<footer>
+		<button id="preserved">确认</button>
+	</footer>
+	</body>
+
+	<script src="../js/judge.js"></script>
+</html>

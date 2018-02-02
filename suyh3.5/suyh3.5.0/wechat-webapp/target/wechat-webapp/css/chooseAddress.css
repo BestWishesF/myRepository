@@ -1,0 +1,174 @@
+html{font-size: 100px;}
+.head{
+    width:100%;
+    position: fixed;
+    top:0px;
+    left:0px;
+    z-index: 999;
+}
+#sure{
+    color: #fff;
+    width:1rem;
+    font-size: 0.38rem;
+}
+.head a{
+    display: block;
+    width:0.65rem;
+    height:1rem;
+    font-size: 0.38rem;
+    text-align: center;
+    line-height: 1rem;
+    float:left;
+}
+.head #sure{
+    display: block;
+    width:1.3rem;
+    height:1rem;
+    font-size: 0.38rem;
+    text-align: center;
+    line-height: 1rem;
+    float:right;
+}
+.head a img{
+    width:0.21rem;height:0.38rem;
+}
+.head p{
+    font-size:0.38rem;
+    width: 40%;
+    text-align:center;
+    height: 1rem;
+    line-height:1rem;
+    color:#fff;
+    float:left;
+    margin-left:1.5rem;
+}
+.head .buont{
+    font-size:0.3rem;
+    float:right;
+    line-height:1rem;
+    padding-right:0.4rem;
+    color:#fff;
+}
+.search{
+    border:none;
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    height:1.06rem;
+    font-size: 0.38rem;
+    width: 100%;
+    padding: 0.2rem 0.32rem 0.2rem 0.32rem ;
+    position: fixed;
+    left:0px;
+    top:1rem;
+
+
+}
+.search input{
+    padding-left: 0.8rem;
+    box-sizing: border-box;
+    font-size: 0.3rem;
+    width:100%;
+    height:100%;
+    border:none;
+    background-color: #fff;
+    border-radius: 0.1rem;
+    background-image: url("../img/index/cj.png");
+    background-position: 0.22rem center;
+    background-repeat: no-repeat;
+    background-size: 0.4rem 0.4rem;
+
+}
+::-webkit-input-placeholder { /* WebKit browsers */ color:#b3b3b3; font-size: 0.24rem;}
+　　:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color:#b3b3b3; font-size: 0.24rem;}
+　　::-moz-placeholder { /* Mozilla Firefox 19+ */ color:#b3b3b3; font-size: 0.24rem;}
+　　:-ms-input-placeholder { /* Internet Explorer 10+ */color:#b3b3b3; font-size: 0.24rem;}
+.content{
+    width:100%;
+    margin-top: 1.5rem;
+}
+.content>.dingwei{
+    font-size: 0.26rem;
+    color: #222222;
+    margin-left: 0.32rem;
+}
+.dingcity-border{
+    padding: 0.16rem 0;
+    width: 1.94rem;
+    text-align: center;
+    border: 0.02rem solid #44c9aa;
+    border-radius: 0.1rem;
+    font-size: 0.26rem;
+    color: #44c9aa;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    margin-left: 0.32rem;
+}
+.citylist{
+    margin-top: 0.2rem;
+}
+.hotcity{
+    margin-top: 0.6rem;
+}
+.hot{
+    font-size: 0.26rem;
+    margin-left: 0.32rem;
+}
+
+.hot-border{
+    width:1.94rem;
+    float: left;
+    margin-left: 0.32rem;
+    margin-top: 0.2rem;
+    padding: 0.16rem 0.1rem;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    text-align: center;
+    border: 0.02rem solid #b4b4b4;
+    box-sizing: border-box;
+    border-radius: 0.1rem;
+    font-size: 0.26rem;
+}
+
+.cityname{
+    font-size: 0.26rem;
+    padding: 0.55rem 0rem 0.33rem 0.32rem;
+    border-bottom: 0.01rem solid #ededed;
+}
+.citycode{
+    font-size: 0.22rem;
+    padding:0.08rem 0.3rem ;
+    background: #f2f2f2;
+}
+.initials{
+    position: fixed;
+    margin: 0px;
+    top: 47px;
+    right: 0px;
+    height: 100%;
+    width: 15px;
+    padding-top: 2.5rem;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 12px;
+    z-index: 99;
+    background: rgba(145,145,145,0);
+}
+.mask{
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,0.3);
+    position: fixed;
+    top: 0px;letf:0px;
+    display:none;
+}
+.citynamep{
+    margin-top: 2rem;
+    padding:0.16rem 0.32rem;
+    font-size: 0.26rem;
+    color: black;
+    background: #ffffff;
+}

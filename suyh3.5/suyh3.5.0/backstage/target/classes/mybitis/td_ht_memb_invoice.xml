@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembInvoiceRepository">
+
+	<!--通过开票信息id查询开票信息 -->
+	<select id="findMembInvoiceById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.member.invoice.TdHtMembInvoiceDto">
+		SELECT * FROM td_ht_memb_invoice WHERE memb_ivc_id=#{memb_ivc_id}
+	</select>
+
+</mapper>

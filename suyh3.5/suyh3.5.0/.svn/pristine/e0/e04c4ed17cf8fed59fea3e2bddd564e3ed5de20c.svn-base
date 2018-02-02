@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentFoundChangeRepository">
+	<!-- 查找代理人资金变化数量 -->
+	<select id="findAgentFoundSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_agent_found_change WHERE agent_id = #{agent_id}
+    </select>
+	<!--   分页查找代理人资金变化-->
+	<select id="findAgentFoundPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.agent.found.TdHtAgentFoundChangeDto">
+		 SELECT * FROM td_ht_agent_found_change WHERE agent_id = #{agent_id} ORDER BY afchg_state DESC, afchg_id DESC   limit #{currentPage},#{pageSize}
+	</select>
+	<!--通过id查询代理人资金变化 -->
+	<select id="findAgentFoundById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.agent.found.TdHtAgentFoundChangeDto">
+		SELECT * FROM td_ht_agent_found_change WHERE afchg_id=#{afchg_id}
+	</select>
+	<!--更新代理人资金变化记录 -->
+	<update id="updateAgentFoundState" parameterType="cn.hotol.app.bean.dto.agent.found.TdHtAgentFoundChangeDto">
+		UPDATE td_ht_agent_found_change SET afchg_state=#{afchg_state},afchg_front_amount=#{afchg_front_amount},afchg_back_amount=#{afchg_back_amount} WHERE afchg_id=#{afchg_id}
+	</update>
+	<!--通过订单id查询代理人资金变化 -->
+	<select id="findAgentFoundByOrdId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.agent.found.TdHtAgentFoundChangeDto">
+		SELECT * FROM td_ht_agent_found_change WHERE exp_ord_id=#{exp_ord_id}
+	</select>
+
+	<!--插入代理人收支记录 -->
+	<insert id="insertAgentFoundChange" parameterType="cn.hotol.app.bean.dto.agent.found.TdHtAgentFoundChangeDto">
+		INSERT INTO td_ht_agent_found_change (agent_id,afchg_front_amount,afchg_back_amount,afchg_change_amount,afchg_time,
+		afchg_month,afchg_type,afchg_state,afchg_number,afchg_name,exp_ord_id)
+		VALUES (#{agent_id},#{afchg_front_amount},#{afchg_back_amount},#{afchg_change_amount},#{afchg_time},#{afchg_month},
+		#{afchg_type},#{afchg_state},#{afchg_number},#{afchg_name},#{exp_ord_id})
+	</insert>
+
+	<!--查询代理人提现申请数量 -->
+	<select id="findWithdrawalsSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM td_ht_agent_found_change WHERE afchg_type=2 AND afchg_state=#{afchg_state}
+	</select>
+
+	<!--分页查询代理人提现申请 -->
+	<select id="findWithdrawalsPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.agent.found.AgentWithdrawalsFoundDto">
+		SELECT * FROM td_ht_agent_found_change WHERE afchg_type=2 AND afchg_state=#{afchg_state}
+		ORDER BY afchg_time ASC limit #{currentPage},#{pageSize}
+	</select>
+
+	<!--修改代理人提现申请状态 -->
+	<update id="updateWithdrawalsState" parameterType="cn.hotol.app.bean.dto.agent.found.TdHtAgentFoundChangeDto">
+		UPDATE td_ht_agent_found_change SET afchg_state=#{afchg_state},afchg_time=#{afchg_time} WHERE afchg_id=#{afchg_id}
+	</update>
+</mapper>

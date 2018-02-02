@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtDictRepository">
+
+    <!--查找字典 -->
+    <select id="findTsHtDictIndex" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.dict.TsHtDictIndex">
+        SELECT * FROM ts_ht_dict WHERE dict_id=#{dict_id}
+    </select>
+
+    <!--通过地址名称和父节点id查询地址 -->
+    <select id="findDictByParentName" parameterType="cn.hotol.app.bean.dto.dict.TsHtDictAddressDto" resultType="cn.hotol.app.bean.dto.dict.TsHtDictAddressDto">
+        SELECT * FROM ts_ht_dict WHERE code_name LIKE concat('%',#{code_name},'%') AND parent_id=#{parent_id} AND `status`=0
+    </select>
+
+    <!--通过字典名称查询字典 -->
+    <select id="findDictByName" parameterType="cn.hotol.app.bean.dto.dict.TsHtDictAddressDto" resultType="cn.hotol.app.bean.dto.dict.DictInitialsSortDto">
+        SELECT * FROM ts_ht_dict WHERE code_type=#{code_type} AND `status`=0 AND code_name LIKE concat('%',#{code_name},'%') ORDER BY dict_initials ASC
+    </select>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembThirdLoginRepository">
+
+    <!--添加第三方用户登录信息 -->
+    <insert id="insertMembThirdLogin" parameterType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto">
+        INSERT INTO td_ht_memb_third_login
+        (thr_type,third_id,thr_token,thr_head_poration,thr_nick_name,thr_sex,thr_register_time,thr_register_month,memb_id)
+        VALUES
+        (#{thr_type},#{third_id},#{thr_token},#{thr_head_poration},#{thr_nick_name},#{thr_sex},#{thr_register_time},#{thr_register_month},#{memb_id})
+    </insert>
+
+    <!--通过第三方标识查询用户第三方登录信息 -->
+    <select id="findMembThirdLogin" parameterType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto"
+            resultType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto">
+        SELECT thr_id,thr_type,third_id,thr_token,thr_head_poration,thr_nick_name,thr_sex,thr_register_time,thr_register_month,memb_id
+        FROM td_ht_memb_third_login WHERE third_id=#{third_id} AND thr_token=#{thr_token}
+    </select>
+
+    <!--更新用户第三方登录信息 -->
+    <update id="updateMembThirdLogin" parameterType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto">
+        UPDATE td_ht_memb_third_login SET thr_head_poration=#{thr_head_poration},thr_nick_name=#{thr_nick_name},thr_sex=#{thr_sex} WHERE thr_id=#{thr_id}
+    </update>
+
+    <!--通过用户id和第三方配置id查询用户第三方登录信息 -->
+    <select id="findMembThirdByBean" parameterType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto"
+            resultType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto">
+        SELECT thr_id,thr_type,third_id,thr_token,thr_head_poration,thr_nick_name,thr_sex,thr_register_time,thr_register_month,memb_id
+        FROM td_ht_memb_third_login WHERE memb_id=#{memb_id} AND third_id=#{third_id}
+    </select>
+
+    <!--通过thr_token查询用户第三方登录信息 -->
+    <select id="findMemberThirdByToken" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto">
+        SELECT * FROM td_ht_memb_third_login WHERE thr_token=#{thr_token}
+    </select>
+
+    <!--修改用户id -->
+    <update id="updateMemberIdByThrId" parameterType="cn.hotol.app.bean.dto.thirdlogin.TdHtMembThirdLoginDto">
+        UPDATE td_ht_memb_third_login SET memb_id=#{memb_id} WHERE thr_id=#{thr_id}
+    </update>
+
+    <!--删除第三方登录信息 -->
+    <delete id="deleteThirdMembLogin" parameterType="java.lang.Integer">
+        DELETE FROM td_ht_memb_third_login WHERE thr_id=#{thr_id}
+    </delete>
+</mapper>

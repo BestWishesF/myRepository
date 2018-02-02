@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #allmap{height:500px;width:100%;}
+        #r-result{width:100%;}
+        p{padding: 0px;margin: 0px;}
+    </style>
+    <title>Title</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=QUFndBMOGVVjr3fFGSQzyfNRKFtrttIU"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/GeoUtils/1.2/src/GeoUtils_min.js"></script>
+    <script src="jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<div id="allmap"></div>
+<div id="r-result">
+    <input type="button" onclick="add_overlay();" value="添加覆盖物" />
+    <input type="button" onclick="remove_overlay();" value="删除覆盖物" />
+    <div>
+        <div style="width: 40%;float: left;">
+            <label>多边形范围</label>
+            <div id="mapList">
+
+            </div>
+        </div>
+        <div style="width: 40%;float: left;">
+            <label>结果</label>
+            <div id="point">
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var is=0;
+    var i=0;
+    var aa=[];
+    var polygon = new BMap.Polygon(aa);
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom("杭州市",12);
+    //单击获取点击的经纬度
+    map.addEventListener("click",function(e){
+        var po = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat)); // 创建点
+        map.addOverlay(po);            //增加点
+        if(is==0){
+            $("#mapList").append('<p><span>'+e.point.lng+'</span>&nbsp;<span>'+e.point.lat+'</span></p>');
+            aa.push(new BMap.Point(e.point.lng, e.point.lat));
+        }else if(is==1){
+            i=i+1;
+            $("#point").append('<p><span>'+e.point.lng+'</span>&nbsp;<span>'+e.point.lat+'</span>&nbsp;<span id="result'+i+'"></span></p>');
+            InOrOutPolygon(e.point.lng,e.point.lat,i);
+        }
+    });
+
+    //添加覆盖物
+    function add_overlay(){
+        polygon = new BMap.Polygon(aa, {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  //创建多边形
+        map.addOverlay(polygon);           //增加多边形
+        is=1;
+    }
+    //清除覆盖物
+    function remove_overlay(){
+        map.clearOverlays();
+        $("#mapList").html("");
+        aa=[];
+        is=0;
+        i=0;
+    }
+
+    function InOrOutPolygon(lng, lat,i){
+        var pt = new BMap.Point(lng, lat);
+        var result = BMapLib.GeoUtils.isPointInPolygon(pt, polygon);
+        if (result == true) {
+            $("#result"+i).html("点在多边形内");
+        } else {
+            $("#result"+i).html("点在多边形外");
+        }
+    }
+</script>
+<script runat="server" language="javascript">
+    var a = new Date();
+    a =a.getFullYear()+ "-"+(a.getMonth()+1)+"-"+a.getDate()+" "+a.getHours()+":"+a.getMinutes();
+    console.log(a);
+</script>

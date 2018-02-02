@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<table style="width: 10cm;" cellspacing="0" cellpadding="0">
+    <tr style="height: 1.4cm;">
+        <td colspan="4" style="border-top: solid 1px;width: 8.3cm;">&nbsp;</td>
+        <td style="font-size: 14pt;font-family: 黑体;border-top: solid 1px;width: 1.7cm;">
+            标准快递
+        </td>
+    </tr>
+    <tr style="height: 1.5cm;">
+        <td colspan="5" style="text-align: center;font-size: 36pt;font-family: 'Arial Black';font-weight: bold;border-top: solid 1px;">
+            上海闵行101
+        </td>
+    </tr>
+    <tr style="height: 1cm;">
+        <td colspan="5" style="border-top: solid 1px;">&nbsp;</td>
+    </tr>
+    <tr style="height: 1.5cm;">
+        <td style="font-size: 11pt;font-family: 黑体;width: 0.9cm;border-top: solid 1px;">
+            收件
+        </td>
+        <td colspan="4" style="width: 9.1cm;font-size: 10pt;font-family: 黑体;font-weight: bold;border-top: solid 1px;">
+            <p style="padding: 0;margin: 0;">姓名&nbsp;&nbsp;&nbsp;电话号码</p>
+            <p style="padding: 0;margin: 0;">地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p>
+        </td>
+    </tr>
+    <tr style="height: 1.2cm;">
+        <td style="font-size: 11pt;font-family: 黑体;width: 0.9cm;border-top: solid 1px;">
+            寄件
+        </td>
+        <td colspan="4" style="width: 9.1cm;font-size: 8pt;font-family: 黑体;border-top: solid 1px;">
+            <p style="padding: 0;margin: 0;">姓名&nbsp;&nbsp;&nbsp;电话号码</p>
+            <p style="padding: 0;margin: 0;">地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p>
+        </td>
+    </tr>
+    <tr style="height: 2.3cm;">
+        <td colspan="5" style="text-align: center;border-top: solid 1px;">
+
+        </td>
+    </tr>
+    <tr style="height: 2cm;">
+        <td colspan="2" style="width: 2cm;border-top: solid 1px;border-right: solid 1px;">
+            <p style="padding: 0;margin: 0;font-size: 8pt;font-family: 黑体;text-align: left;width: 2cm;"></p>
+            <p style="padding: 0;margin: 0;font-size: 11pt;font-family: 黑体;text-align: left;width: 2cm;"></p>
+            <p style="padding: 0;margin: 0;font-size: 14pt;font-family: 黑体;text-align: left;width: 2cm;"></p>
+            <p style="padding: 0;margin: 0;font-size: 7pt;font-family: 黑体;text-align: right;width: 2cm;"></p>
+        </td>
+        <td style="width: 6cm;border-top: solid 1px;border-right: solid 1px;">
+            <p style="padding: 0;margin: 0;width: 6cm;font-size: 6pt;font-family: 黑体;">
+                快件送达收件人地址，经收件人或收件人（寄件人）允许的代收人签字，视为送达，您的签字代表您已经签收此包裹，并已确认商品信息无误、包装完好、没有划痕、破损等表面质量问题。
+            </p>
+            <p style="padding: 0;margin: 0;width: 6cm;font-size: 7pt;font-family: 黑体;text-align: right;">签收人</p>
+        </td>
+        <td colspan="2" style="width: 2cm;border-top: solid 1px;"></td>
+    </tr>
+    <tr style="height: 1cm;">
+        <td colspan="5" style="text-align: right;border-top: solid;border-width: 0.2cm;">
+
+        </td>
+    </tr>
+    <tr style="height: 1cm;">
+        <td style="width: 0.9cm;font-size: 11pt;font-family: 黑体;border-top: solid 1px;">
+            收件
+        </td>
+        <td colspan="2" style="width: 7.1cm;font-size: 7pt;font-family: 黑体;border-top: solid 1px;border-right: solid 1px;">
+            <p style="padding: 0;margin: 0;">姓名&nbsp;&nbsp;&nbsp;电话号码</p>
+            <p style="padding: 0;margin: 0;">地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p>
+        </td>
+        <td colspan="2" rowspan="2" style="width: 2cm;height: 2cm;"></td>
+    </tr>
+    <tr style="height: 1cm;">
+        <td style="width: 0.9cm;font-size: 11pt;font-family: 黑体;border-top: solid 1px;">
+            寄件
+        </td>
+        <td colspan="2" style="width: 7.1cm;font-size: 7pt;font-family: 黑体;border-top: solid 1px;border-right: solid 1px;">
+            <p style="padding: 0;margin: 0;">姓名&nbsp;&nbsp;&nbsp;电话号码</p>
+            <p style="padding: 0;margin: 0;">地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p>
+        </td>
+    </tr>
+    <tr style="height: 3.9cm;">
+        <td colspan="5" style="font-family: 黑体;font-size: 8pt;position: relative;border-top: solid 1px;">
+            <div style="position: absolute;bottom: 0px;height: 10pt;width: 100%;">
+                <span>3301000055515</span>
+                <span style="float: right;">已验视</span>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

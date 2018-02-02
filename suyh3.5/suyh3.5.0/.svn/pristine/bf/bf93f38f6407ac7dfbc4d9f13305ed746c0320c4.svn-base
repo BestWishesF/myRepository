@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="uploadService" class="cn.hotol.app.service.upload.excel.UploadServiceImpl">
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+        <property name="tdHtMemberRepository" ref="tdHtMemberRepository"></property>
+        <property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+        <property name="tdHtMembAddressRepository" ref="tdHtMembAddressRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtMembFoundChangeRepository" ref="tdHtMembFoundChangeRepository"></property>
+    </bean>
+
+</beans>

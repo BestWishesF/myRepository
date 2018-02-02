@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtFuncionRepository">
+	<!-- 根据角色查找角色父功能 -->
+	<select id="findFatherFuncion" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.funcion.TdHtFuncionDto">
+    	 select rel.func_id,func_name,link_url,func_type,funcion.father_id  from td_ht_funcion funcion,td_ht_funcrole_rel rel
+    	 where rel.is_valid=0 and rel.role_id=#{role_id} and rel.func_id=funcion.func_id and funcion.father_id=0 and funcion.is_valid=0
+    	 ORDER BY func_sort desc , func_id ASC
+    </select>
+	<!--  根据角色id,及父id查找子角色功能 -->
+	<select id="findSonFuncion" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.funcion.TdHtFuncionDto">
+		select rel.func_id,func_name,link_url,func_type,funcion.father_id from td_ht_funcion funcion,td_ht_funcrole_rel rel
+		where rel.is_valid=0 and rel.role_id=#{role_id} and rel.func_id=funcion.func_id and funcion.father_id=#{father_id}  and funcion.is_valid=0
+		ORDER BY func_sort desc , func_id ASC
+	</select>
+	<!--  根据角色id查找角色所有功能 -->
+	<select id="findFuncionsByRoleId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.funcion.TdHtFuncionDto">
+		select rel.func_id,func_name,link_url,func_type,funcion.father_id from td_ht_funcion funcion,td_ht_funcrole_rel rel
+		where rel.is_valid=0 and rel.role_id=#{role_id} and rel.func_id=funcion.func_id  and funcion.is_valid=0
+		ORDER BY  func_id ASC
+	</select>
+</mapper>

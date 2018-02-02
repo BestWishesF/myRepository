@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tdHtAgentMemberRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TdHtAgentMemberRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="agentMemberService" class="cn.hotol.app.service.agent.member.AgentMemberServiceImpl">
+		<property name="tdHtAgentMemberRepository" ref="tdHtAgentMemberRepository"></property>
+		<property name="tdHtMemberRepository" ref="tdHtMemberRepository"></property>
+		<property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+	</bean>
+
+</beans>

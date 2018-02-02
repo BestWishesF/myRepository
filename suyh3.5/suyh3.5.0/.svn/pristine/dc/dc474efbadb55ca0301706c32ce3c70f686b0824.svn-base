@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentFoundChangeRepository">
+
+    <!--查询代理人资金变化明细总记录数 -->
+    <select id="findAgentFoundChangeCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_agent_found_change WHERE agent_id=#{agent_id} AND afchg_state!=1
+    </select>
+
+    <!--分页查询代理人资金变化明细 -->
+    <select id="findAgentFoundChange" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.found.AgentFinancialDetailsDto">
+        SELECT afchg_name,afchg_time,afchg_change_amount,afchg_type,afchg_state FROM td_ht_agent_found_change WHERE agent_id=#{id} AND afchg_state!=1 ORDER BY afchg_time DESC ${limit_str}
+    </select>
+
+    <!--插入代理人收支记录 -->
+    <insert id="insertAgentFoundChange" parameterType="cn.hotol.app.bean.dto.found.TdHtAgentFoundChangeDto">
+        INSERT INTO td_ht_agent_found_change (agent_id,afchg_front_amount,afchg_back_amount,afchg_change_amount,afchg_time,
+        afchg_month,afchg_type,afchg_state,afchg_number,afchg_name,exp_ord_id)
+        VALUES (#{agent_id},#{afchg_front_amount},#{afchg_back_amount},#{afchg_change_amount},#{afchg_time},#{afchg_month},
+        #{afchg_type},#{afchg_state},#{afchg_number},#{afchg_name},#{exp_ord_id})
+    </insert>
+
+    <!--通过订单id查询代理人资金变化 -->
+    <select id="findAgentFoundByOrdId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.found.TdHtAgentFoundChangeDto">
+        SELECT * FROM td_ht_agent_found_change WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--更新代理人资金变化记录 -->
+    <update id="updateAgentFoundState" parameterType="cn.hotol.app.bean.dto.found.TdHtAgentFoundChangeDto">
+        UPDATE td_ht_agent_found_change SET afchg_state=#{afchg_state},afchg_front_amount=#{afchg_front_amount},afchg_back_amount=#{afchg_back_amount} WHERE afchg_id=#{afchg_id}
+    </update>
+
+    <!--查询一定时间内未入账的代理人接单奖励 -->
+    <select id="findUnrecordedAfchg" parameterType="cn.hotol.app.bean.dto.found.TdHtAgentFoundChangeDto" resultType="java.util.Map">
+        SELECT a.agent_id,a.afchg_id,a.afchg_change_amount FROM td_ht_agent_found_change a,td_ht_express_order b
+        WHERE a.afchg_time <![CDATA[ < ]]> #{afchg_time} AND a.afchg_type=#{afchg_type} AND a.afchg_state=#{afchg_state}
+        AND a.exp_ord_id=b.exp_ord_id AND b.exp_ord_state=5
+    </select>
+
+    <!--代理人奖励批量入账 -->
+    <insert id="updateBonusAccount" parameterType="java.util.List">
+        INSERT INTO td_ht_agent_found_change (afchg_id,afchg_front_amount,afchg_back_amount,afchg_state) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.afchg_id},#{item.afchg_front_amount},#{item.afchg_back_amount},#{item.afchg_state})
+        </foreach>
+         ON DUPLICATE KEY UPDATE afchg_front_amount=VALUES(afchg_front_amount),afchg_back_amount=VALUES(afchg_back_amount),
+        afchg_state=VALUES(afchg_state)
+    </insert>
+
+    <!--查询代理人资金变化明细总记录数 -->
+    <select id="findAgentFoundChangeSize" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_agent_found_change WHERE agent_id=#{id} AND afchg_type=#{type}
+        <if test="state == 1">
+            AND afchg_state!=#{state}
+        </if>
+    </select>
+
+    <!--分页查询代理人资金变化明细 -->
+    <select id="findAgentFoundChangePage" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="java.util.Map">
+        SELECT afchg_name,afchg_time,afchg_change_amount,afchg_state FROM td_ht_agent_found_change
+        WHERE agent_id=#{id} AND afchg_type=#{type}
+        <if test="state == 1">
+            AND afchg_state!=#{state}
+        </if>
+        ORDER BY afchg_time DESC ${limit_str}
+    </select>
+
+</mapper>

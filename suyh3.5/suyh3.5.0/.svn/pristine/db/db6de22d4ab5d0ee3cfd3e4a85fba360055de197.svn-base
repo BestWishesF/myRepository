@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembAddressRepository">
+
+    <!-- 根据用户id查询地址信息 -->
+    <select id="findMemberAddressPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE memb_id = #{memb_id}  ORDER BY add_state asc, add_is_default ASC, add_express_size desc   limit #{currentPage},#{pageSize}
+    </select>
+
+    <!-- 根据用户id查询地址条数 -->
+    <select id="findMemberAddressSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_address WHERE memb_id = #{memb_id}
+    </select>
+
+    <!-- 添加收发件地址 -->
+    <insert id="insertAddress" parameterType="cn.hotol.app.bean.TdHtMembAddress" useGeneratedKeys="true"
+            keyProperty="add_id">
+        INSERT INTO td_ht_memb_address(memb_id,add_name,add_detail_address,add_province,add_city,add_region,add_label,add_telephone,
+        add_longitude,add_latitude,add_mobile_phone,add_id_number,add_is_default,add_type,add_state,add_express_size)
+        VALUES(#{memb_id},#{add_name},#{add_detail_address},#{add_province},#{add_city},#{add_region},#{add_label},#{add_telephone},
+        #{add_longitude},#{add_latitude},#{add_mobile_phone},#{add_id_number},#{add_is_default},#{add_type},#{add_state},#{add_express_size})
+    </insert>
+
+    <!-- 查询收件人地址 -->
+    <select id="findMemberRevAddress" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE add_type=2 AND add_state=0
+    </select>
+
+    <!--查询用户默认发件地址 -->
+    <select id="findMembDefSendAddress" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE memb_id=#{memb_id} AND add_type=1 AND add_is_default=0 AND add_state=0
+    </select>
+</mapper>

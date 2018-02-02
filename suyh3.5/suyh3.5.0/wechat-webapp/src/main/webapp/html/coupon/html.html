@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Strict//EN' 'http://www.w3.org/TR/html4/strict.dtd'>
+<html  style="height:100%">
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <title>领取优惠券</title>
+    <script src="../../js/jquery-1.9.1.min.js" ></script>
+    <script src="../../js/lib/aes.js"></script>
+    <script src="../../js/lib/mode-ecb.js"></script>
+    <script src="../../js/lib/header.js"></script>
+    <script type="text/javascript" src="../../js/md5.js"></script>
+    <style>
+        body
+        {
+            position: fixed;
+            background:url(../../img/coupon/background.png);
+            background-size:100% 100%;
+            -moz-background-size:100% 100%; /* 老版本的 Firefox */
+            background-repeat:no-repeat;  /*margin:0;*/
+        }
+        .btn {
+
+            position: fixed;
+            bottom:7.5%;
+            /*margin-top: 143%;*/
+
+            text-align: center;
+            width: 80%;
+            height: 10%;
+        }
+        #popBox{
+            position: fixed;
+            display:none;
+            width:70%;
+            height:40%;
+            left:15%;
+            top:30%;
+            z-index:11;
+            background:url(../../img/coupon/update.png);
+            background-size:100% 100%;
+            background-repeat:no-repeat;
+
+        }
+        #ineligible{
+            position: fixed;
+            display:none;
+            width:70%;
+            height:40%;
+            left:15%;
+            top:30%;
+            z-index:11;
+            background:url(../../img/coupon/ineligible.png);
+            background-size:100% 100%;
+            background-repeat:no-repeat;
+
+        }
+        #receive{
+            position: fixed;
+            display:none;
+            width:70%;
+            height:40%;
+            left:15%;
+            top:30%;
+            z-index:11;
+            background:url(../../img/coupon/receive.png);
+            background-size:100% 100%;
+            background-repeat:no-repeat;
+
+        }
+        #popLayer{
+            position: fixed;
+            display:none;
+            width:100%;
+            height:100%;
+            left:0;
+            top:0;
+            z-index:10;
+            background:#000000;
+            -moz-opacity: 0.8;
+            opacity:0.53;
+            filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+        }
+        #success{
+            position: fixed;
+            display:none;
+            width:80%;
+            height:50%;
+            left:10%;
+            top:25%;
+            z-index:11;
+            background:url(../../img/coupon/success.png);
+            background-size:100% 100%;
+            background-repeat:no-repeat;
+
+        }
+
+        .button {
+            position: fixed;
+            top: 65%;
+            left:14%;
+            width:80%;
+            height:50%;
+        }
+        img{
+            width:43%;
+            height:14%;
+        }
+        .close{
+            position: fixed;
+            font-size: 350%;
+            left: 80%;
+            top: 25%;
+            width:20%;
+            height:10%;
+        }
+
+    </style>
+</head>
+<body onmousewheel="return false;">
+
+<!--<input type="button" name="popBox" value="弹出框" onclick="popBox()" />-->
+<div class="btn" id="button"  >
+</div>
+<div id="popLayer" >
+</div>
+<div id="popBox" >
+
+</div>
+<div id="ineligible" >
+
+</div>
+<div id="receive" >
+
+</div>
+<div id="success" >
+    <!--<div><a href="javascript:void(0)" onclick="closeBox()">关闭</a></div>-->
+    <div class="close" onclick="closeSuccess()">
+
+    </div>
+    <div class="button">
+        <img src="../../img/coupon/know.png" style="padding-right: 3%" onclick="closeSuccess()"> <img src="../../img/coupon/use.png" id="use">
+
+    </div>
+</div>
+<script type="text/javascript">
+    function openSuccess(){
+        var success = document.getElementById('success');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.display = "block";
+        success.style.display = "block";
+
+    }//end func closeBox()
+
+    function closeSuccess(){
+        var success = document.getElementById('success');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.display = "none";
+        success.style.display = "none";
+
+    }//end func closeBox()
+    var flag = true;
+
+        $("#button").click(function(){
+            if (flag) {
+            var token = getQueryString("token");
+            var time = Date.parse(new Date());
+            var hash = hex_md5(time + "hotol");
+            time = Encrypt(time);
+            hash = Encrypt(hash);
+            $.ajax({
+                contentType: "application/json;charset=UTF-8",
+                headers:{
+                    "token":token,
+                    "version":"7",
+                    "client_type":"3",
+                    "Timestamp":time,
+                    "SignInfo":hash,
+                    "Access-Control-Allow-Origin":"*",
+                },
+                type: 'post',
+                url: '/suyh/app/7/token/receiveCoupon',
+                data:'',
+                dataType: 'text',
+                success: function (data) {
+                    var result = JSON.parse(Decrypt(data));
+                    if(result.mark == "0"){
+                        $("#success").attr("style","background:url('../../img/coupon/" + result.obj + ".png');background-size:100% 100%;background-repeat:no-repeat;");
+                        openSuccess()
+                    } else if(result.mark == "1"){
+                        //不符合条件
+                        ineligible();
+                    }
+                    else if(result.mark == "2"){
+                        //已参与
+                        receive();
+                    }
+                    flag = false;
+                }
+            })
+            }
+        });
+
+
+    $("#use").click(function(){
+        function setupWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+            if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'https://__bridge_loaded__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+        }
+        setupWebViewJavascriptBridge(function(bridge) {
+
+            /* Initialize your app here */
+            bridge.callHandler('sendExpress', '', function responseCallback(responseData) {
+
+            })
+
+        })
+    });
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    function popBox(){
+        var popBox = document.getElementById('popBox');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.display = "block";
+        popBox.style.display = "block";
+    }//end func popBox()
+    function ineligible(){
+        var ineligible = document.getElementById('ineligible');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.display = "block";
+        ineligible.style.display = "block";
+    }//end func popBox()
+    function receive(){
+        var receive = document.getElementById('receive');
+        var popLayer = document.getElementById('popLayer');
+
+        popLayer.style.display = "block";
+        receive.style.display = "block";
+    }//end f
+</script>
+</body>
+</html>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var vsersion = getQueryString("version");
+        var token = getQueryString("token");
+        var time = Date.parse(new Date());
+        var hash = hex_md5(time + "hotol");
+        time = Encrypt(time);
+        hash = Encrypt(hash);
+        if (vsersion == null) {
+            popBox();
+        } else {
+            $.ajax({
+                contentType: "application/json;charset=UTF-8",
+                headers:{
+                "token":token,
+                "version":"7",
+                "client_type":"3",
+                "Timestamp":time,
+                "SignInfo":hash,
+                "Access-Control-Allow-Origin":"*",
+               },
+                type: 'post',
+                url: '/suyh/app/7/token/ineligible',
+                data:'',
+                dataType: 'text',
+                success: function (data) {
+                    var result = JSON.parse(Decrypt(data));
+                    if(result.mark == "0"){
+
+                    } else if(result.mark == "1"){
+                        //不符合条件
+                        ineligible();
+                    }
+                    else if(result.mark == "2"){
+                        //已参与
+                        receive();
+                    } else {
+                        alert("请在速邮汇APP内部打开")
+                    }
+                }
+            })
+
+        }
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        function popBox(){
+            var popBox = document.getElementById('popBox');
+            var popLayer = document.getElementById('popLayer');
+
+            popLayer.style.display = "block";
+            popBox.style.display = "block";
+        }//end func popBox()
+        function ineligible(){
+            var ineligible = document.getElementById('ineligible');
+            var popLayer = document.getElementById('popLayer');
+
+            popLayer.style.display = "block";
+            ineligible.style.display = "block";
+        }//end func popBox()
+        function receive(){
+            var receive = document.getElementById('receive');
+            var popLayer = document.getElementById('popLayer');
+
+            popLayer.style.display = "block";
+            receive.style.display = "block";
+        }//end f
+    });
+</script>

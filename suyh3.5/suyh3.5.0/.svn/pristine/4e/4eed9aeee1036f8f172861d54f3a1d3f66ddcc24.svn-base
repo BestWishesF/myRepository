@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtScoreTaskRepository">
+
+    <!--查找积分任务列表 -->
+    <select id="findScoreTask" resultType="cn.hotol.app.bean.dto.task.TsHtScoreTaskDto" >
+        SELECT st_id,st_type,st_name,st_synopsis,st_score,st_img,st_state FROM ts_ht_score_task WHERE st_state=0
+    </select>
+
+</mapper>

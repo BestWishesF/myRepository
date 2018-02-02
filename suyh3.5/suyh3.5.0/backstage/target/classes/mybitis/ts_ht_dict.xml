@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtDictRepository">
+    <!--查找所有的省份 -->
+    <select id="findAllProvince" resultType="cn.hotol.app.bean.dto.location.ProvinceDto" >
+        SELECT dict_id,code_name AS province_name FROM ts_ht_dict WHERE code_type='province' AND `status`=0 ORDER BY dict_sort
+    </select>
+
+    <!--根据省份查询省份下的城市 -->
+    <select id="findCityByProvince" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.location.CityDto" >
+        SELECT dict_id,code_name AS city_name,parent_id AS province_id FROM ts_ht_dict WHERE code_type='city' AND parent_id=#{dict_id} AND `status`=0 ORDER BY dict_sort
+    </select>
+
+    <!--根据城市查询城市下的区 -->
+    <select id="findAreaByCity" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.location.AreaDto" >
+        SELECT dict_id,code_name AS area_name,parent_id AS city_id FROM ts_ht_dict WHERE code_type='area' AND parent_id=#{dict_id} AND `status`=0 ORDER BY dict_sort
+    </select>
+
+    <!--根据字典类别查询字典数据 -->
+    <select id="findDictByType" parameterType="java.lang.String" resultType="cn.hotol.app.bean.dto.location.TsHtDictDto" >
+        SELECT dict_id,code_name,dict_img,dict_code FROM ts_ht_dict WHERE code_type=#{code_type} AND `status`=0 ORDER BY dict_sort
+    </select>
+
+    <!--根据区域id查询快递公司列表 -->
+    <select id="findExpressByRegion" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.location.TsHtDictDto">
+        SELECT a.dict_id,a.code_name,a.dict_img,a.dict_code FROM ts_ht_dict a,ts_ht_express_open_region b WHERE a.dict_id=b.express_id AND b.region_id=#{region_id} AND a.`status`=0 AND b.state=0 ORDER BY a.dict_sort
+    </select>
+
+    <!--查询所有现实的静态数据 -->
+    <select id="findDicts"  resultType="cn.hotol.app.bean.dto.location.TsHtDictDto">
+        SELECT a.dict_id,a.code_name,a.dict_img,a.dict_code FROM ts_ht_dict a WHERE  a.`status`=0
+    </select>
+
+    <!-- 根据类别查找数据数量 -->
+    <select id="findDictByTypeSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) from ts_ht_dict WHERE code_type=#{code_type}
+    </select>
+    <!-- 根据类别分页查找数据 -->
+    <select id="findDictByTypePage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.location.TsHtDictList">
+        SELECT * from ts_ht_dict WHERE code_type=#{code_type} ORDER BY dict_sort DESC,dict_id desc limit #{currentPage},#{pageSize}
+    </select>
+    <!-- 根据父id查找数据数量 -->
+    <select id="findDictByParentIdize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) from ts_ht_dict WHERE parent_id=#{parent_id}
+    </select>
+    <!-- 根据父id分页查找数据 -->
+    <select id="findDictByParentIdPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.location.TsHtDictList">
+        SELECT * from ts_ht_dict WHERE parent_id=#{parent_id} ORDER BY dict_sort DESC,dict_id desc limit #{currentPage},#{pageSize}
+    </select>
+    <!--修改数据-->
+    <update id="updateDict" parameterType="cn.hotol.app.bean.dto.location.TsHtDictList" >
+        UPDATE ts_ht_dict set code_name=#{code_name},parent_id=#{parent_id}, dict_sort=#{dict_sort}, status=#{status},
+        dict_img=#{dict_img},dict_code=#{dict_code},dict_initials=#{dict_initials},dict_is_hos=#{dict_is_hos}
+        WHERE dict_id=#{dict_id}
+    </update>
+    <!--添加数据-->
+    <insert id="insertDict" parameterType="cn.hotol.app.bean.dto.location.TsHtDictList" >
+        INSERT INTO ts_ht_dict(code_name,parent_id,dict_sort,status,dict_img,dict_code,code_type,dict_initials,dict_is_hos)
+        VALUES (#{code_name},#{parent_id},#{dict_sort},#{status},#{dict_img},#{dict_code},#{code_type},#{dict_initials},#{dict_is_hos})
+    </insert>
+    <!-- 根据id查找数据 -->
+    <select id="findDictById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.location.TsHtDictList">
+        SELECT * from ts_ht_dict WHERE dict_id=#{dict_id}
+    </select>
+    <!--根据名称查询数据 -->
+    <select id="findDictByName" parameterType="cn.hotol.app.bean.dto.location.TsHtDictList" resultType="cn.hotol.app.bean.dto.location.TsHtDictList">
+        SELECT * from ts_ht_dict WHERE parent_id=#{parent_id} AND code_name LIKE concat('%',#{code_name},'%') AND status=0
+    </select>
+
+    <!--根据字典父节点查询数据 -->
+    <select id="findDictByParent" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.location.TsHtDictDto">
+        SELECT * FROM ts_ht_dict WHERE parent_id=#{parent_id} AND `status`=0 ORDER BY dict_sort ASC
+    </select>
+
+    <!--查询所有的字典数据的id、名称和父id -->
+    <select id="findAllDictIndex" resultType="cn.hotol.app.bean.dto.dict.TsHtDictIndex">
+        SELECT * FROM ts_ht_dict WHERE `status`=0
+    </select>
+
+    <!--查询字典按首字母排序 -->
+    <select id="findAllDictByInitials" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.dict.DictInitialsSortDto">
+        SELECT * FROM ts_ht_dict WHERE code_type=#{code_type} AND `status`=0
+        <if test="dict_is_hos == 1">
+            AND dict_is_hos=#{dict_is_hos}
+        </if>
+        ORDER BY dict_initials ASC;
+    </select>
+</mapper>

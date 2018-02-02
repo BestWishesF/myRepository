@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtExpressCollectRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtExpressCollectRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tdHtExpressOrderRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtExpressOrderRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="expressService" class="cn.hotol.app.service.express.ExpressServiceImpl">
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+        <property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtMemberRepository" ref="tdHtMemberRepository"></property>
+        <property name="tdHtAdminDivideRepository" ref="tdHtAdminDivideRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tdHtAgentFoundChangeRepository" ref="tdHtAgentFoundChangeRepository"></property>
+        <property name="tdHtMembFoundChangeRepository" ref="tdHtMembFoundChangeRepository"></property>
+        <property name="tdHtMembRefundChangeRepository" ref="tdHtMembRefundChangeRepository"></property>
+    </bean>
+    <bean id="expressOpenRegionService" class="cn.hotol.app.service.express.open.region.ExpressOpenRegionServiceImpl">
+        <property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+    </bean>
+</beans>

@@ -1,0 +1,33 @@
+input[type=radio] {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.44rem;
+    height: 0.44rem;
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0 !important;
+    line-height: 0.2rem;
+    color: #d8d8d8;
+}
+input[type=radio]:after {
+    content: "";
+    display:block;
+    width: 0.44rem;
+    height: 0.44rem;
+    border-radius: 50%;
+  text-align: center;
+  line-height: 0.30rem;
+  font-size: 0.44rem;
+  color: #fff;
+    border: 0.03rem solid #ddd;
+    background-color: #fff;
+    box-sizing:border-box;
+}
+input[type=radio]:checked:after {
+    content: "L";
+    font-size:0.44rem;
+    transform:matrix(-0.766044,-0.642788,-0.642788,0.766044,0,0);
+    -webkit-transform:matrix(-0.766044,-0.642788,-0.642788,0.766044,0,0);
+    border-color: #f6741c;
+    background-color: #f6741c;
+}

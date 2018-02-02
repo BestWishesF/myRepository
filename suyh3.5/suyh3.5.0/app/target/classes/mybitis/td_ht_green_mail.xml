@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtGreenMailRepository">
+
+    <!--查询用户参与活动的记录 -->
+    <select id="findGreenMailByMemb" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.green.TdHtGreenMailDto">
+        SELECT * FROM td_ht_green_mail WHERE memb_id=#{memb_id}
+    </select>
+
+    <!--添加新的用户参与记录 -->
+    <insert id="insertGreenMail" parameterType="cn.hotol.app.bean.dto.green.TdHtGreenMailDto">
+        INSERT INTO td_ht_green_mail (memb_id,`name`,address,phone,event_reward,done_time,state,give_green_time,give_reward_time)
+        VALUES
+        (#{memb_id},#{name},#{address},#{phone},#{event_reward},#{done_time},#{state},#{give_green_time},#{give_reward_time})
+    </insert>
+
+    <!--更新用户参与活动记录 -->
+    <update id="updateGreenMail" parameterType="cn.hotol.app.bean.dto.green.TdHtGreenMailDto">
+        UPDATE td_ht_green_mail SET `name`=#{name},address=#{address},phone=#{phone},state=#{state} WHERE green_mail_id=#{green_mail_id}
+    </update>
+
+</mapper>

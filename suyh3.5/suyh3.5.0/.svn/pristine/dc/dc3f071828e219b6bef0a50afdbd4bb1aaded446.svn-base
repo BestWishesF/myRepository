@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtScoreGoodsRepository">
+
+    <!--查找积分兑换商品列表 -->
+    <select id="findScoreGoods" resultType="cn.hotol.app.bean.dto.goods.TsHtScoreGoodsDto" >
+        SELECT * FROM ts_ht_score_goods WHERE goods_state=0
+    </select>
+
+    <!--查询积分商品数量 -->
+    <select id="findScoreGoodsSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ts_ht_score_goods WHERE goods_state=#{goods_state}
+    </select>
+
+    <!--分页查询积分商品 -->
+    <select id="findScoreGoodsPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.goods.ScoreGoodsDto">
+        SELECT * FROM ts_ht_score_goods WHERE goods_state=#{goods_state} ORDER BY goods_id DESC LIMIT #{currentPage},#{pageSize}
+    </select>
+
+    <!--修改积分商品状态 -->
+    <update id="updateGoodsState" parameterType="cn.hotol.app.bean.dto.goods.ScoreGoodsDto">
+        UPDATE ts_ht_score_goods SET goods_state=#{goods_state} WHERE goods_id=#{goods_id}
+    </update>
+
+    <!--通过id查询积分商品信息 -->
+    <select id="findScoreGoodsById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.goods.ScoreGoodsDto">
+        SELECT * FROM ts_ht_score_goods WHERE goods_id=#{goods_id}
+    </select>
+
+    <!--添加新的积分商品 -->
+    <insert id="insertScoreGoods" parameterType="cn.hotol.app.bean.dto.goods.ScoreGoodsDto">
+        INSERT INTO ts_ht_score_goods (goods_img,goods_name,goods_score,goods_state,coupon_money,effective_day,
+        goods_type,goods_img_detail,goods_subhead,goods_introduce,goods_amount,region_id,express_source,express_id,
+        cou_limit_amount,cou_discount) VALUES (#{goods_img},#{goods_name},#{goods_score},#{goods_state},#{coupon_money},
+        #{effective_day},#{goods_type},#{goods_img_detail},#{goods_subhead},#{goods_introduce},#{goods_amount},#{region_id},
+        #{express_source},#{express_id},#{cou_limit_amount},#{cou_discount})
+    </insert>
+
+    <!--修改积分商品信息 -->
+    <update id="updateScoreGoods" parameterType="cn.hotol.app.bean.dto.goods.ScoreGoodsDto">
+        UPDATE ts_ht_score_goods SET goods_img=#{goods_img},goods_name=#{goods_name},goods_score=#{goods_score},
+        goods_state=#{goods_state},coupon_money=#{coupon_money},effective_day=#{effective_day},goods_type=#{goods_type},
+        goods_img_detail=#{goods_img_detail},goods_subhead=#{goods_subhead},goods_introduce=#{goods_introduce},
+        goods_amount=#{goods_amount},region_id=#{region_id},express_source=#{express_source},express_id=#{express_id},
+        cou_limit_amount=#{cou_limit_amount},cou_discount=#{cou_discount} WHERE goods_id=#{goods_id}
+    </update>
+
+    <!--按条件查询积分商品数量 -->
+    <select id="searchScoreGoodsSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ts_ht_score_goods WHERE goods_state=#{goods_state}
+        <if test="region_id>0">
+            AND region_id=#{region_id}
+        </if>
+        <if test="express_id>0">
+            AND express_id=#{express_id}
+        </if>
+        <if test="goods_type>0">
+            AND goods_type=#{goods_type}
+        </if>
+    </select>
+
+    <!--按条件分页查询积分商品 -->
+    <select id="searchScoreGoodsPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.goods.ScoreGoodsDto">
+        SELECT * FROM ts_ht_score_goods WHERE goods_state=#{goods_state}
+        <if test="region_id>0">
+            AND region_id=#{region_id}
+        </if>
+        <if test="express_id>0">
+            AND express_id=#{express_id}
+        </if>
+        <if test="goods_type>0">
+            AND goods_type=#{goods_type}
+        </if>
+        ORDER BY goods_id DESC LIMIT #{currentPage},#{pageSize}
+    </select>
+
+</mapper>

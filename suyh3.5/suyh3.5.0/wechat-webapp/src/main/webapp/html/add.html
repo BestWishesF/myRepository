@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加收件人</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/add.css" />
+		<link rel="stylesheet" type="text/css" href="../js/lib/mobile-select-area.css">
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/lib/aes.js"></script>
+		<script src="../js/lib/header.js"></script>
+		<script src="../js/lib/mode-ecb.js"></script>
+		<script type="text/javascript" src="../js/jquery.form.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script type="text/javascript" src="../js/lib/dialog.js"></script>
+		<script type="text/javascript" src="../js/lib/mobile-select-area.js"></script>
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	</head>
+	<body>
+		<!----------------------------------header-------------------------------------->
+		<header class="head">
+			<a href="recipients.html"><img src="../img/order/1.png"></a>
+			<p>添加收件人</p>
+			<span class="buont btn">保存</span>
+		</header>
+		<!----------------------------------site-------------------------------------->
+		<section class="site">
+		<div>
+			<span class="bon">姓名 ：</span><input class="search-input input" id="name" value="" type="text" placeholder="请输入收件人姓名" />
+			<a href="sender.html"></a>
+			</div>
+			<div>
+			<span class="bon">手机：</span><input class="input" type="text" id="phone" value="" placeholder="请输入11位手机号或者0开头的固话" />
+			</div>
+		<div>
+			<div class="content-block">
+				<span class="bon">地区：</span><input class="input" id="txt_area" type="text"  readonly="readonly" placeholder="请选择省市区"  value="">
+				<input type="hidden" id="area" value=""/>
+			</div>
+		</div>
+			<div>
+			<input type="text" class="input" id="address" value="" placeholder="请详细到门牌号" />
+				<input type="hidden" id="lng" value=""/>
+			</div>
+		</section>
+		<!----------------------------------footer-------------------------------------->
+		<footer>
+			<button  id="preserved" class="btn">保存</button>
+		</footer>
+	</body>
+	<script src="../js/judge.js"></script>
+	<script src="../js/adda.js"></script>
+</html>

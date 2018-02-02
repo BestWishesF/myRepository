@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>datasource configure</description>
+    <!-- <util:properties id="w13Properties" location="classpath:w13.properties"/>-->
+   <!-- <util:properties id="emailProperties" location="classpath:email.properties"/>-->
+
+    <!-- task任务扫描注解 -->
+    <!--<task:annotation-driven/>-->
+
+    <!--  <context:property-placeholder properties-ref="w13Properties"/>-->
+ <!--   <context:property-placeholder properties-ref="emailProperties"/>-->
+
+    <bean id="storageSupport" class="cn.hotol.wechat.toolutil.modelutil.StorageSupport">
+        <property name="systemModel" value="${system.model}"/>
+        <property name="storageRoot" value="${storage.root}"/>
+    </bean>
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+
+
+        <!--<property name="driverClassName" value="${ds.driver_class}"/>
+        <property name="url" value="${ds.url}"/>
+        <property name="username" value="${ds.username}"/>
+        <property name="password" value="${ds.password}"/>-->
+
+
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://120.193.21.139:3306/merchant?characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"/>
+        <property name="username" value="root"/>
+        <property name="password" value="qaz1234567"/>
+
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://hotolw13.mysql.rds.aliyuncs.com:3306/w13?characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"/>
+        <property name="username" value="w15"/>
+        <property name="password" value="hotol_com"/>-->
+
+        <!--initialSize: 初始化连接-->
+        <property name="initialSize" value="15"></property>
+        <!--maxIdle: 最大空闲连接-->
+        <property name="maxIdle" value="20"></property>
+        <!--minIdle: 最小空闲连接-->
+        <property name="minIdle" value="5"></property>
+        <!--maxActive: 最大连接数量-->
+        <property name="maxActive" value="1000"></property>
+        <!--maxWait: 超时等待时间以毫秒为单位 1000等于60秒-->
+        <property name="maxWait" value="5000"></property>
+        <!--testWhileIdle  false  指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除.注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串-->
+        <property name="testWhileIdle" value="true"></property>
+        <!--removeAbandoned: 是否自动回收超时连接-->
+        <property name="removeAbandoned" value="true"></property>
+        <!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->
+        <property name="removeAbandonedTimeout" value="180"></property>
+        <!-- 连接被泄露时是否打印 -->
+        <property name="logAbandoned" value="true"></property>
+        <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->
+        <property name="timeBetweenEvictionRunsMillis" value="6000"></property>
+        <!-- 1000 * 60 * 30  连接在池中保持空闲而不被空闲连接回收器线程-->
+        <property name="minEvictableIdleTimeMillis" value="6000"></property>
+
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <!--<property name="testWhileIdle" value="true"/>-->
+        <property name="validationQuery" value="SELECT 1"/>
+
+    </bean>
+
+    <!-- 定时器 -->
+    <!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="testTrigger"/>
+            </list>
+        </property>
+        <property name="autoStartup" value="true"/>
+    </bean>
+
+    <bean id="testTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="testJobDetail"/>
+        <property name="cronExpression" value="0 */30 * * * ?"/>&lt;!&ndash; 每隔30分钟触发一次 &ndash;&gt;
+    </bean>
+
+    <bean id="testJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="testJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+        &lt;!&ndash; 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 &ndash;&gt;
+    </bean>
+
+    <bean id="testJob" class="cn.hotol.wechat.service.merchant.impl.RefundTimer"/>-->
+
+    <!--================================定时配置==========针对摇一摇功能==========================================-->
+
+   <!-- &lt;!&ndash; 要调用的工作类 &ndash;&gt;
+    <bean id="quartzJob" class="AShakeTimingImpl"></bean>
+    &lt;!&ndash; 定义调用对象和调用对象的方法 &ndash;&gt;
+    <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        &lt;!&ndash; 调用的类 &ndash;&gt;
+        <property name="targetObject">
+            <ref bean="quartzJob"/>
+        </property>
+        &lt;!&ndash; 调用类中的方法 &ndash;&gt;
+        <property name="targetMethod">
+            <value>updateAshakeNumber</value>
+        </property>
+    </bean>
+    &lt;!&ndash; 定义触发时间 &ndash;&gt;
+    <bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="jobtask"/>
+        </property>
+        &lt;!&ndash; cron表达式 &ndash;&gt;
+        <property name="cronExpression">
+            <value>0/5 * * * * ?</value>
+        </property>
+    </bean>
+    &lt;!&ndash; 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  &ndash;&gt;
+    <bean id="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="doTime"/>
+            </list>
+        </property>
+    </bean>-->
+
+    <!--
+         ===================================================================
+     -->
+    <!--
+         AOP: Configuration and Aspects
+     -->
+    <!--
+         ===================================================================
+     -->
+    <!-- Enable @AspectJ     support -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- Enable @Configured support -->
+    <aop:spring-configured/>
+
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeHandlers">
+            <list>
+                <bean class="cn.hotol.wechat.domain.mybatis.W13DateTypeHandler"/>
+            </list>
+        </property>
+        <property name="configLocation" value="classpath:mybatis/settings.xml"/>
+    </bean>
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+    <!--事务配置-->
+    <tx:annotation-driven transaction-manager="txManager"/>
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <aop:config>
+        <aop:advisor id="controllerTx" advice-ref="txAdvice"
+                     pointcut="execution(* cn.hotol.wechat.controller..*Controller*.*(..))" order="1"/>
+        <aop:advisor id="serviceTx" advice-ref="txAdvice"
+                     pointcut="execution(* cn.hotol.wechat.service..*Service*.*(..))" order="2"/>
+        <aop:advisor id="repositoryTx" advice-ref="txAdvice"
+                     pointcut="execution(* cn.hotol.wechat.repository..*Repository*.*(..))" order="3"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!-- the transactional semantics... -->
+        <tx:attributes>
+            <!-- all methods starting with 'get' are read-only -->
+            <tx:method name="search*" read-only="true"/>
+            <!--<tx:method name="get*" read-only="true"/>-->
+            <tx:method name="view*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="list*" read-only="true"/>
+            <tx:method name="page*" read-only="true"/>
+            <tx:method name="load*" read-only="true"/>
+            <!-- other methods use the default transaction settings (see below) -->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+</beans>

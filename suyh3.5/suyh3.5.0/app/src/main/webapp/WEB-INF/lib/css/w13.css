@@ -1,0 +1,536 @@
+.popover.left {
+    margin-left: -125px;
+}
+
+/*home页面自定义  */
+#home_coder_a {
+    display: none;
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 120px;
+    color: #000000;
+    background-color: red;
+    margin-top: 0px;
+}
+
+#home_coder_b {
+    display: none;
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 260px;
+    color: #000000;
+    background-color: red;
+}
+
+#home_coder_c {
+    display: none;
+}
+
+#home_coder_d {
+    border: solid 1px #e7e7e7;
+    width: 260px;
+    height: 65px;
+    font-size: 19px;
+    color: red;
+    background-color: #f7f7f7;
+}
+
+#noContIsNull {
+    display: none;
+    color: red;
+}
+
+#noOutOfRange {
+    display: none;
+    color: red;
+}
+
+#numberAndCompanyDoNotMatch {
+    display: none;
+    color: red;
+}
+
+/*#numberAndCompanyDoNotMatch{display: none;}*/
+#backgroundReturnMsg {
+    border: solid 1px #e7e7e7;
+    width: 465px;
+    height: 70px;
+    font-size: 19px;
+    color: red;
+    background-color: #f7f7f7;
+}
+
+#intellQueryAuthentication {
+    display: none;
+    border: solid 1px #e7e7e7;
+    width: 350px;
+    font-size: 19px;
+    color: black;
+    background-color: #f7f7f7;
+}
+
+#intellQueryResults {
+}
+
+/*自定义 登录界面，忘记密码错误提示 */
+#error1_verifyNo {
+    width: 95px;
+}
+
+#error1_new_password {
+    width: 95px;
+}
+
+#error1_new_confirmPassword {
+    width: 95px;
+}
+
+#error1_verifyNo {
+    width: 95px;
+}
+
+#home_coder_log {
+}
+
+/*注册页面检查唯一性显示  */
+#code_Prompt {
+    width: 270px;
+}
+
+/*地图弹出信息窗口*/
+/*
+.info_window{ width:240px; height:150px;}
+.info_window h2{ font-size:16px; color:#40c3a4; margin-top:0; margin-bottom:5px;}
+.info_window .iline{ height:32px; border-bottom:1px solid #e5e5e5;}
+.info_window .iinfo{ width:220px; height:30px; float:left; padding-top:8px; line-height:25px; font-size:12px; color:#666666;}
+*/
+
+.info_title {
+    font-size: 18px;
+    color: #40c3a4;
+}
+
+.info_panel {
+    color: #40c3a4;
+}
+
+.info_panel .blank_space {
+    height: 8px;
+}
+
+.info_panel .info_content p {
+    height: 28px;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+.info_panel .info_more {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+/*寄件页面快递选择  */
+.company_logos {
+    width: 120px;
+    height: 57px;
+}
+
+.send_mod {
+    width: 430px;
+    float: left;
+}
+
+#experssageImgCss {
+}
+
+/*联系人页面编辑模块  */
+.editab tbody > tr > td {
+    border-top: 0px;
+}
+
+.editab tbody > tr > td input, .editab tbody > tr > td select {
+    background: #ECEEEF;
+}
+
+/*我的中心页面快件模块  */
+#recipientAddress {
+    width: 335px;
+}
+
+.quick_send_ {
+    width: 146px;
+    height: 50px;
+    padding-left: 60px;
+    line-height: 50px;
+    color: #ffffff;
+    font-size: 14px;
+    display: block;
+    background: url('../images/quicksend.jpg') no-repeat;
+    position: relative;
+    cursor: pointer;
+}
+
+.quick_send_:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/*我的中心*/
+#center_main {
+    width: 83%
+}
+
+#center_left {
+    width: 17%
+}
+
+#ct1i ul {
+    list-style: none;
+}
+
+#ct1i li {
+    float: left;
+    width: 150px;
+    padding-left: 40px;
+}
+
+ul#navigation {
+    width: 100%;
+    height: 60px;
+    background: #00A77F;
+    margin: 0 auto;
+    text-align: right;
+}
+
+ul#navigation li {
+    display: inline;
+    height: 60px
+}
+
+ul#navigation li a {
+    display: inline-block;
+    padding: 0 20px;
+    height: 60px;
+    line-height: 60px;
+    color: #FFF;
+    font-family: "\5FAE\8F6F\96C5\9ED1";
+    font-size: 16px;
+    text-decoration: none;
+}
+
+/*设置鼠标滑过或悬停时变化的背景颜色*/
+/*寄件页面默认信息*/
+.sendPageDefaultInfo {
+    color: #000;
+    font-size: 12px;
+}
+
+#cont {
+    width: 100%;
+}
+
+#center_con {
+    width: 100%
+}
+
+#review {
+    margin: 7px 0 0 5px;
+}
+
+#navigation li.active a {
+    background: #40C3A3;
+}
+
+/*查件*/
+.select_box {
+    width: 100px;
+    height: 24px;
+}
+
+.tag_select {
+    display: block;
+    color: #79A2BD;
+    width: 80px;
+    height: 24px;
+    background: transparent url("../images/flowbg_3.png") no-repeat 0 0;
+    padding: 0 10px;
+    line-height: 24px;
+}
+
+.tag_options {
+    list-style: none;
+    background: transparent url("../images/flowbg_2.png") no-repeat right bottom;
+    width: 100px;
+    padding: 0 0 5px;
+    margin: 0;
+}
+
+.open_selected {
+    background: transparent url('../images/flowbg_1.png') no-repeat 0 -96px;
+    color: #fff;
+}
+
+.tag_options li {
+    display: block;
+    width: 80px;
+    padding: 0 10px;
+    height: 24px;
+    text-decoration: none;
+    line-height: 24px;
+}
+
+#recipientStreet {
+    float: left;
+}
+
+#recipientProvince {
+    float: left;
+    margin-top: 10px
+}
+
+#recipientCity {
+    float: left;
+    margin-top: 10px;
+}
+
+#recipientName {
+    float: left
+}
+
+#recipientMobileNo {
+    float: left
+}
+
+/*.tip{display: none;}*/
+#recipientDistrict {
+    float: left;
+    margin-top: 10px;
+}
+
+/*我的资料*/
+.personal_tab select {
+    width: 90px;
+}
+
+/*手机版APP下载*/
+.diyizhang {
+    background-color: #27262c;
+    height: 438px;
+}
+
+.diyizhang01 {
+    width: 1081px;
+    height: 438px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.diyizhang01 img {
+    float: left;
+}
+
+/*添加*/
+.disankuai0010204020101 {
+    margin-right: 10px;
+}
+
+/*修改*/
+.disankuai0010204020201 {
+    margin-right: 10px;
+}
+
+/*撤销*/
+.disankuai0010204020301 {
+    margin-right: 10px;
+}
+
+/*
+*我的中心条形导航条样式
+*/
+.disankuai00101 {
+    width: 70px;
+    height: 170px;
+    float: left;
+    margin-top: 17px;
+}
+
+.disankuai00101 img {
+    float: left;
+}
+
+.disankuai0010201 {
+    width: 780px;
+    height: 32px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.disankuai0010201 img {
+    float: left;
+}
+
+.disankuai00102 {
+    width: 75%;
+    float: left;
+    margin-left: 53px;
+}
+
+.disankuai00102 div {
+    float: left;
+}
+
+.disankuai0010202 {
+    border-bottom: 1px solid #e6e6e6;
+    width: 743px;
+    height: 2px;
+    margin-top: 6px;
+    position: relative;
+    margin-top: 12px;
+    display: none;
+}
+
+.disankuai00101 ul li a {
+    font-size: 12px;
+    color: #656563;
+    line-height: 41px;
+    font-family: "宋体";
+}
+
+.wer {
+    width: 140px;
+    float: left;
+    height: 33px;
+}
+
+.qwe {
+    width: 140px;
+    float: left;
+    height: 33px;
+    margin-left: 38px;
+}
+
+.dsl {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 56px;
+    color: #5a5a5a;
+    font-family: "微软雅黑";
+}
+
+.dfk {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 56px;
+    color: #5a5a5a;
+    font-family: "微软雅黑";
+}
+
+.tyu {
+    width: 140px;
+    float: left;
+    height: 33px;
+}
+
+.sdf {
+    width: 140px;
+    float: left;
+    height: 33px;
+}
+
+.yfj {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 56px;
+    color: #5a5a5a;
+    font-family: "微软雅黑";
+}
+
+.dpj {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 56px;
+    color: #5a5a5a;
+    font-family: "微软雅黑";
+}
+
+.wer:hover .disankuai0010202 {
+    display: block;
+}
+
+.qwe:hover .disankuai0010202 {
+    display: block;
+}
+
+.tyu:hover .disankuai0010202 {
+    display: block;
+}
+
+.sdf:hover .disankuai0010202 {
+    display: block;
+}
+
+.a {
+    color: #ff4401;
+    font-size: 14px;
+    font-family: "宋体"
+}
+
+.b {
+    color: #ff4401;
+    font-size: 14px;
+    font-family: "宋体"
+}
+
+.c {
+    color: #ff4401;
+    font-size: 14px;
+    font-family: "宋体"
+}
+
+.d {
+    color: #ff4401;
+    font-size: 14px;
+    font-family: "宋体"
+}
+
+.sousuodaohang {
+    overflow: hidden;
+    margin-top: 15px;
+    border-top-width: 15px;
+    border-bottom-width: 15px;
+    margin-bottom: 15px;
+    width: 743px;
+    float: left;
+}
+
+.sousuodaohang_01 {
+    width: 252px;
+    height: 25px;
+    border: 1px solid #cccccc;
+    float: left;
+}
+
+.sousuodaohang_02 {
+    width: 65px;
+    height: 27px;
+    border-right: 1px solid #cccccc;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    float: left;
+    color: #3c3c3c;
+    font-size: 14px;
+    font-family: "宋体"
+}
+
+
+
+
+
+
+
+
+
+
+
+

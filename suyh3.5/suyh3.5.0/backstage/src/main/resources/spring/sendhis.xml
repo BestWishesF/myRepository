@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="twSmsSendHisRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TwSmsSendHisRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="sendHisService" class="cn.hotol.app.service.sendhis.SendHisServiceImpl">
+		<property name="twSmsSendHisRepository" ref="twSmsSendHisRepository"></property>
+	</bean>
+
+</beans>

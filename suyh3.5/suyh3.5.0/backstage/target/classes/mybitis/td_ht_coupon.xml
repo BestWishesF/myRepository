@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtCouponRepository">
+
+    <!--添加用户的优惠券 -->
+    <insert id="insertMemberCoupon" parameterType="cn.hotol.app.bean.dto.coupon.TdHtCouponDto">
+        INSERT INTO td_ht_coupon
+        (cou_amount,cou_limit_amount,cou_limit_time,cou_discount,cou_receive_time,memb_id,cou_name,state,cou_user_time,
+        exp_ord_id,region_id,memb_type,express_id)
+        VALUES
+        (#{cou_amount},#{cou_limit_amount},#{cou_limit_time},#{cou_discount},#{cou_receive_time},#{memb_id},#{cou_name},
+        #{state},#{cou_user_time},#{exp_ord_id},#{region_id},#{memb_type},#{express_id})
+    </insert>
+
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+
+	<!-- 配置占位符 -->
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:config.properties</value>
+		</property>
+	</bean>
+
+
+	<!-- redis -->
+
+
+	<!--<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">-->
+
+		<!--<property name="maxIdle" value="${redis.maxIdle}"/>   &lt;!&ndash; 控制一个pool最多有多少个状态为idle(空闲)的jedis实例 &ndash;&gt;-->
+		<!--<property name="maxTotal" value="${redis.maxTotal}"/> &lt;!&ndash; 控制一个pool可分配多少个jedis实例 &ndash;&gt;-->
+		<!--<property name="maxWaitMillis" value="${redis.maxWait}"/>&lt;!&ndash; 表示当borrow一个jedis实例时，最大的等待时间，如果超过等待时间，则直接抛出JedisConnectionException &ndash;&gt;-->
+		<!--<property name="testOnBorrow" value="${redis.testOnBorrow}"/>&lt;!&ndash;在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的&ndash;&gt;-->
+
+	<!--</bean>-->
+
+	<!--&lt;!&ndash;<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" destroy-method="destroy" >&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name ="hostName" value = "${redis.host}" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name ="port" value ="${redis.port}" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name ="timeout" value = "15000" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name ="password" value ="${redis.pass}"/>&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name ="usePool" value = "true" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name ="poolConfig" ref = "poolConfig" />&ndash;&gt;-->
+	<!--&lt;!&ndash;</bean>&ndash;&gt;-->
+	<!--<bean id="jedisConnFactory"-->
+		  <!--class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"-->
+		  <!--p:usePool="true" />-->
+	<!--<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connectionFactory-ref="jedisConnFactory"/>-->
+	<!--&lt;!&ndash;<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name="connectionFactory"   ref="connectionFactory" />&ndash;&gt;-->
+		<!--&lt;!&ndash;&lt;!&ndash; 序列化方式建议key / hashKey采用StringRedisSerializer&ndash;&gt;&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name="keySerializer" >&ndash;&gt;-->
+			<!--&lt;!&ndash;<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>&ndash;&gt;-->
+		<!--&lt;!&ndash;</property>&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name="hashKeySerializer" >&ndash;&gt;-->
+			<!--&lt;!&ndash;<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>&ndash;&gt;-->
+		<!--&lt;!&ndash;</property>&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name="valueSerializer" >&ndash;&gt;-->
+			<!--&lt;!&ndash;<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>&ndash;&gt;-->
+		<!--&lt;!&ndash;</property>&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name="hashValueSerializer" >&ndash;&gt;-->
+			<!--&lt;!&ndash;<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>&ndash;&gt;-->
+		<!--&lt;!&ndash;</property>&ndash;&gt;-->
+	<!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+
+
+
+		<!-- base dataSource -->
+	<bean name="baseDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="initialSize" value="5" />
+		<property name="maxActive" value="100" />
+		<property name="minIdle" value="10" />
+		<property name="maxWait" value="60000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800" />
+		<property name="logAbandoned" value="true" />
+
+	</bean>
+
+	<!-- 主库 -->
+	<bean name="master-dataSource" parent="baseDataSource">
+		<property name="driverClassName">
+		<value>${datasource.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${datasource.url}</value>
+		</property>
+		<property name="username">
+			<value>${datasource.username}</value>
+		</property>
+		<property name="password">
+			<value>${datasource.password}</value>
+		</property>
+	</bean>
+
+	<!-- 从库 -->
+	<bean name="slave-dataSource" parent="baseDataSource">
+		<property name="driverClassName">
+			<value>${datasource.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${salve.datasource.url}</value>
+		</property>
+		<property name="username">
+			<value>${salve.datasource.username}</value>
+		</property>
+		<property name="password">
+			<value>${salve.datasource.password}</value>
+		</property>
+	</bean>
+
+	<!--主从库选择 -->
+	<bean id="dynamicDataSource" class="cn.hotol.app.datasource.DynamicDataSource">
+		<property name="master" ref="master-dataSource" />
+		<property name="slaves">
+			<list>
+				<ref bean="slave-dataSource" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 事务管理 -->
+	<bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dynamicDataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	<!-- MyBatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dynamicDataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+    <!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="cn.hotol.app.repository"/>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		  <constructor-arg index="0" ref="sqlSessionFactory" />
+		  <constructor-arg index="1" value="BATCH" /><!-- 如果想要进行批量操作可加入这个属性 -->
+	</bean>
+
+	<!-- memcached -->
+	<bean id="memcachedPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown"
+		lazy-init="false">
+		<constructor-arg>
+			<value>neeaMemcachedPool</value>
+		</constructor-arg>
+		<property name="servers">
+			<list>
+				<value>${memcache.server}</value>
+			</list>
+		</property>
+		<property name="initConn">
+			<value>${memcache.initConn}</value>
+		</property>
+		<property name="maxConn">
+			<value>${memcache.maxConn}</value>
+		</property>
+		<property name="maintSleep">
+			<value>${memcache.maintSleep}</value>
+		</property>
+		<property name="nagle">
+			<value>${memcache.nagle}</value>
+		</property>
+		<property name="socketTO">
+			<value>${memcache.socketTO}</value>
+		</property>
+	</bean>
+
+	<bean id="memcachedClient" class="com.danga.MemCached.MemCachedClient"
+		lazy-init="false">
+		<constructor-arg>
+			<value>neeaMemcachedPool</value>
+		</constructor-arg>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+
+
+
+
+	<!-- 验证码 -->
+
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">yes</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.size">45</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.image.width">125</prop>
+						<prop key="kaptcha.image.height">45</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+						<prop key="kaptcha.noise.color">blue</prop>
+						<prop key="kaptcha.background.clear.from">gray</prop>
+						<prop key="kaptcha.background.clear.to">white</prop>
+						<prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+</beans>

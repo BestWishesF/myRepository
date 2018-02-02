@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtExpressOpenNumberRepository">
+
+    <!--查询可快递单号 -->
+    <select id="findCanUseExpressNumber" parameterType="cn.hotol.app.bean.dto.number.TsHtExpressOpenNumberDto" resultType="cn.hotol.app.bean.dto.number.TsHtExpressOpenNumberDto">
+        SELECT * FROM ts_ht_express_open_number WHERE express_id=#{express_id} AND region_id=#{region_id} AND exp_open_state=0 ORDER BY exp_open_id LIMIT 0,1
+    </select>
+
+    <!--修改快递单号状态 -->
+    <update id="updateExpressNumberState" parameterType="cn.hotol.app.bean.dto.number.TsHtExpressOpenNumberDto">
+        UPDATE ts_ht_express_open_number SET agent_id=#{agent_id},exp_open_state=#{exp_open_state} WHERE exp_open_id=#{exp_open_id}
+    </update>
+
+</mapper>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>寄件人相关信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/related.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/lib/aes.js"></script>
+		<script src="../js/lib/header.js"></script>
+		<script src="../js/lib/mode-ecb.js"></script>
+	</head>
+	<body>
+		<!----------------------------------header----------------------------------------->
+		<header class="head">
+        	<a href="send.html"><img src="../img/order/1.png"></a>
+       		<p>寄件</p>
+  		</header>
+		<!----------------------------------site------------------------------------------->	
+		<section class="site">
+		<div>
+			<img src="../img/send/site1.png" alt="" />
+			<input class="search-input" type="text" placeholder="请输入寄件地址"/>
+			<a href="sender.html"><span>地址薄</span></a>
+		</div>
+			<div class="null"></div>
+		</section>	
+		<!----------------------------------list------------------------------------------->
+		<section class="list">
+			<ul>
+				<li>日常品</li>
+				<li>文件</li>
+				<li>数码产品</li>
+				<li>食品</li>
+				<li>衣帽服饰</li>
+				<li>其他</li>
+			</ul>
+		</section>
+		<!----------------------------------paragraph-------------------------------------->
+		<section class="paragraph">
+			<p>违禁物品：危险枪支、军用或警用械具（含主要零部件）及其纺织品；<br>《违禁品须知》</p>
+		</section>
+		<!----------------------------------time------------------------------------------->
+		<section class="time">
+			<div>
+				<span>估计重量(KG)</span>
+					<a>
+					<button id="minus">-</button>
+					<input type="text" id="txt" value="1.0">
+					<button id="plus">+</button>
+					</a>
+			</div>
+		</section>
+		<!----------------------------------footer----------------------------------------->
+		<footer>
+			<button>确定</button>
+		</footer>
+		
+	</body>
+	<script src="../js/judge.js"></script>
+	<script src="../js/related.js"></script>
+</html>

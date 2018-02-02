@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tsHtScoreGoodsRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TsHtScoreGoodsRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="goodsService" class="cn.hotol.app.service.goods.GoodsServiceImpl">
+		<property name="tsHtScoreGoodsRepository" ref="tsHtScoreGoodsRepository"></property>
+		<property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+	</bean>
+
+</beans>

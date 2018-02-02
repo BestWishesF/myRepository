@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+	   default-lazy-init="false">
+
+	<!-- 定时器start -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="testTrigger_1"/>
+				<ref bean="testTrigger_2"/>
+				<ref bean="testTrigger_3"/>
+				<ref bean="testTrigger_4"/>
+				<ref bean="testTrigger_5"/>
+			</list>
+		</property>
+		<property name="autoStartup" value="true"/>
+	</bean>
+
+	<!--定时器1 -->
+	<!--每天9：00到18：00，每隔5分钟执行一次 -->
+	<bean id="testTrigger_1" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="testJobDetail_1"/>
+		<property name="cronExpression" value="0 0/5 9-17 * * ?"/>
+	</bean>
+
+	<bean id="testJobDetail_1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="testJob_1"/>
+		<property name="targetMethod" value="expressOrderOverdue"/>
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+		<property name="concurrent" value="false"/>
+	</bean>
+
+	<bean id="testJob_1" class="cn.hotol.app.service.three.timer.ExpressOverdueTimer"/>
+
+	<!--定时器2 -->
+	<!--每月的最后一天的23：55触发  -->
+	<bean id="testTrigger_2" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="testJobDetail_2"/>
+		<property name="cronExpression" value="0 55 23 L * ?"/>
+	</bean>
+
+	<bean id="testJobDetail_2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="testJob_2"/>
+		<property name="targetMethod" value="generateMonthBill"/>
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+		<property name="concurrent" value="false"/>
+	</bean>
+
+	<bean id="testJob_2" class="cn.hotol.app.service.three.timer.MonthBillTimer"/>
+
+	<!--定时器3 -->
+	<!--每隔1小时执行一次 -->
+	<bean id="testTrigger_3" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="testJobDetail_3"/>
+		<property name="cronExpression" value="0 0 */1 * * ?"/>
+		<!--<property name="cronExpression" value="0 0/1 9-23 * * ?"/>-->
+	</bean>
+
+	<bean id="testJobDetail_3" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="testJob_3"/>
+		<property name="targetMethod" value="generateWeChatToken"/>
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+		<property name="concurrent" value="false"/>
+	</bean>
+
+	<bean id="testJob_3" class="cn.hotol.app.service.three.timer.WeChatTokenTimer"/>
+
+	<!--定时器4 -->
+	<!--每隔30分钟执行一次 -->
+	<bean id="testTrigger_4" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="testJobDetail_4"/>
+		<property name="cronExpression" value="0 */30 * * * ?"/>
+	</bean>
+
+	<bean id="testJobDetail_4" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="testJob_4"/>
+		<property name="targetMethod" value="cancelInvoicePay"/>
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+		<property name="concurrent" value="false"/>
+	</bean>
+
+	<bean id="testJob_4" class="cn.hotol.app.service.three.timer.InvoiceTimer"/>
+
+	<!--定时器5 -->
+	<!--每隔30分钟执行一次 -->
+	<bean id="testTrigger_5" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="testJobDetail_5"/>
+		<property name="cronExpression" value="0 */30 * * * ?"/>
+		<!--<property name="cronExpression" value="0 0/1 9-23 * * ?"/>-->
+	</bean>
+
+	<bean id="testJobDetail_5" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="testJob_5"/>
+		<property name="targetMethod" value="bonusAccount"/>
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+		<property name="concurrent" value="false"/>
+	</bean>
+
+	<bean id="testJob_5" class="cn.hotol.app.service.three.timer.AgentBonusAccountTimer"/>
+	<!-- 定时器end -->
+
+</beans>

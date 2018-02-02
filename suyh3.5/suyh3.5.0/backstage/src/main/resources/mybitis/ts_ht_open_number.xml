@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtOpenNumberRepository">
+
+    <!--根据厚通单号查询数据库 -->
+    <select id="findOpenNumberByHtNumber" parameterType="java.lang.String" resultType="cn.hotol.app.bean.dto.express.number.TsHtOpenNumberDto">
+        SELECT * FROM ts_ht_open_number WHERE ht_number=#{ht_number}
+    </select>
+
+    <!--更新厚通单号状态 -->
+    <update id="updateOpenNumStateByNum" parameterType="cn.hotol.app.bean.dto.express.number.TsHtOpenNumberDto">
+        UPDATE ts_ht_open_number SET ht_open_state=#{ht_open_state},agent_id=#{agent_id} WHERE ht_number=#{ht_number}
+    </update>
+
+</mapper>

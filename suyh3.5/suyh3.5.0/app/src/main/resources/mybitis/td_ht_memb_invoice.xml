@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembInvoiceRepository">
+
+    <!--保存用户申请开票信息 -->
+    <insert id="insertMembInvoice" parameterType="cn.hotol.app.bean.dto.invoice.TdHtMembInvoiceDto" useGeneratedKeys="true"
+            keyProperty="memb_ivc_id">
+        INSERT INTO td_ht_memb_invoice
+        (memb_id,memb_company,memb_taxpayer_number,memb_company_address,memb_company_phone,
+        memb_company_bank,memb_company_number,memb_ivc_remark,add_name,add_detail_address,
+        add_province,add_city,add_region,add_longitude,add_latitude,add_mobile_phone)
+        VALUES
+        (#{memb_id},#{memb_company},#{memb_taxpayer_number},#{memb_company_address},#{memb_company_phone},
+        #{memb_company_bank},#{memb_company_number},#{memb_ivc_remark},#{add_name},#{add_detail_address},
+        #{add_province},#{add_city},#{add_region},#{add_longitude},#{add_latitude},#{add_mobile_phone})
+    </insert>
+
+    <!--通过id查询用户开票详情 -->
+    <select id="findMembIvcById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.invoice.TdHtMembInvoiceDto">
+        SELECT * FROM td_ht_memb_invoice WHERE memb_ivc_id=#{memb_ivc_id}
+    </select>
+
+    <!--通过用户最近一次开票详情 -->
+    <select id="findLatelyIvcInfo" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.invoice.TdHtMembInvoiceDto">
+        SELECT * FROM td_ht_memb_invoice WHERE memb_id=#{memb_id} ORDER BY memb_ivc_id DESC LIMIT 0,1
+    </select>
+
+</mapper>

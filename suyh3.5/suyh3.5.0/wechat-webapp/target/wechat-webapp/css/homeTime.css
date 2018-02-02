@@ -1,0 +1,159 @@
+.list{
+	width:100%;
+	height:6rem;
+}
+.list .short{
+	overflow: hidden;
+	width:100%;
+	line-height: 0.5rem;
+	font-size:0.28rem;
+	height:1rem;
+	border-bottom:1px solid #e5e5e5;
+}
+.list .long{
+	min-height:1rem;
+	overflow: hidden;
+	width:100%;
+	line-height: 1rem;
+	font-size:0.28rem;
+	border-bottom:1px solid #e5e5e5;	
+}
+.list .daily{
+	background:url(../img/advance.png) no-repeat 7rem 0.35rem;
+	background-size:0.11rem 0.23rem;
+	border-bottom: 1px solid #e6e6e6;
+}
+.list div input[name="opt"]{
+	float:left;
+	line-height: 1.18rem;
+	outline: none;
+}
+.list .box{
+	padding-left:0.25rem;
+}
+.list div #plus{
+	width:0.43rem;
+	height:0.8rem;
+	border:0;
+	background:#fff;
+	color:#fff;
+	font-size:0.4rem;
+	outline: none;
+}
+.list div #minus{
+	width:0.43rem;
+	height:0.8rem;
+	background:#fff;
+	color:#fff;
+	font-size:0.4rem;
+	outline: none;
+}
+/*.list div .select{
+	height:1rem;
+	width:4.5rem;
+	float:right;
+	background:url(../img/advance.png) no-repeat 3.8rem center;
+	background-size:0.18rem 0.34rem;
+}*/
+.list div .pull{
+	float:left;
+	width:100%;
+	height:2.17rem;
+	background:#f1f8ff;
+	display: none;
+}
+.list div .pull span{
+	width:1.43rem;
+	height:0.2rem;
+	font-size:0.2rem;
+	color:#666;
+	padding:0.2rem 0.4rem;
+	margin:0.3rem 0.2rem;
+	border:1px solid #999;
+}
+
+.radio{
+	float:left;
+	height:1rem;
+	width:2.2rem;
+}
+.select{
+	width:7rem;
+	height:1rem;
+}
+label span{
+	float:left;
+	width:100%;
+	line-height:1rem;
+	color:#666;
+	margin-left:0.7rem;
+}
+.input{
+	opacity:0;
+	display:inline-block;
+	height:0.4rem;
+}
+.list .biao{
+	float:right;
+	margin-right:0.5rem;
+}
+.list .biao input{
+	width:1.1rem;
+	margin:0 0.1rem;
+	border:0;
+	font-size:0.25rem;
+	text-align: center;
+	outline: none;
+}
+.list .biao button{
+	border:none;
+	background:#fff;
+	color:#fff;
+	outline: none;
+}
+.list .biao button img {
+	float:left;
+	padding-top:0.3rem;
+	width:0.43rem;
+	height:0.43rem;
+}
+.radio {
+	background:url(../img/agree.png) no-repeat 0.1rem center;
+	background-size:0.4rem;
+}
+.input:checked + .radio {
+	background:url(../img/list1.png) no-repeat 0.1rem center;
+	background-size:0.4rem;
+}
+footer button{
+	border:0;
+	width:6.9rem;
+	height:0.84rem;
+	background:#ff9a0a;
+	color:#fff;
+	font-size:0.34rem;
+	border-radius: 0.04rem;
+	margin:1.64rem 0.31rem 0;
+	outline: none;
+}
+.pull input{
+	display:none;
+}
+.pull label{
+	padding: 0.02rem 0.2rem;
+	margin-left: 0.3rem;
+	color: #999;
+	font-size: 0.25rem;
+	display: inline-block;
+}
+ .biao #minus{
+	float:left;
+}
+#txt{
+	float:left;
+	padding-top:0.4rem;
+}
+
+
+
+

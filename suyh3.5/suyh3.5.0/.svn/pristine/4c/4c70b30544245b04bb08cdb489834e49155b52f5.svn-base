@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>速邮汇</title>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="快递,速邮汇,寄快递,寄件,快递下单,电商件,智能快递,快递服务平台,互联网快递,批量寄件,快递前端一公里"/>
+    <meta name="description" content="速邮汇是杭州厚通网络科技有限公司旗下的网站，面向快递信息提供一站式的管理服务。旨在解决当前快递行业出现的效率低，
+    管理紊乱等问题。运用科学管理方法，更有针对性地完善快递在运输过程中落单、跑单的现象，提高快递运输的效率。同时支持在线手机查询，有独立的手机客户端随时
+    随地查快递。与多家快递公司合作，给予用户全面、便捷的快递查询服务，告别快递信息复杂、难找的困扰，为用户构建一个全新的快递管理平台。"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../lib/images/icon_32X32.ico"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../lib/js/md5.js"></script>
+    <script src="../lib/js/jquery-1.9.1.min.js"></script>
+    <script src="../lib/js/cookie.js"></script>
+    <script src="../lib/js/header.js"></script>
+    <script src="../lib/js/aes.js"></script>
+    <script src="../lib/js/mode-ecb.js"></script>
+    <script src="../lib/js/jquery.form.js"></script>
+    <script src="js/common.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link href="../lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../lib/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../lib/css/googFile/css.css"/>
+    <link rel="stylesheet" href="../lib/css/newMain.css"/>
+    <link rel="stylesheet" href="../lib/css/main.css"/>
+    <link rel="stylesheet" href="../lib/css/w13.css"/>
+    <link rel="stylesheet" href="../lib/css/custom.css"/>
+</head>
+<body style="min-width: 1100px;">
+<div id="nav" class=""
+     style="position: absolute; top: 0px; width: 100%; background-color: rgb(0, 0, 0); height: 70px; min-width: 1100px;">
+    <div>
+        <div class="top-01">
+            <div class="top-001"><a>服务热线:</a><a style="font-size:18px;">400-114-1788</a></div>
+            <div class="top-002" style="width:55%;position: relative;margin-left: 50px;">
+                <div class="top-logo"><img src="../lib/images/logo.png"></div>
+                <div class="top-nav" style="margin-top: 10px;position: absolute; right: -50px;top: 10px;">
+                    <a href="index.html" style="padding: 8% 10px;">首页</a>
+                    <a id="send" href="login.html" style="padding: 8% 10px;">大客户寄件</a>
+                    <a href="http://www.hotol.cn/merchant/html/index.html#regView" target="_blank"
+                       style="padding: 8% 10px;color:darkorange;">商户入驻</a>
+                </div>
+            </div>
+            <div class="top-003" style="margin-right: 10px;">
+                <p id="profileRegion" style="font-size: 11px;margin-top: 10px;display: none;">
+                    <a id="a1"></a>
+                    <a href="javascript:void (0)" id="logoutLink">【退出】</a>
+                </p>
+                <div class="denglu">
+                    <a id="loginLink" href="login.html" style="display: none;">用户登录</a>
+                </div>
+                <div class="zhuce">
+                    <a id="regLink" href="register.html" style="display: none;">用户注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main" class="hidenest">
+    <div>
+        <div class="top-01" style="margin-top: 60px;"></div>
+        <div class="handeast-01">
+            <div class="handeast-001"><a>当前位置:网站地图 &gt; 运费查询 </a></div>
+        </div>
+        <div class="handeast-02">
+            <div class="hand-map" style="border-bottom: 0px solid;"><a>运费计算规则</a></div>
+            <div class="hand-word">
+                <div class="hand-letter" style="margin-left: 20px;width: 90%;"><a>1)快递的运费是根据物品的重量和运送的距离来计算的</a> <br> <a>2)为了您的权益，首先应尽量自己称好物品的重量再填写订单</a>
+                    <br> <a>3)如果没有秤，可先不填，同时在快递员和您联系时和对方沟通好，等待快递员称过后实际收的标准为准。</a> <br> <a>4)速邮汇提供的是快递公司给的参考价格，由于不同地区加盟店的快递网点会有略微的不同，快递员会依据实际的距离、重量等因素考虑，但一般不会相差太多。</a>
+                    <br> <a>5)快递的运费要依据各大快递物流公司的实际收费标准来定，一般情况下误差不会相差太多，如果相距太远（比如20元以上），用户可以在“我的订单”里找到快递公司的客服进行投诉。</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="last" style="min-width: 1100px;min-height: 85px;">
+    <div class="last-kuang" style="min-width: 1100px;">
+        <div class="last-left"><a>服务热线：400-114-1788 服务邮箱：suyh@100emall.com</a> <br/>
+            <a>Copyright ©2013 厚通网络 浙ICP备14024016号-1</a></div>
+        <div class="last-right">
+            <a href="aboutus.html">关于速邮汇</a>
+            <a href="news.html">速邮汇动态</a>
+            <a href="rzlc.html">商户入驻流程</a>
+            <a href="partners.html">合作伙伴</a>
+            <a href="sitemap.html">网站地图</a>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;top: 55%;right: 1px;">
+    <div id="qq_div" style="position: relative;">
+        <a href="javascript:void (0)" onclick="$('#qq_div').hide()"
+           style="position: absolute;top: 0px;right: 0px;z-index: 100;opacity: 0;">关闭</a>
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2781686263&site=qq&menu=yes">
+            <img border="0" src="../lib/images/qq.png" alt="点击即可发起会话" title="点击即可发起会话" style="z-index: 99;"/>
+        </a>
+    </div>
+</div>
+</body>
+</html>

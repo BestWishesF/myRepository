@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtMembInvoiceHistoryRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtMembInvoiceHistoryRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tdHtMembInvoiceRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtMembInvoiceRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tsHtOpenNumberRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TsHtOpenNumberRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="invoiceService" class="cn.hotol.app.service.member.invoice.InvoiceServiceImpl">
+        <property name="tdHtMembInvoiceHistoryRepository" ref="tdHtMembInvoiceHistoryRepository"></property>
+        <property name="tdHtMembInvoiceRepository" ref="tdHtMembInvoiceRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+        <property name="tdHtMemberRepository" ref="tdHtMemberRepository"></property>
+        <property name="tdHtMembAddressRepository" ref="tdHtMembAddressRepository"></property>
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tsHtOpenNumberRepository" ref="tsHtOpenNumberRepository"></property>
+    </bean>
+
+</beans>

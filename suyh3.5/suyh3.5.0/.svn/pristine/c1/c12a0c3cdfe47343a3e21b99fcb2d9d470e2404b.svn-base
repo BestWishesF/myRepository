@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tsHtDataConfigRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TsHtDataConfigRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="configService" class="cn.hotol.app.service.config.ConfigServiceImpl">
+        <property name="tsHtDataConfigRepository" ref="tsHtDataConfigRepository"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../js/md5.js"></script>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script src="../js/lib/aes.js"></script>
+    <script src="../js/lib/mode-ecb.js"></script>
+    <script src="../js/lib/header.js"></script>
+    <script type="text/javascript" src="../js/jquery.form.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+<body style="font-size: 10px;">
+<div style="width: 100%;height: auto;height: auto;">
+    <p style="margin: 0;padding: 10px;">
+        <button id="test" onclick="testClick()">测试</button>
+    </p>
+    <p id="encrypt"></p>
+    <p id="decrypt"></p>
+    <p style="margin: 0;padding: 10px;">
+        <button id="login">测试登录</button>
+    </p>
+</div>
+</body>
+<script src="../js/judge.js"></script>
+<script>
+    $("#login").click(function () {
+        var jsonData={
+            memb_phone:"18569034337",
+            memb_password:"123456",
+            push_token:"fasf6543asd"
+        }
+        $.ajax({
+            contentType: "application/json;charset=UTF-8",
+            headers: getHeader(),
+            type: 'post',
+            url: '/suyh/app/3/login',
+            data:Encrypt(JSON.stringify(jsonData)),
+            dataType: 'text',
+            success: function (data) {
+                var result = JSON.parse(Decrypt(data));
+                if(result.mark=="0"){
+                    var token=result.obj;
+                    alert(token+"!");
+                }else{
+                    alert(result.tip);
+                }
+            }
+        })
+    })
+
+    function testClick() {
+        var json = {
+            "region_id": "0"
+        };
+        var aa = getUrl("/suyh/app/3/token/findSendExpInfo", json, "");
+        var tsHtThird = {
+            "third_id": 1
+        }
+        var bb = getUrl("/suyh/app/3/findTsHtThirdDto", tsHtThird, "");
+
+        var res = getUrl("/suyh/app/3/token/findProvincialCity", "", "");
+
+        console.log(aa);
+        console.log(bb);
+        console.log(res);
+
+        /*var str = Encrypt("fda");
+        $("#encrypt").html(str);
+
+        var str1 = Decrypt(str);
+        $("#decrypt").html(str1);*/
+    }
+</script>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAdminDivideRepository">
+
+	<!--查询区下的所有有效的划分区域 -->
+	<select id="findDivideByRegion" parameterType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto" resultType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto">
+		SELECT * FROM td_ht_admin_divide WHERE divide_state=0 AND region_id=#{region_id}
+		<if test="divide_type > 0">
+			AND divide_type=#{divide_type}
+		</if>
+	</select>
+
+	<!--创建新的划分区域 -->
+	<insert id="insertDivide" parameterType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto" useGeneratedKeys="true"
+			keyProperty="divide_id">
+		INSERT INTO td_ht_admin_divide (region_id,divide_name,divide_state,divide_type)
+		VALUES (#{region_id},#{divide_name},#{divide_state},#{divide_type})
+	</insert>
+
+	<!--通过划分区域id修改区域状态 -->
+	<update id="updateDivideState" parameterType="java.lang.Integer">
+		UPDATE td_ht_admin_divide SET divide_state=1 WHERE divide_id=#{divide_id}
+	</update>
+
+	<!--通过划分区域id查询该区域信息 -->
+	<select id="findDivideById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto">
+		SELECT * FROM td_ht_admin_divide WHERE divide_id=#{divide_id}
+	</select>
+
+	<!--查询区域下划分区域数量 -->
+	<select id="findDivideByRegionSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM td_ht_admin_divide WHERE region_id=#{region_id}
+	</select>
+
+	<!--分页查询区域下划分区域 -->
+	<select id="findDivideByRegionPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto">
+		SELECT * FROM td_ht_admin_divide WHERE region_id=#{region_id} ORDER BY divide_id DESC LIMIT #{currentPage},#{pageSize}
+	</select>
+
+	<!--查询区下的所有划分区域 -->
+	<select id="findAllDivideByRegion" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto">
+		SELECT * FROM td_ht_admin_divide WHERE region_id=#{region_id} AND divide_state=0
+	</select>
+
+	<!--修改划分区域信息 -->
+	<update id="updateDivide" parameterType="cn.hotol.app.bean.dto.admin.divide.TdHtAdminDivideDto">
+		UPDATE td_ht_admin_divide SET divide_name=#{divide_name},divide_state=#{divide_state} WHERE divide_id=#{divide_id}
+	</update>
+
+</mapper>

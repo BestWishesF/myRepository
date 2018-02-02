@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentRepository">
+
+
+    <!-- 查找代理人数量 -->
+    <select id="findAgentSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) from td_ht_agent a
+        <if test="province > 0 and city == 0">
+            ,ts_ht_dict c,ts_ht_dict r
+        </if>
+        <if test="city > 0 and region == 0">
+            ,ts_ht_dict r
+        </if>
+        <if test="agent_state == 1 ">
+            WHERE a.agent_state in(1,2,3)
+        </if>
+        <if test="agent_state == 2 ">
+            WHERE a.agent_state in(4,5)
+        </if>
+        <if test="agent_state == 3 ">
+            WHERE a.agent_state=6
+        </if>
+        <if test="province > 0 and city == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=c.dict_id AND c.parent_id=#{province}
+        </if>
+        <if test="city > 0 and region == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=#{city}
+        </if>
+        <if test="region > 0">
+            AND a.area_id=#{region}
+        </if>
+        <if test="divide_id > 0">
+            AND a.divide_id=#{divide_id}
+        </if>
+    </select>
+    <!-- 分页查找代理人 -->
+    <select id="findAgentPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT * from td_ht_agent a
+        <if test="province > 0 and city == 0">
+            ,ts_ht_dict c,ts_ht_dict r
+        </if>
+        <if test="city > 0 and region == 0">
+            ,ts_ht_dict r
+        </if>
+        <if test="agent_state == 1 ">
+            WHERE   agent_state in(1,2,3)
+        </if>
+        <if test="agent_state == 2 ">
+            WHERE   agent_state in(4,5)
+        </if>
+        <if test="agent_state == 3 ">
+            WHERE  agent_state=6
+        </if>
+        <if test="province > 0 and city == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=c.dict_id AND c.parent_id=#{province}
+        </if>
+        <if test="city > 0 and region == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=#{city}
+        </if>
+        <if test="region > 0">
+            AND a.area_id=#{region}
+        </if>
+        <if test="divide_id > 0">
+            AND a.divide_id=#{divide_id}
+        </if>
+        ORDER BY a.agent_adopt_time DESC limit #{currentPage},#{pageSize}
+    </select>
+    <!-- 更新代理人状态 -->
+    <update id="updateAgentState" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent set agent_state=#{agent_state} WHERE agent_id=#{agent_id}
+    </update>
+    <!-- 根据id查找代理人 -->
+    <select id="findAgentById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT * from td_ht_agent   WHERE  agent_id=#{agent_id}
+    </select>
+    <!-- 更新代理人信息 -->
+    <update id="updateAgentApply" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent set agent_name=#{agent_name},agent_sex=#{agent_sex},agent_id_number=#{agent_id_number},agent_state=#{agent_state},agent_adopt_time=now(),agent_type=#{agent_type},divide_id=#{divide_id}
+        ,area_id=#{area_id},agent_head_portrait=#{agent_head_portrait},agent_address=#{agent_address},agent_birthday=#{agent_birthday},agent_pay_type=#{agent_pay_type},agent_pay_account=#{agent_pay_account}
+        WHERE agent_id=#{agent_id}
+    </update>
+    <!--通过代理人手机号查询代理人信息 -->
+    <select id="findAgentByMobile" parameterType="java.lang.String" resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT * FROM td_ht_agent WHERE agent_phone=#{agent_phone} AND agent_state IN (4,5)
+    </select>
+
+    <!--通过手机号查询可指派代理人 -->
+    <select id="findAssignAgentList" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT * from td_ht_agent WHERE agent_state=4
+        <if test="agent_phone != null and agent_phone != '' ">
+            AND agent_phone LIKE concat('%',#{agent_phone}, '%')
+        </if>
+        <if test="region != null and region != ''">
+            AND area_id IN
+            <foreach item="item" index="index" collection="region" open="(" separator="," close=")">
+                #{item.dict_id}
+            </foreach>
+        </if>
+        ORDER BY agent_adopt_time DESC
+    </select>
+
+    <!--更新代理人的钱包 -->
+    <update id="updateAgentBalance" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_balance=#{agent_balance} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--按条件查询代理人数量 -->
+    <select id="findAgentByBeanSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) from td_ht_agent a
+        <if test="province > 0 and city == 0">
+            ,ts_ht_dict c,ts_ht_dict r
+        </if>
+        <if test="city > 0 and region == 0">
+            ,ts_ht_dict r
+        </if>
+        WHERE agent_state in(4,5)
+        <if test="agent_id > 0 ">
+            AND a.agent_id=#{agent_id}
+        </if>
+        <if test="agent_mobile != null and agent_mobile != '' ">
+            AND a.agent_phone LIKE concat('%',#{agent_mobile}, '%')
+        </if>
+        <if test="agent_name != null and agent_name != '' ">
+            AND a.agent_name LIKE concat('%',#{agent_name}, '%')
+        </if>
+        <if test="province > 0 and city == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=c.dict_id AND c.parent_id=#{province}
+        </if>
+        <if test="city > 0 and region == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=#{city}
+        </if>
+        <if test="region > 0">
+            AND a.area_id=#{region}
+        </if>
+        <if test="divide_id > 0">
+            AND a.divide_id=#{divide_id}
+        </if>
+    </select>
+
+    <!--按条件查询代理人分页 -->
+    <select id="findAgentByBeanPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT * from td_ht_agent a
+        <if test="province > 0 and city == 0">
+            ,ts_ht_dict c,ts_ht_dict r
+        </if>
+        <if test="city > 0 and region == 0">
+            ,ts_ht_dict r
+        </if>
+        WHERE agent_state in(4,5)
+        <if test="agent_id > 0 ">
+            AND a.agent_id=#{agent_id}
+        </if>
+        <if test="agent_mobile != null and agent_mobile != '' ">
+            AND a.agent_phone LIKE concat('%',#{agent_mobile}, '%')
+        </if>
+        <if test="agent_name != null and agent_name != '' ">
+            AND a.agent_name LIKE concat('%',#{agent_name}, '%')
+        </if>
+        <if test="province > 0 and city == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=c.dict_id AND c.parent_id=#{province}
+        </if>
+        <if test="city > 0 and region == 0">
+            AND a.area_id=r.dict_id AND r.parent_id=#{city}
+        </if>
+        <if test="region > 0">
+            AND a.area_id=#{region}
+        </if>
+        <if test="divide_id > 0">
+            AND a.divide_id=#{divide_id}
+        </if>
+        ORDER BY a.agent_adopt_time DESC limit #{currentPage},#{pageSize}
+    </select>
+</mapper>

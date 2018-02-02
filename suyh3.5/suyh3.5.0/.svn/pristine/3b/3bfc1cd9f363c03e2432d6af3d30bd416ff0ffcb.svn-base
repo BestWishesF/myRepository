@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="tdHtAgentRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtAgentRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tdHtAgentApplyRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtAgentApplyRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tdHtAgentFoundChangeRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtAgentFoundChangeRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="agentService" class="cn.hotol.app.service.agent.AgentServiceImpl">
+        <property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtAdminDivideRepository" ref="tdHtAdminDivideRepository"></property>
+        <property name="tdHtAdminDivideGridRepository" ref="tdHtAdminDivideGridRepository"></property>
+    </bean>
+    <bean id="agentApplyService" class="cn.hotol.app.service.agent.apply.AgentApplyServiceImpl">
+        <property name="tdHtAgentApplyRepository" ref="tdHtAgentApplyRepository"></property>
+        <property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtAdminDivideRepository" ref="tdHtAdminDivideRepository"></property>
+        <property name="tdHtAdminDivideGridRepository" ref="tdHtAdminDivideGridRepository"></property>
+    </bean>
+    <bean id="agentFoundService" class="cn.hotol.app.service.agent.found.AgentFoundServiceImpl">
+        <property name="tdHtAgentFoundChangeRepository" ref="tdHtAgentFoundChangeRepository"></property>
+        <property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+    </bean>
+</beans>

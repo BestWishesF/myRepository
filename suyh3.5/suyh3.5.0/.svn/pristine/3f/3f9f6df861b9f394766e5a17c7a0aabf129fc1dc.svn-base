@@ -1,0 +1,230 @@
+body{
+    width:100%;
+    height:100%;
+    background:#f2f2f2;
+}
+.nav{
+    width:100%;
+    min-height: 4rem;
+    font-size:0.2rem;
+    border:0;
+}
+.nav ul li{
+    width:25%;
+    height:0.73rem;
+    font-size:0.31rem;
+    float:left;
+    color:#666;
+    text-align: center;
+    line-height:0.8rem;
+    background:#e5e5e5;
+}
+.products .main{
+    width:100%;
+    display: none;
+    float:left;
+}
+.products .main.selected{
+    display: block;
+}
+.tab li.active em{
+    color: #ff5b62;
+    padding:0 0.43rem 0.05rem;
+    margin-top:0.2rem;
+    border-bottom: 0.08rem solid #ff5b62;
+}
+.main .left img{
+    width:0.87rem;
+    height:0.87rem;
+    margin:0.1rem 0.1rem 0.4rem 0.1rem;
+    float:left;
+}
+.main .left p{
+    font-size:0.26rem;
+}
+.main .left{
+    margin-top:0.25rem;
+    float:left;
+    width:70%;
+    min-height:1.2rem;
+    font-size:0.18rem;
+}
+.main .left span{
+    font-size:0.24rem;
+    line-height:0.4rem;
+    color:#999;
+}
+.main .dadv{
+    width:100%;
+    float:left;
+    background:#fff;
+    min-height:1.6rem;
+    border-bottom:0.2rem solid #f2f2f2;
+}
+.main .news{
+    background:#fff;
+    float:left;
+    width:100%;
+    min-height:1.8rem;
+    border-bottom:0.15rem solid #f2f2f2;
+}
+.main .left .acting{
+    font-size:0.2rem;
+}
+.main .left .name{
+    line-height:0.3rem;
+    font-size:0.25rem;
+    color:#333;
+}
+.min .left #sender{
+    float:left;
+    font-size:0.5rem;
+}
+.main .left .recent{
+    font-size:0.2rem;
+    color:#44c9aa;
+    width:4.5rem;
+    min-height:0.4rem;
+    display:block;
+    margin-left:1.07rem;
+}
+.main .left .dai{
+    font-size:0.23rem;
+    line-height:0.3rem;
+}
+.main .left .opend{
+    color:#666;
+    line-height:0.4rem;
+}
+.main .p{
+    color:#333;
+}
+.main .phone{
+    color:#999;
+}
+.main .right{
+    margin-top:0.2rem;
+    float:right;
+    width:30%;
+    text-align: center;
+    line-height:0.3rem;
+    font-size:0.2rem;
+    height:1.3rem;
+}
+.main .right .sh{
+    color:#666;
+}
+.main .right .btn{
+    float:right;
+    margin:0.2rem 0.45rem 0 0 ;
+}
+.main .right .but{
+    padding:0.1rem 0.1rem;
+    margin:0;
+    font-size:0.25rem;
+    margin:0.5rem 0.45rem 0 0;
+}
+.main .left .address{
+    width:4rem;
+    color:#666;
+    font-size:0.22rem;
+    line-height:0.4rem;
+}
+.main .right p{
+    float:right;
+    text-align:center;
+    color:#fff;
+    line-height:0.4rem;
+    margin-right: 0.6rem;
+    margin-top:0.2rem;
+    width:0.85rem;
+    height:0.4rem;
+    border-radius: 0.04rem;
+}
+.main .removes{
+    font-size:0.25rem;
+    width:100%;
+    height:0.6rem;
+    line-height:0.6rem;
+    float:left;
+}
+.main .removes .sh{
+    margin-left:0.3rem;
+    float:left;
+    color:#666;
+    font-size:0.2rem
+}
+.main .remove{
+    background:url(../img/remove.jpg) no-repeat left center;
+    background-size:0.3rem;
+    padding-left:0.4rem;
+    float:right;
+    margin-right:0.45rem;
+    color:#666;
+}
+.revise{
+    float:left;
+    min-height:1.2rem;
+    width:100%;
+    border-bottom:0.02rem solid #f2f2f2;
+}
+.main .right .delivers{
+    background:#fcd071;
+    padding:0.1rem;
+    margin:0;
+    font-size:0.23rem;
+    margin:0.2rem 0.42rem 0 0;
+}
+.main .right .achieve{
+    font-size:0.2rem;
+    padding:0.1rem;
+    margin:0;
+    margin:0.3rem 0.45rem 0 0;
+    background:#015efe;
+}
+.main .right i{
+    color:#fff;
+    padding:0.15rem 0.1rem;
+    border-radius: 0.04rem;
+    background:#ff9a0a;
+    font-size:0.24rem;
+}
+.main .right em{
+    float:left;
+    padding:0.1rem 0 0 0.9rem;
+    font-size:0.27rem;
+    color:#e80100;
+}
+.main .img{
+    width:2rem;
+    heigth:2rem;
+    margin:30% 0 0 40%;
+}
+.main .right .span{
+    display:block;
+    padding-right:1.8rem;
+}
+#css{
+    color:red;
+}
+#btn{
+    float:left;
+    font-size:0.3rem;
+    margin:0.6rem 0 1rem 45%;
+}
+#bant{
+    float:left;
+    font-size:0.3rem;
+    margin:0.6rem 0 1rem 45%;
+}
+#bt{
+    float:left;
+    font-size:0.3rem;
+    margin:0.6rem 0 1rem 45%;
+}
+#bn{
+    float:left;
+    font-size:0.3rem;
+    margin:0.6rem 0 1rem 45%;
+}
+

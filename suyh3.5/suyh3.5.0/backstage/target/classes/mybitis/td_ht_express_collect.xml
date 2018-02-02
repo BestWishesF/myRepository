@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtExpressCollectRepository">
+
+    <!-- 根据订单id查找收货人数量 -->
+    <select id="findExpressCollectByExpOrdIdSize" parameterType="java.util.Map"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order_collect  WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!-- 根据订单id查找收货人分页 -->
+    <select id="findExpressCollectByExpOrdIdPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        SELECT * FROM td_ht_express_order_collect WHERE exp_ord_id=#{exp_ord_id}
+        ORDER BY exp_ord_id DESC   limit #{currentPage},#{pageSize}
+    </select>
+
+    <!--通过订单id查询快件信息 -->
+    <select id="findExpressCollectByExpOrdId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        SELECT * FROM td_ht_express_order_collect WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--根据厚通单号查询快件信息 -->
+    <select id="findExpressCollectByHtNumber" parameterType="java.lang.String" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        SELECT * FROM td_ht_express_order_collect WHERE ht_number=#{ht_number}
+    </select>
+
+    <!--保存快件 -->
+    <insert id="insertExpressOrderCollect"
+            parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        INSERT INTO td_ht_express_order_collect(exp_ord_id,exp_ord_category,exp_ord_clt_height,add_id,add_name,add_mobile_phone,add_detail_address,
+        add_province,add_city,add_region,add_telephone,add_longitude,add_latitude,exp_ord_clt_state,express_number,ht_number,sign_time,send_time,
+        delivery_time,express_id,category_id,express_name,express_price,exp_ord_clt_number)
+        VALUES(#{exp_ord_id},#{exp_ord_category},#{exp_ord_clt_height},#{add_id},#{add_name},#{add_mobile_phone},#{add_detail_address},#{add_province},#{add_city},
+        #{add_region},#{add_telephone},#{add_longitude},#{add_latitude},#{exp_ord_clt_state},#{express_number},#{ht_number},#{sign_time},
+        #{send_time},#{delivery_time},#{express_id},#{category_id},#{express_name},#{express_price},#{exp_ord_clt_number})
+    </insert>
+
+    <!--修改订单快件状态 -->
+    <update id="updateExpOrdCltState" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        UPDATE td_ht_express_order_collect SET exp_ord_clt_state=#{exp_ord_clt_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--通过快件id查询快件信息 -->
+    <select id="findExpOrdCltById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        SELECT * FROM td_ht_express_order_collect WHERE exp_ord_clt_id=#{exp_ord_clt_id}
+    </select>
+
+    <!--修改订单快件信息 -->
+    <update id="updateExpOrdCltInfoById" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        UPDATE td_ht_express_order_collect SET add_name=#{add_name},add_mobile_phone=#{add_mobile_phone},add_telephone=#{add_telephone},
+        add_province=#{add_province},add_city=#{add_city},add_region=#{add_region},add_detail_address=#{add_detail_address} WHERE exp_ord_clt_id=#{exp_ord_clt_id}
+    </update>
+
+    <!--按条件查询快件数量 -->
+    <select id="searchOrdBillSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order_collect a, td_ht_express_order b WHERE a.exp_ord_id = b.exp_ord_id
+        AND b.exp_ord_state = 5 AND b.import_marker = 0
+        <if test="send_city > 0 ">
+            AND b.add_city = #{send_city}
+        </if>
+        <if test="express_id > 0 ">
+            AND b.express_id = #{express_id}
+        </if>
+        AND b.exp_ord_time <![CDATA[ >= ]]> #{star_time} and b.exp_ord_time <![CDATA[ < ]]> #{end_time}
+    </select>
+
+    <!--按条件查询快件列表 -->
+    <select id="searchOrdBillList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT b.exp_ord_id,b.agent_id,b.exp_ord_time,b.add_name AS send_name,CONCAT(b.add_mobile_phone,b.add_telephone)AS send_mobile,
+        b.add_province AS send_province,b.add_city AS send_city,b.add_region AS send_region,b.add_detail_address AS send_detail_address,
+        a.add_name AS rev_name,CONCAT(a.add_mobile_phone,a.add_telephone)AS rev_mobile,a.add_province AS rev_province,
+        a.add_city AS rev_city,a.add_region AS rev_region,a.add_detail_address AS rev_detail_address,a.ht_number,
+        a.express_number,a.express_price,a.express_name,a.exp_ord_clt_height,b.exp_ord_size,b.exp_ord_amount,b.exp_ord_pay_amount
+        FROM td_ht_express_order_collect a, td_ht_express_order b WHERE a.exp_ord_id = b.exp_ord_id AND b.exp_ord_state = 5 AND b.import_marker = 0
+        <if test="send_city > 0 ">
+            AND b.add_city = #{send_city}
+        </if>
+        <if test="express_id > 0 ">
+            AND b.express_id = #{express_id}
+        </if>
+        AND b.exp_ord_time <![CDATA[ >= ]]> #{star_time} and b.exp_ord_time <![CDATA[ < ]]> #{end_time}
+        ORDER BY b.exp_ord_time
+        <if test="page != null and page != ''">
+            limit #{currentPage},#{pageSize}
+        </if>
+    </select>
+
+    <!--通过订单id查询快件信息 -->
+    <select id="findExpOrdCollectDetailDtoByExpOrdId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.ExpOrdCollectDetailDto">
+        SELECT * FROM td_ht_express_order_collect WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--查询大客户快件数量 -->
+    <select id="findCltByStateAndId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order_collect WHERE exp_ord_clt_state=0 AND exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--修改大客户快件状态 -->
+    <update id="updateCltById" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        UPDATE td_ht_express_order_collect SET exp_ord_clt_state=#{exp_ord_clt_state},express_number=#{express_number} WHERE exp_ord_clt_id=#{exp_ord_clt_id}
+    </update>
+</mapper>

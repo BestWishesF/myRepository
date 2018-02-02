@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtDataConfigRepository">
+
+	<!--查询所有的数据配置 -->
+	<select id="findAllDataConfig" resultType="cn.hotol.app.bean.dto.config.TsHtDataConfigDto">
+		SELECT * FROM ts_ht_data_config
+	</select>
+
+</mapper>

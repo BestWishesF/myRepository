@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backstage/backstage.iml" filepath="$PROJECT_DIR$/backstage/backstage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hotol_full.iml" filepath="$PROJECT_DIR$/hotol_full.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wechat-webapp/wechat-webapp.iml" filepath="$PROJECT_DIR$/wechat-webapp/wechat-webapp.iml" />
+    </modules>
+  </component>
+</project>

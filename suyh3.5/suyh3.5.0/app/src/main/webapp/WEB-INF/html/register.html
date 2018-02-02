@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="快递,速邮汇,寄快递,寄件,快递下单,电商件,智能快递,快递服务平台,互联网快递,批量寄件,快递前端一公里"/>
+    <meta name="description" content="速邮汇是杭州厚通网络科技有限公司旗下的网站，面向快递信息提供一站式的管理服务。旨在解决当前快递行业出现的效率低，
+    管理紊乱等问题。运用科学管理方法，更有针对性地完善快递在运输过程中落单、跑单的现象，提高快递运输的效率。同时支持在线手机查询，有独立的手机客户端随时
+    随地查快递。与多家快递公司合作，给予用户全面、便捷的快递查询服务，告别快递信息复杂、难找的困扰，为用户构建一个全新的快递管理平台。"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../lib/images/icon_32X32.ico"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../lib/js/md5.js"></script>
+    <script src="../lib/js/jquery-1.9.1.min.js"></script>
+    <script src="../lib/js/cookie.js"></script>
+    <script src="../lib/js/header.js"></script>
+    <script src="../lib/js/aes.js"></script>
+    <script src="../lib/js/mode-ecb.js"></script>
+    <script src="../lib/js/jquery.form.js"></script>
+    <script src="js/register.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link href="../lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../lib/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../lib/css/googFile/css.css"/>
+    <link rel="stylesheet" href="../lib/css/newMain.css"/>
+    <link rel="stylesheet" href="../lib/css/main.css"/>
+    <link rel="stylesheet" href="../lib/css/w13.css"/>
+    <link rel="stylesheet" href="../lib/css/custom.css"/>
+    <style>
+        input{color: #000000;}
+    </style>
+</head>
+<body style="min-width: 1100px;">
+<div id="nav" class=""
+     style="position: absolute; top: 0px; width: 100%; background-color: rgb(0, 0, 0); height: 70px; min-width: 1100px;">
+    <div>
+        <div class="top-01">
+            <div class="top-001"><a>服务热线:</a><a style="font-size:18px;">400-114-1788</a></div>
+            <div class="top-002" style="width:55%;position: relative;margin-left: 50px;">
+                <div class="top-logo"><img src="../lib/images/logo.png"></div>
+                <div class="top-nav" style="margin-top: 10px;position: absolute; right: -50px;top: 10px;">
+                    <a href="index.html" style="padding: 8% 10px;">首页</a>
+                    <a href="login.html" style="padding: 8% 10px;">大客户寄件</a>
+                    <a href="http://www.hotol.cn/merchant/html/index.html#regView" target="_blank" style="padding: 8% 10px;color:darkorange;">商户入驻</a>
+                </div>
+            </div>
+            <div class="top-003" style="margin-right: 10px;">
+                <div class="denglu">
+                    <a id="loginLink" href="login.html">用户登录</a>
+                </div>
+                <div class="zhuce">
+                    <a id="regLink" href="register.html">用户注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main" class="login">
+    <div>
+        <div class="top-01" style="margin-top: 70px;"></div>  <!--位置指示-->
+        <div class="handeast-01">
+            <div class="handeast-001" style="float: left;"><a>当前位置: 首页 &gt; 用户注册 </a></div>
+        </div>  <!--主要内容-->
+        <div class="handeast-02" style="height: 530px;color: whitesmoke;">
+            <div class="login-01">
+                <div class="login-nav" style="text-align: center;margin-left: 0;">用户注册</div>
+            </div>
+            <div id="tab_1">
+                <div class="text-01">
+                    <div style="float:left;margin-top:5px;margin-left:64px;"><a>*</a> <label>手机号码:</label></div>
+                    <div id="gosern" style="float:left;margin-left: 10px;">
+                        <input name="mobileNo_username" id="mobileNo_username" placeholder="请输入手机号"
+                               class="texton button-01" type="text" style="padding-left: 10px;">
+                    </div>
+                    <div style="float:left">
+                        <a id="verifyNoTimer" onmouseover="this.style.backgroundColor='#6f6464';" href="javascript:void(0)"
+                                onmouseout="this.style.backgroundColor='#514945';" onclick="getVerify()"
+                                style="width:113px;height:30px;padding:5px;margin-left:25px;background:#514945;border:0;color:white;line-height: 30px;">
+                            获取验证码
+                        </a>
+                    </div>
+                    <div id="mobileError" class="kong" style="display: none;color: #ff0000;"></div>
+                </div>
+                <div class="text-01" id="imgCode" style="display: none;">
+                    <div style="float:left;margin-top:5px;margin-left: 8px;"><a>*</a> <label>请输入图片验证码:</label></div>
+                    <div style="float:left;margin-left:10px;">
+                        <input class="button-01" maxlength="4" id="code" placeholder="请输入图片验证码" type="text" style="padding-left: 10px;">
+                    </div>
+                    <div style="float:left">
+                        <img src="../getKaptchaImage" style="height: 32px;margin-left:25px;" id="PictureCheckCode">
+                    </div>
+                    <div id="imgCodeError" class="kong" style="display: none;color: #ff0000;"></div>
+                </div>
+                <div class="text-01">
+                    <div style="float:left;margin-top:5px;margin-left: 8px;"><a>*</a> <label>请输入手机验证码:</label></div>
+                    <div style="float:left;margin-left:10px;">
+                        <input class="button-01" maxlength="6" placeholder="请输入手机验证码" name="verifyNo"
+                               id="verifyNo" type="text" style="padding-left: 10px;">
+                    </div>
+                    <div id="phoneCodeError" class="kong" style="display: none;color: #ff0000;"></div>
+                </div>
+                <div class="text-01">
+                    <div style="float:left;margin-top:5px;margin-left:64px;"><a>*</a> <label>设置密码:</label></div>
+                    <div style="float:left;margin-left:10px;">
+                        <input maxlength="20" class="button-01" name="mobileNo_password" id="mobileNo_password"
+                               placeholder="请输入密码" type="password" style="padding-left: 10px;">
+                    </div>
+                    <div class="number"><a>密码由6-20位数字、字母</a> <br> <a>或特殊字符组成</a></div>
+                    <div id="pwdError" class="kong" style="display: none;color: #ff0000;"></div>
+                </div>
+                <div class="text-01">
+                    <div style="float:left;margin-top:5px;margin-left:64px;"><a>*</a> <label>确认密码:</label></div>
+                    <div style="float:left;margin-left:10px;">
+                        <input class="button-01" maxlength="20" name="again_pwd" id="again_pwd" placeholder="请再次输入密码"
+                               type="password" style="padding-left: 10px;">
+                    </div>
+                    <div id="pwdAgainError" class="kong" style="display: none;color: #ff0000;"></div>
+                </div>
+                <!--<div id="yqm" class="text-01" style="display: none;">
+                    <div style="float:left;margin-top:5px;margin-left:88px;"><label>邀请码:</label></div>
+                    <div style="float:left;margin-left:10px;"><input placeholder="输入有效邀请码可得到相应的代金券!" class="button-01"
+                                                                     name="obtainInviteCode" id="obtainInviteCode"
+                                                                     maxlength="20" type="text"></div>
+                    <div class="kong"><a id="obtainInviteCodeError" style="display: none;">邀请码已过有效期！</a></div>
+                </div>-->
+                <div class="text-01">
+                    <div style="float:left;margin-top:5px;margin-left:154px;">
+                        <input id="agreement" type="checkbox" checked="checked">
+                    </div>
+                    <div style="float:left;margin-left:10px;margin-top: 5px;">
+                        我同意并已阅读<a style="color:#3d9685;font-size:14px;" id="getAgreement" href="javascript:void(0)">《用户使用协议》</a>
+                    </div>
+                    <div id="checkedError" class="kong" style="display: none;color: #ff0000;"></div>
+                </div>
+                <div class="text-01" style="padding-left:180px;">
+                    <input value="提交" onmouseover="this.style.backgroundColor='#a16d0b';" onmouseout="this.style.backgroundColor='#8a572a';"
+                           data-toggle="tab" id="doSubmit_a" style="width:254px;height:40px;background-color:#8a572a;border:0;color:#a1a1a1;cursor:pointer;"
+                           type="button">
+                    <input value="已有帐号，前往登录" onmouseover="this.style.backgroundColor='#a16d0b';" data-toggle="tab"
+                           onmouseout="this.style.backgroundColor='#8a572a';" onclick="window.location.href='#login'"
+                           id="gotologin" style="width:254px;height:40px;background-color:#8a572a;border:0;color:#a1a1a1;cursor:pointer;display: none;"
+                           type="button">
+                </div>
+            </div>
+            <div id="syxy" style="position: fixed;top: 180px;left: 30%;width: 43%;height: 70%;z-index: 201;background-color: #dafff5;overflow-y: scroll;display: none;">
+                <div style="position: relative;text-align: center;width: 100%;font-family: 黑体;color: #000000;font-size: 1.2em;margin-top: 20px;">
+                    速邮汇用户使用协议
+                    <a id="syxy_close" href="javascript:void(0)" style="position: absolute;right: 5px;top: -25px;">×</a>
+                </div>
+                <div style="margin-top: 10px;padding: 10px 20px;font-family: 黑体;color: #000000;font-size: 1em;">
+                    &nbsp;&nbsp;&nbsp; 欢迎您成为厚通速邮汇的注册会员，在您注册成为我们的会员后，将享有我们提供的相应服务，但同时也要遵守相应的规则和履行一定的义务。开
+                    始注册时请务必认真阅读全部服务协议内容，如有任何疑问，可向速邮汇咨询，您一旦注册成为我们的会员，则意味着完全接受以下条款。<p></p>                <br>一、版权声明 <p>
+                    本站的域名、商标、内容和技术数据等相关资料（以下统称为“网站内容”）均属于厚通速邮汇所有，请广大会员用户、客户予以尊重并严格遵循国
+                    家政府相关的法律法规及本站的规定合理使用。对于某些事项，如果网站内容上没有特定的权利声明，并不代表速邮汇
+                    不享有其权利，同时也不意味着速邮汇放弃或不主张权利。您不得以任何方式、任何理由侵占网站的内容，将其用于其他任何互联网或实体平台，违者将追求其法律责任。</p>              <br>二、注册会员的权利
+                    <p>1) 会员有权拥有自己在速邮汇的用户名及密码，并有权使用自己的用户名及密码随时登陆网站。</p>
+                    <p>2) 会员可以享有速邮汇提供的相应服务，并且可以提出您认为本网站可以改进的地方。</p>                <br>三、注册会员的义务 <p>
+                    1）注册成为会员之后享受提供的服务，同时也应同意以下事项：依本服务提示提供您本人真实，正确、及时完整的资料，并随时更新登记资料确保
+                    其为真实、正确、完整可靠的资料。若您提供任何有误、不实或者不完整、带有误导性的资料，速邮汇不负任何连带的责任和义务。</p>
+                    <p>2）速邮汇将采取规范、合法合理的安全手段来保护会员已存储的个人信息，除非根据法律或政府的强制性规定，在未得到会员的许可之前，速邮汇
+                        不会将会员的任何个人信息提供给任何无关的第三方，包括公司和个人。</p>                <br> 四、平台规范使用守则 <p>1）
+                    会员在使用速邮汇平台服务的过程中应全程遵守国家的相关法律、法规等规范文件及速邮汇平台明示的各项规定和要求，不违反社会公共利益
+                    和公共道德，不损害他人的合法权益，如若您违反了上述的相关守则所产生的任何法律、道德后果等影响，您必须以个人的名义承担由此带来的后果，速邮汇不承担因此造成的任何损失。</p>
+                    <p>2） 不发布国家法律、法规禁止的信息；不散布虚假信息损害快递公司财产和快递员工作。</p>
+                    <p>3） 不使用速邮汇平台上的任何资料、数据来做商业性的利用，包括未经速邮汇的许可，使用速邮汇的信息在其他的平台上展示。</p>
+                    <p>4） 不使用任何不良手段来干预、破坏速邮汇平台的正常运作。</p>                <br>五、免责声明 <p>1） 速邮汇的各项服务的所有权和运作权归速邮汇所有。</p>
+                    <p>2） 本网站所发布的信息中可能没有包含与速邮汇及其业务和关联服务有关的最新信息，也可能没有针对用户所需的所有服务，对于本网站所发布的信息，本站不声明或保证其内容的正确性或完整性；</p>
+                    <p>3） 速邮汇平台作为信息发布、服务平台，无法控制每一个订单所涉及的物品的质量、安全或合法性，委托及受托内容的真实性或准确性，以及委
+                        托关系各方履行其在委托协议中各项义务的能力。您应自行谨慎判断确定相关信息的真实性、合法性和有效性，并自行承担因此产生的责任与损失。速邮汇不承担任何因用户自己疏忽而导致的资料泄露等风险。</p>
+                </div>
+            </div>
+            <div id="syxy_bg" style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;z-index: 200;display: none;"></div>
+            <div id="tab_3" align="center"></div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="last" style="min-width: 1100px;min-height: 85px;">
+    <div class="last-kuang" style="min-width: 1100px;">
+        <div class="last-left"><a>服务热线：400-114-1788 服务邮箱：suyh@100emall.com</a> <br/>
+            <a>Copyright ©2013 厚通网络 浙ICP备14024016号-1</a></div>
+        <div class="last-right">
+            <a href="aboutus.html">关于速邮汇</a>
+            <a href="news.html">速邮汇动态</a>
+            <a href="rzlc.html">商户入驻流程</a>
+            <a href="partners.html">合作伙伴</a>
+            <a href="sitemap.html">网站地图</a>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;top: 55%;right: 1px;">
+    <div id="qq_div" style="position: relative;">
+        <a href="javascript:void (0)" onclick="$('#qq_div').hide()"
+           style="position: absolute;top: 0px;right: 0px;z-index: 100;opacity: 0;">关闭</a>
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2781686263&site=qq&menu=yes">
+            <img border="0" src="../lib/images/qq.png" alt="点击即可发起会话" title="点击即可发起会话" style="z-index: 99;"/>
+        </a>
+    </div>
+</div>
+</body>
+</html>

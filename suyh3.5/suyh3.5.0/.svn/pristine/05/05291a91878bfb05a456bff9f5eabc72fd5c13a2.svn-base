@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtRoleRepository">
+
+	<!--查询所有的角色 -->
+	<select id="findAllRole" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto" resultType="cn.hotol.app.bean.dto.role.TdHtRoleDto">
+
+		select role.role_id, role.role_name, role.creater, role.create_time, role.province_id, role.city_id, role.region_id, role.divide_id
+		<if test="role_id == 1">
+			from td_ht_role role
+			WHERE  role_id!=1 and is_valid=0 and province_id=0 and city_id=0 and region_id=0 and divide_id=0
+		</if>
+		<if test="role_id != 1 and region_id==0">
+
+			from td_ht_role role,ts_ht_dict dict
+			WHERE  role_id!=1 and role.is_valid=0 and dict.status=0
+			<if test="province_id == 0">
+				and	dict.code_type="province" and dict.parent_id=0 and role.province_id=dict.dict_id and  role.city_id=0
+			</if>
+			<if test="province_id!=0 and city_id == 0">
+				and	dict.code_type="city" and dict.parent_id=#{province_id} and  role.city_id=dict.dict_id  and role.region_id=0
+			</if>
+			<if test="city_id!=0 and region_id == 0">
+				and	dict.code_type="area" and dict.parent_id=#{city_id} and role.region_id=dict.dict_id and role.divide_id=0
+			</if>
+
+		</if>
+		<if test="role_id != 1 and region_id!=0">
+			from td_ht_role role
+			WHERE  role_id!=1 and role.is_valid=0 and role.divide_id=#{divide_id}
+		</if>
+		ORDER BY create_time DESC
+	</select>
+
+	<!--通过角色id查询角色信息 -->
+	<select id="findRoleById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.role.TdHtRoleDto">
+		SELECT * FROM td_ht_role WHERE role_id=#{role_id}
+	</select>
+
+	<!--查询角色权限下的角色 -->
+	<select id="findRoleByJurisdiction" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.role.TdHtRoleDto">
+		SELECT * FROM td_ht_role WHERE role_id <![CDATA[ > ]]> #{role_id}
+	</select>
+
+	<!--添加角色-->
+	<insert id="insertRole" parameterType="cn.hotol.app.bean.dto.role.TdHtRoleDto" useGeneratedKeys="true" keyProperty="role_id">
+		INSERT  INTO td_ht_role (role_name,is_valid,creater,create_time,province_id,city_id,region_id,divide_id)
+		VALUES (#{role_name},#{is_valid},#{creater},now(),#{province_id},#{city_id},#{region_id},#{divide_id})
+	</insert>
+	<!--修改角色-->
+	<update id="updateRole" parameterType="cn.hotol.app.bean.dto.role.TdHtRoleDto">
+		UPDATE td_ht_role SET
+		role_name=#{role_name},is_valid=#{is_valid},province_id=#{province_id},city_id=#{city_id},
+		region_id=#{region_id},divide_id=#{divide_id}
+		WHERE role_id=#{role_id}
+	</update>
+	<!--修改角色不可用-->
+	<update id="updateRoleValid" parameterType="cn.hotol.app.bean.dto.role.TdHtRoleDto">
+		UPDATE td_ht_role SET  is_valid=#{is_valid}
+		WHERE role_id=#{role_id}
+	</update>
+</mapper>

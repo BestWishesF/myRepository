@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>大客户寄件</title>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="快递,速邮汇,寄快递,寄件,快递下单,电商件,智能快递,快递服务平台,互联网快递,批量寄件,快递前端一公里"/>
+    <meta name="description" content="速邮汇是杭州厚通网络科技有限公司旗下的网站，面向快递信息提供一站式的管理服务。旨在解决当前快递行业出现的效率低，
+    管理紊乱等问题。运用科学管理方法，更有针对性地完善快递在运输过程中落单、跑单的现象，提高快递运输的效率。同时支持在线手机查询，有独立的手机客户端随时
+    随地查快递。与多家快递公司合作，给予用户全面、便捷的快递查询服务，告别快递信息复杂、难找的困扰，为用户构建一个全新的快递管理平台。"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../lib/images/icon_32X32.ico"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../lib/js/md5.js"></script>
+    <script src="../lib/js/jquery-1.9.1.min.js"></script>
+    <script src="../lib/js/cookie.js"></script>
+    <script src="../lib/js/header.js"></script>
+    <script src="../lib/js/aes.js"></script>
+    <script src="../lib/js/mode-ecb.js"></script>
+    <script src="../lib/js/jquery.form.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/send.js"></script>
+    <script src="../lib/js/location.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link href="../lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../lib/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../lib/css/googFile/css.css"/>
+    <link rel="stylesheet" href="../lib/css/newMain.css"/>
+    <link rel="stylesheet" href="../lib/css/main.css"/>
+    <link rel="stylesheet" href="../lib/css/w13.css"/>
+    <link rel="stylesheet" href="../lib/css/custom.css"/>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css"/>
+</head>
+<body style="min-width: 1100px;">
+<div id="nav" class=""
+     style="position: absolute; top: 0px; width: 100%; background-color: rgb(0, 0, 0); height: 70px; min-width: 1100px;">
+    <div>
+        <div class="top-01">
+            <div class="top-001"><a>服务热线:</a><a style="font-size:18px;">400-114-1788</a></div>
+            <div class="top-002" style="width:55%;position: relative;margin-left: 50px;">
+                <div class="top-logo"><img src="../lib/images/logo.png"></div>
+                <div class="top-nav" style="margin-top: 10px;position: absolute; right: -50px;top: 10px;">
+                    <a href="index.html" style="padding: 8% 10px;">首页</a>
+                    <a id="send" href="login.html" style="padding: 8% 10px;">大客户寄件</a>
+                    <a href="http://www.hotol.cn/merchant/html/index.html#regView" target="_blank" style="padding: 8% 10px;color:darkorange;">商户入驻</a>
+                </div>
+            </div>
+            <div class="top-003" style="margin-right: 10px;">
+                <p id="profileRegion" style="font-size: 11px;margin-top: 10px;display: none;">
+                    <a id="a1"></a>
+                    <a href="javascript:void (0)" id="logoutLink">【退出】</a>
+                </p>
+                <div class="denglu">
+                    <a id="loginLink" href="login.html" style="display: none;">用户登录</a>
+                </div>
+                <div class="zhuce">
+                    <a id="regLink" href="register.html" style="display: none;">用户注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main" class="handeast" style="height:auto;">
+    <div>
+        <div class="top-01"></div>
+        <div class="handeast-01" style="margin-top: 60px;">
+            <div class="handeast-001" style="float: left;"><a>当前位置: 首页 &gt; 个人用户寄件 </a></div>
+        </div>
+        <div class="empBg" style="height: auto;width: 70%;margin-left: 15%;color: #ffffff;">
+            <div id="div1" style="width: 80%;margin-left: 10%;margin-top: 20px;">
+                <h3 style="font-size: 1.15em;border-bottom: solid 1px #b4b3b3;">发件信息</h3>
+                <div style="width: 100%;height: auto;margin-bottom: 15px;position: relative;">
+                    <label style="width: 130px;text-align: right;"><span style="color: red;">*</span>发件人姓名：</label>
+                    <select class="empInp" id="senderNameList"></select>
+                    <input type="hidden" id="add_id" value="0" />
+                    <input class="empInp" style="position: absolute;top: 0px;left: 134px;width: 47.9%;" placeholder="发件人姓名" id="senderName" type="text">
+                </div>
+                <div style="width: 100%;height: auto;margin-bottom: 15px;">
+                    <label style="width: 130px;text-align: right;"><span style="color: red;">*</span>发件人手机号：</label>
+                    <input class="empInp" id="senderMobileNo" maxlength="11" placeholder="发件人手机号" type="text">
+                </div>
+                <div style="width: 100%;height: auto;margin-bottom: 15px;">
+                    <label style="width: 130px;text-align: right;"><span style="color: red;">*</span>发件地址：</label>
+                    <select class="empInp" style="width: 15%;" id="senderProvince" data-id-prefix="sender"></select>
+                    <span style="margin-left: 1%;margin-right: 1%;">省</span>
+                    <select class="empInp" style="width: 17%;" id="senderCity" data-id-prefix="sender"></select>
+                    <span style="margin-left: 1%;margin-right: 1%;">市</span>
+                    <select class="empInp" style="width: 20%;" id="senderDistrict" data-id-prefix="sender"></select>
+                    <span style="margin-left: 1%;">区</span>
+                </div>
+                <div style="width: 100%;height: auto;margin-bottom: 15px;">
+                    <label style="width: 130px;text-align: right;"></label>
+                    <input class="empInp" maxlength="50" id="senderStreet" placeholder="详细地址" type="text">
+                </div>
+                <div style="width: 100%;height: auto;margin-bottom: 15px;position: relative;margin-top: 30px;">
+                    <label style="width: 130px;text-align: right;">快递公司：</label>
+                    <select class="empInp" id="providerName">
+                        <option value="0">请先选择发件地址</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 90%;margin-left: 5%;margin-top: 10px;">
+                <div style="padding-left: 180px;margin-bottom: 15px;color: red">* 如需批量上传收件信息，请先下载示例文件（文件大小不能大于2M）</div>
+                <div style="width: 100%;height: auto;margin-bottom: 15px;line-height: 30px;">
+                    <label style="width: 130px;text-align: right;"></label>
+                    <a style="color: red;margin-left: 50px" href="http://hotol.oss-cn-hangzhou.aliyuncs.com/app/data/config/%E6%89%B9%E9%87%8F%E4%B8%8B%E5%8D%95%E7%A4%BA%E4%BE%8B%E6%96%87%E4%BB%B6.xls">下载示例文件</a>
+                    <a style="color: red;margin-left: 30px" href="javascript:document.getElementById('file').click()">批量上传收件信息</a>
+                    <form id="uploadFile" action="/suyh/app/5/token/uploadExpFile" method="post" enctype="multipart/form-data" style="display: none">
+                        <input type="file" name="file" id="file"/>
+                    </form>
+                </div>
+            </div>
+            <div id="div3" style="width: 90%;margin-left: 5%;margin-top: 20px;">
+                <table id="table" style="width: 100%;">
+                    <tr style="height: 40px;line-height: 40px;background-color: #696969;color: #ffffff;">
+                        <th style="text-align: center;width: 145px;">订单编号</th>
+                        <th style="text-align: center;width: 80px;">姓名</th>
+                        <th style="text-align: center;width: 100px;">手机号</th>
+                        <th style="text-align: center;">地址</th>
+                        <th style="text-align: center;width: 80px;">重量(kg)</th>
+                        <th style="text-align: center;width: 120px;">货物名称</th>
+                        <th style="text-align: center;width: 120px;">操作</th>
+                    </tr>
+                    <tbody id="collects">
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 100%;text-align: center;margin-top: 10px;margin-bottom: 20px;height: 30px;line-height: 30px;">
+                <a id="quickVerifyNoSubmit" href="javascript:void (0)" style="background-color: #0da3e2;border: #0da3e2;padding: 5px 15px;color: black;">提交订单</a>
+            </div>
+            <div style="width: 100%;height: 80px;"></div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="last" style="min-width: 1100px;min-height: 85px;">
+    <div class="last-kuang" style="min-width: 1100px;">
+        <div class="last-left"><a>服务热线：400-114-1788 服务邮箱：suyh@100emall.com</a> <br/>
+            <a>Copyright ©2013 厚通网络 浙ICP备14024016号-1</a></div>
+        <div class="last-right">
+            <a href="aboutus.html">关于速邮汇</a>
+            <a href="news.html">速邮汇动态</a>
+            <a href="rzlc.html">商户入驻流程</a>
+            <a href="partners.html">合作伙伴</a>
+            <a href="sitemap.html">网站地图</a>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;top: 55%;right: 1px;">
+    <div id="qq_div" style="position: relative;">
+        <a href="javascript:void (0)" onclick="$('#qq_div').hide()"
+           style="position: absolute;top: 0px;right: 0px;z-index: 100;opacity: 0;">关闭</a>
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2781686263&site=qq&menu=yes">
+            <img border="0" src="../lib/images/qq.png" alt="点击即可发起会话" title="点击即可发起会话" style="z-index: 99;"/>
+        </a>
+    </div>
+</div>
+</body>
+</html>

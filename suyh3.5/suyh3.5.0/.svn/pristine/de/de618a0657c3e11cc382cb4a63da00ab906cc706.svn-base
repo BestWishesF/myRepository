@@ -1,0 +1,78 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security
+                    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <http auto-config="true" authentication-manager-ref="authenticationManager" use-expressions="true">
+        <intercept-url pattern="/auth/**" access="permitAll"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+<!--
+        <intercept-url pattern="/auth/**" access="ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/**" access="ROLE_GUEST"/>
+-->
+
+        <form-login login-page="/auth/login"
+                    default-target-url="/auth/loginSuccess"
+                    always-use-default-target="true"
+                    authentication-failure-url="/auth/loginFailed"/>
+        <logout logout-success-url="/html/index.html"/>
+        <remember-me key="_w13_remember_me_key"
+                     token-validity-seconds="1209600"
+                     data-source-ref="dataSource"
+                     user-service-ref="ldapUserService"/>
+    </http>
+
+    <beans:bean id="ldapUserService" class="org.springframework.security.ldap.userdetails.LdapUserDetailsService">
+        <beans:constructor-arg ref="ldapSearchBean"/>
+        <beans:constructor-arg ref="ldapAuthoritiesPopulator"/>
+    </beans:bean>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="ldapAuthProvider"/>
+    </authentication-manager>
+
+    <beans:bean class="org.springframework.security.ldap.DefaultSpringSecurityContextSource" id="ldapServer">
+        <beans:constructor-arg value="ldap://ldap.cisco.com:389/"/>  <!-- Hill debug: This item must be updated  -->
+    </beans:bean>
+
+    <beans:bean class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"
+                id="ldapAuthProvider">
+        <beans:constructor-arg ref="ldapBindAuthenticator"/>
+        <beans:constructor-arg ref="ldapAuthoritiesPopulator"/>
+    </beans:bean>
+
+    <beans:bean id="roleHierarchy"
+                class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <beans:property name="hierarchy">
+            <beans:value>
+                ROLE_SUPER_MAN > ROLE_PM
+                ROLE_SUPER_MAN > ROLE_QA_LEADER
+                ROLE_SUPER_MAN > ROLE_CLIENT_LEADER
+                ROLE_SUPER_MAN > ROLE_PAGE_LEADER
+                ROLE_PAGE_LEADER > ROLE_PAGE_DEV
+                ROLE_CLIENT_LEADER > ROLE_CLIENT_DEV
+                ROLE_QA_LEADER > ROLE_QA
+                ROLE_PAGE_DEV > ROLE_GUEST
+                ROLE_CLIENT_DEV > ROLE_GUEST
+                ROLE_QA > ROLE_GUEST
+                ROLE_GUEST > ROLE_ANONYMOUS
+            </beans:value>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean class="org.springframework.security.ldap.authentication.BindAuthenticator" id="ldapBindAuthenticator">
+        <beans:constructor-arg ref="ldapServer"/>
+        <beans:property name="userSearch" ref="ldapSearchBean"/>
+    </beans:bean>
+
+    <beans:bean class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch" id="ldapSearchBean">
+        <beans:constructor-arg value="ou=active, ou=employees, ou=people, o=cisco.com"/>   <!-- Hill debug: it must be updated. -->
+        <!-- login-search-base -->
+        <beans:constructor-arg value="(uid={0})"/>
+        <!-- login-search-filter -->
+        <beans:constructor-arg ref="ldapServer"/>
+    </beans:bean>
+</beans:beans>

@@ -1,0 +1,24 @@
+log4j.rootLogger=INFO,stdout,Console
+
+
+
+#### First appender writes to console
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%-5.5p:%d [ %c - %L ] - %m%n
+
+
+#### Second appender writes to a file
+log4j.appender.Console=org.apache.log4j.DailyRollingFileAppender
+#log4j.appender.Console.File=d\:\\log\\selfApp\\selfApp_info.log
+log4j.appender.Console.File=../log/selfApp_info_suyh.log
+
+log4j.appender.Console.Append=true
+log4j.appender.Console.Threshold=INFO
+log4j.appender.Console.DatePattern='.'yyyy-MM-dd
+log4j.appender.Console.layout=org.apache.log4j.PatternLayout
+log4j.appender.Console.layout.ConversionPattern=%5p:%d - %m%n
+
+
+
+

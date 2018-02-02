@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tsHtScoreTaskRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TsHtScoreTaskRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="taskService" class="cn.hotol.app.service.task.TaskServiceImpl">
+		<property name="tsHtScoreTaskRepository" ref="tsHtScoreTaskRepository"></property>
+	</bean>
+
+</beans>

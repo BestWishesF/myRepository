@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtFeedbackRepository">
+    <!-- 添加意见反馈 -->
+    <insert id="insertTdHtFeedback" parameterType="cn.hotol.app.bean.dto.feedback.TdHtFeedbackDto">
+		INSERT INTO  td_ht_feedback(user_id,user_cate,feed_content,feed_time,feed_phone)
+		   VALUES (
+		        #{user_id},#{user_cate},#{feed_content},now(),#{feed_phone}
+		   )
+	</insert>
+
+</mapper>

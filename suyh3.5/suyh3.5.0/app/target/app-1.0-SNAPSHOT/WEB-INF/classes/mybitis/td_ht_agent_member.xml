@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentMemberRepository">
+
+    <!--添加用户代理人关联信息 -->
+    <insert id="insertTdHtAgentMember" parameterType="cn.hotol.app.bean.dto.agent.member.TdHtAgentMemberDto" >
+        INSERT INTO td_ht_agent_member (memb_id,agent_id,register_reward,first_single_reward,regiter_time,first_single_time)
+        VALUES(#{memb_id},#{agent_id,},#{register_reward},#{first_single_reward},now(),now())
+    </insert>
+
+    <!--根据用户id查找用户代理人关联信息 -->
+    <select id="findTdHtAgentMemberDtoByMembId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.agent.member.TdHtAgentMemberDto">
+        SELECT agent_id,first_single_reward,agent_memb_id FROM td_ht_agent_member WHERE memb_id=#{memb_id}
+    </select>
+    <!--更新首单奖励时间 -->
+    <update id="updateFirstSingleTime" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent_member SET first_single_time=now() WHERE agent_memb_id=#{agent_memb_id}
+    </update>
+
+    <!--查询代理人推广的数量 -->
+    <select id="findAgentExtensionNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_agent_member WHERE agent_id=#{agent_id}
+        <if test="regiter_time != null and regiter_time != ''">
+            AND TO_DAYS(regiter_time)=TO_DAYS(NOW())
+        </if>
+    </select>
+</mapper>

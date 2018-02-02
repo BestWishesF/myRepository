@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
+       default-lazy-init="true">
+
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages</value>
+                <value>messages_portal</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/>
+        <property name="basePackage" value="cn.hotol.wechat.repository"/>
+        <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+        <property name="processPropertyPlaceHolders" value="true"/>
+    </bean>
+    <!--
+        <bean class="com.hotoltol.w13.domain.service.service.impl.PriceProviderServiceImpl">
+            <property name="priceCalculatorMap">
+                <map key-type="java.lang.Long">
+                    <entry key="1">
+                        <bean class="com.hotoltol.w13.provider.DummyPriceCalculator1"/>
+                    </entry>
+                    <entry key="2">
+                        <bean class="com.hotoltol.w13.provider.DummyPriceCalculator2"/>
+                    </entry>
+                    <entry key="3">
+                        <bean class="com.hotoltol.w13.provider.DummyPriceCalculator3"/>
+                    </entry>
+                </map>
+            </property>
+        </bean>
+    -->
+    <!--<bean id="mailprocessor" class="com.hotoltol.w13.domain.service.mail.RegexMailProcessorImpl">-->
+    <!--<property name="tmplatePath" value="/mail_template/" />-->
+    <!--</bean>    -->
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.ym.163.com"/>
+        <property name="port" value="994"/>
+        <property name="username" value="support@100emall.com"/>
+        <property name="password" value="P@ss123"/>
+        <property name="protocol" value="smtps"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtps.auth">true</prop>
+                <prop key="mail.smtp.ssl.enable">true</prop>
+                <prop key="mail.transport.protocol">smtps</prop>
+                <prop key="mail.smtps.timeout">25000</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <context:component-scan base-package="cn.hotol.wechat.service">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+    <!--<context:component-scan base-package="com.hotol.w13.external">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>-->
+
+    <context:component-scan base-package="cn.hotol.wechat.toolutil.modelutil">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>
+
+</beans>

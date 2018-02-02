@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentApplyRepository">
+
+    <!--添加代理人申请 -->
+    <insert id="insertAgentApply" parameterType="cn.hotol.app.bean.dto.apply.TdHtAgentApplyDto">
+        INSERT INTO td_ht_agent_apply (agent_id,agent_head_portrait,agent_name,agent_id_number,apply_id_front,apply_id_back,agent_pay_type,agent_pay_account,
+        apply_state,agent_province,agent_city,agent_region,agent_address,apply_fail_reason,divide_id)
+        VALUES (#{agent_id},#{agent_head_portrait},#{agent_name},#{agent_id_number},#{apply_id_front},#{apply_id_back},#{agent_pay_type},#{agent_pay_account},
+        #{apply_state},#{agent_province},#{agent_city},#{agent_region},#{agent_address},#{apply_fail_reason},#{divide_id})
+    </insert>
+
+    <!--查询代理人失败原因 -->
+    <select id="findApplyInfoByAgent" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.apply.TdHtAgentApplyDto">
+        SELECT apply_fail_reason FROM td_ht_agent_apply WHERE agent_id=#{agent_id} AND apply_state=3 ORDER BY apply_id DESC LIMIT 0,1
+    </select>
+
+</mapper>

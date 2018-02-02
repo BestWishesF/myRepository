@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtArticleRepository">
+
+    <!--查找显示的文章 -->
+    <select id="findIndividualArticle" resultType="cn.hotol.app.bean.dto.article.TsHtArticleDto" >
+        SELECT arti_id,arti_name,arti_content FROM ts_ht_article WHERE menu_id=0 AND is_valid=0
+    </select>
+
+    <!--查找所有文章  数量-->
+    <select id="findArticleSize" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+        SELECT  COUNT(*) FROM ts_ht_article WHERE is_valid=#{is_valid}
+    </select>
+    <!-- 查找所有文章 分页-->
+    <select id="findArticlePage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.article.TsHtArticleBeanDto" >
+        SELECT  * FROM ts_ht_article WHERE is_valid=#{is_valid}
+        ORDER BY arti_sort DESC,arti_id desc
+        limit #{currentPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+    <!--根据id查找文章-->
+    <select id="findArticleById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.article.TsHtArticleBeanDto" >
+        SELECT  * FROM ts_ht_article WHERE arti_id=#{arti_id}
+    </select>
+    <!--添加文章-->
+    <insert id="insertArticle" parameterType="cn.hotol.app.bean.dto.article.TsHtArticleBeanDto">
+        INSERT  INTO ts_ht_article (arti_name,menu_id,arti_content,arti_sort,is_valid,creater,cret_date,modifier,mod_date)
+        VALUES (#{arti_name},#{menu_id},#{arti_content},#{arti_sort},#{is_valid},#{creater},now(),#{creater},now())
+    </insert>
+    <!--更新文章信息-->
+    <update id="updateArticle" parameterType="cn.hotol.app.bean.dto.article.TsHtArticleBeanDto">
+        UPDATE ts_ht_article SET
+        arti_name=#{arti_name},menu_id=#{menu_id},arti_content=#{arti_content},arti_sort=#{arti_sort},
+        modifier=#{modifier},is_valid=#{is_valid},mod_date=now()
+        WHERE arti_id=#{arti_id}
+    </update>
+    <!--更新文章信息-->
+    <update id="updateArticleValid" parameterType="cn.hotol.app.bean.dto.article.TsHtArticleBeanDto">
+        UPDATE ts_ht_article SET  modifier=#{modifier},is_valid=#{is_valid},mod_date=now()
+        WHERE arti_id=#{arti_id}
+    </update>
+</mapper>

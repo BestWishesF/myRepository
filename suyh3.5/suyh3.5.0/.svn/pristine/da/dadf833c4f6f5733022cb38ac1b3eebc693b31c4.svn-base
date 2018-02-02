@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtThirdRepository">
+	<!-- 查询第三方配置 -->
+	<select id="findTsHtThird" resultType="cn.hotol.app.bean.dto.thirdparty.TsHtThirdDto">
+    	SELECT third_id,appid,appsecret,accesstoken,accesstokentime,jsticket,jstickettime,party_type,pay_mchid,pay_partnerkey FROM ts_ht_third
+    </select>
+</mapper>

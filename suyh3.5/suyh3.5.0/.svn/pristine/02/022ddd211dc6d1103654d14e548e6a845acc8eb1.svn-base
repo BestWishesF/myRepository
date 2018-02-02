@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtExpressOpenRegionRepository">
+
+    <!--查找所有的快递公司开通区域 -->
+    <select id="findExpressOpenRegion" resultType="cn.hotol.app.bean.dto.courier.CourierDto" >
+        SELECT eoa_id,region_id,express_id FROM ts_ht_express_open_region WHERE state=0 GROUP BY region_id
+    </select>
+    <!-- 根据快递公司查找所有的快递公司开通区域数量 -->
+    <select id="findExpOpenRegionByExpIdSize" parameterType="java.util.Map"  resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ts_ht_express_open_region WHERE state=0 and express_id=#{express_id}
+    </select>
+    <!--   根据快递公司查找所有的快递公司开通区域分页-->
+    <select id="findExpOpenRegionByExpIdPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        SELECT * FROM ts_ht_express_open_region WHERE state=0 and express_id=#{express_id} ORDER BY eoa_id DESC
+
+        limit #{currentPage},#{pageSize}
+    </select>
+    <!--   添加快递公司开通区域-->
+    <insert id="insertExpOpenRegion" parameterType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        INSERT INTO ts_ht_express_open_region(state,express_id,region_id,eoa_type,first_single_bonus,more_single_bonus,subsidy_weight,subsidy_bonus)
+        VALUES (#{state},#{express_id},#{region_id},#{eoa_type},#{first_single_bonus},#{more_single_bonus},#{subsidy_weight},#{subsidy_bonus})
+    </insert>
+    <!--   修改快递公司开通区域-->
+    <update id="updateExpOpenRegion" parameterType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        UPDATE ts_ht_express_open_region set state=#{state}
+        WHERE eoa_id=#{eoa_id}
+    </update>
+    <!--   根据相关信息查找快递开通区域-->
+    <select id="findExpOpenRegionByBean" parameterType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto" resultType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        SELECT * FROM ts_ht_express_open_region WHERE express_id=#{express_id} and region_id=#{region_id}
+    </select>
+
+    <!--查找所有的开通区域 -->
+    <select id="findAllExpressOpenRegion" resultType="cn.hotol.app.bean.dto.courier.CourierDto" >
+        SELECT * FROM ts_ht_express_open_region WHERE state=0
+    </select>
+
+    <!--根据id查询快递开通信息 -->
+    <select id="findExpOpenRegByEoaId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        SELECT * FROM ts_ht_express_open_region WHERE eoa_id=#{eoa_id}
+    </select>
+
+    <!--查询该城市开通寄件服务区 -->
+    <select id="findRegOpenNumByCity" parameterType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto" resultType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        SELECT a.* FROM ts_ht_express_open_region a,ts_ht_dict b WHERE a.region_id=b.dict_id AND a.express_id=#{express_id} AND b.parent_id=#{region_id}
+    </select>
+
+    <!--修改开通区域信息 -->
+    <update id="updateRegOpenInfoById" parameterType="cn.hotol.app.bean.dto.express.region.TsHtExpressOpenRegionDto">
+        UPDATE ts_ht_express_open_region SET eoa_type=#{eoa_type},first_single_bonus=#{first_single_bonus},more_single_bonus=#{more_single_bonus},
+        subsidy_weight=#{subsidy_weight},subsidy_bonus=#{subsidy_bonus} WHERE eoa_id=#{eoa_id}
+    </update>
+</mapper>

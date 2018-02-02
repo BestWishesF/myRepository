@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtCommentRepository">
+
+    <!--保存用户评价记录 -->
+    <insert id="insertComment" parameterType="cn.hotol.app.bean.dto.comment.TdHtCommentDto">
+        INSERT INTO td_ht_comment (memb_id,agent_id,com_grade,com_content,exp_ord_id,com_time,com_month)
+        VALUES(#{memb_id},#{agent_id},#{com_grade},#{com_content},#{exp_ord_id},#{com_time},#{com_month})
+    </insert>
+
+    <!--查询代理人评价总分 -->
+    <select id="findAgentComment" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.comment.TdHtCommentDto">
+        SELECT com_grade FROM td_ht_comment WHERE agent_id=#{agent_id}
+    </select>
+</mapper>

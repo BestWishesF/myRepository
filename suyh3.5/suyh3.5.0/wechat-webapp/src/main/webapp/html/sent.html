@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改寄件地址</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="../css/add.css" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IstZcZGxIWMgybcvDntmTbvM"></script>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script src="../js/lib/aes.js"></script>
+    <script src="../js/lib/header.js"></script>
+    <script src="../js/lib/mode-ecb.js"></script>
+    <script type="text/javascript" src="../js/jquery.form.js"></script>
+    <script type="text/javascript" src="../js/md5.js"></script>
+    <script type="text/javascript" src="../js/lib/dialog.js"></script>
+    <script type="text/javascript" src="../js/lib/mobile-select-area.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+<body>
+<!----------------------------------header-------------------------------------->
+<header class="head">
+    <a href="sender.html"><img src="../img/order/1.png"></a>
+    <p>修改寄件地址</p>
+    <span class="buont btn">保存</span>
+</header>
+<!----------------------------------site-------------------------------------->
+<section class="site">
+    <div>
+        <span class="bon">名字：</span><input class="search-input input"  id="name" value="" type="text"/>
+    </div>
+    <div>
+        <span class="bon">电话：</span><input class="input" type="text" id="phone" value=""/>
+    </div>
+    <div>
+        <div class="content-block">
+            <a onclick="jump()"><span class="bon">地区：</span><input class="input" id="txt_area" type="text" readonly="readonly" placeholder="请选择省市区"  value="">
+               <input type="hidden" id="province" value="0"/>
+               <input type="hidden" id="city" value="0"/>
+               <input type="hidden" id="region" value="0"/>
+           </a>
+        </div>
+    </div>
+    <div>
+        <input type="text" class="input" id="add_street" value="" placeholder="请详细到门牌号" />
+    </div>
+    <div class="seemed">
+        <input id="c" type="checkbox" class="al-toggle-button " value="">
+        <label for="c" class="radio" id="lal">保存为新地址</label>
+    </div>
+</section>
+<!----------------------------------footer-------------------------------------->
+<footer>
+    <button  id="preserved" class="btn">保存</button>
+</footer>
+</body>
+<script src="../js/judge.js"></script>
+<script src="../js/sent.js"></script>
+</html>

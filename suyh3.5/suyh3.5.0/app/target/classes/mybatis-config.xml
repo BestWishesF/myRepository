@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+
+			 <!--打印查询语句 -->
+			<setting name="logImpl" value="STDOUT_LOGGING" />
+
+		        <!-- 对于批量更新操作缓存SQL以提高性能 -->
+		         <setting name="defaultExecutorType" value="SIMPLE" />
+
+    </settings>
+    <mappers>
+        <mapper resource="mybitis/td_ht_member.xml"/>
+        <mapper resource="mybitis/td_ht_login_log.xml"/>
+        <mapper resource="mybitis/td_ht_express_search.xml"/>
+        <mapper resource="mybitis/td_ht_express_order.xml"/>
+        <mapper resource="mybitis/td_ht_express_collect.xml"/>
+        <mapper resource="mybitis/td_ht_memb_address.xml"/>
+        <mapper resource="mybitis/ts_ht_dict.xml" />
+        <mapper resource="mybitis/tw_sms_send_his.xml" />
+        <mapper resource="mybitis/td_ht_memb_score.xml" />
+        <mapper resource="mybitis/td_ht_comment.xml" />
+        <mapper resource="mybitis/td_ht_coupon.xml" />
+        <mapper resource="mybitis/td_ht_memb_found_change.xml" />
+        <mapper resource="mybitis/td_ht_feedback.xml" />
+        <mapper resource="mybitis/td_ht_agent.xml" />
+        <mapper resource="mybitis/td_ht_memb_score_goods.xml" />
+        <mapper resource="mybitis/td_ht_memb_score_task.xml" />
+        <mapper resource="mybitis/td_ht_member_invite.xml" />
+        <mapper resource="mybitis/td_ht_agent_apply.xml" />
+        <mapper resource="mybitis/td_ht_agent_found_change.xml" />
+        <mapper resource="mybitis/ts_ht_third.xml" />
+        <mapper resource="mybitis/td_ht_memb_third_login.xml" />
+        <mapper resource="mybitis/td_ht_grid_change.xml" />
+        <mapper resource="mybitis/ts_ht_express_open_number.xml" />
+        <mapper resource="mybitis/ts_ht_open_number.xml" />
+        <mapper resource="mybitis/td_ht_memb_month_bill.xml" />
+        <mapper resource="mybitis/td_ht_green_mail.xml" />
+        <mapper resource="mybitis/td_ht_app_update.xml" />
+        <mapper resource="mybitis/td_ht_agent_member.xml" />
+        <mapper resource="mybitis/td_ht_memb_invoice.xml" />
+        <mapper resource="mybitis/td_ht_memb_invoice_history.xml" />
+    </mappers>
+
+</configuration>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtGreenMailRepository">
+
+    <!--查询活动记录数量 -->
+    <select id="findMembGreenMailSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_green_mail WHERE state=#{state}
+        <if test="star_time != null and star_time != ''">
+            AND done_time <![CDATA[ >= ]]> #{star_time}
+        </if>
+        <if test="end_time != null and end_time != ''">
+            AND done_time <![CDATA[ < ]]> #{end_time}
+        </if>
+        <if test="phone != null and phone != ''">
+            AND phone LIKE concat('%',#{phone}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            AND `name` LIKE concat('%',#{name}, '%')
+        </if>
+    </select>
+
+    <!--分页查询活动记录 -->
+    <select id="findMembGreenMailPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.green.TdHtGreenMailDto">
+        SELECT * FROM td_ht_green_mail WHERE state=#{state}
+        <if test="star_time != null and star_time != ''">
+            AND done_time <![CDATA[ >= ]]> #{star_time}
+        </if>
+        <if test="end_time != null and end_time != ''">
+            AND done_time <![CDATA[ < ]]> #{end_time}
+        </if>
+        <if test="phone != null and phone != ''">
+            AND phone LIKE concat('%',#{phone}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            AND `name` LIKE concat('%',#{name}, '%')
+        </if>
+        ORDER BY done_time DESC limit #{currentPage},#{pageSize}
+    </select>
+
+    <!--通过id查询用户活动记录信息 -->
+    <select id="findGreenMailById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.green.TdHtGreenMailDto">
+        SELECT * FROM td_ht_green_mail WHERE green_mail_id=#{green_mail_id}
+    </select>
+
+    <!--修改用户活动记录状态 -->
+    <update id="updateGreenMailState" parameterType="cn.hotol.app.bean.dto.green.TdHtGreenMailDto">
+        UPDATE td_ht_green_mail SET state=#{state},give_green_time=#{give_green_time},give_reward_time=#{give_reward_time} WHERE green_mail_id=#{green_mail_id}
+    </update>
+
+</mapper>

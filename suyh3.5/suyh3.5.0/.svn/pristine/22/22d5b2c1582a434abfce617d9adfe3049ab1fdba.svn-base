@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tsHtDictRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TsHtDictRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+
+	<bean id="locationService" class="cn.hotol.app.service.location.LocationServiceImpl">
+		<property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+	</bean>
+
+	<bean id="dictionaryService" class="cn.hotol.app.service.dictionary.DictionaryServiceImpl">
+		<property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+		<property name="tsHtExpressOpenRegionRepository" ref="tsHtExpressOpenRegionRepository"></property>
+		<property name="tdHtAdminDivideRepository" ref="tdHtAdminDivideRepository"></property>
+	</bean>
+
+</beans>

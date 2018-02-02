@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembInvoiceHistoryRepository">
+
+    <!--查询用户开票记录数量 -->
+    <select id="findMembInvHisSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_invoice_history a,td_ht_memb_invoice b WHERE a.memb_ivc_id=b.memb_ivc_id AND a.memb_id=#{memb_id}
+    </select>
+
+    <!--分页查询用户开票记录 -->
+    <select id="findMembInvHisPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.member.invoice.TdHtMembInvoiceHistoryDto">
+        SELECT a.*,b.add_name,b.add_mobile_phone,b.add_province,b.add_city,b.add_region,b.add_detail_address
+        FROM td_ht_memb_invoice_history a,td_ht_memb_invoice b WHERE a.memb_ivc_id=b.memb_ivc_id AND
+        a.memb_id=#{memb_id} ORDER BY FIELD(a.state,1,0,2,3) ASC,a.memb_ivc_his_time DESC LIMIT #{currentPage},#{pageSize}
+    </select>
+
+    <!--按条件查询用户开票记录数量 -->
+    <select id="searchMembInvHisSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_invoice_history a,td_ht_memb_invoice b WHERE a.memb_ivc_id=b.memb_ivc_id AND a.memb_id=#{memb_id}
+        <if test="add_mobile_phone != null and add_mobile_phone != ''">
+            AND b.add_mobile_phone LIKE concat('%',#{add_mobile_phone}, '%')
+        </if>
+        <if test="state != null and state != ''">
+            AND a.state=#{state}
+        </if>
+    </select>
+
+    <!--按条件分页查询用户开票记录 -->
+    <select id="searchMembInvHisPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.member.invoice.TdHtMembInvoiceHistoryDto">
+        SELECT a.*,b.add_name,b.add_mobile_phone,b.add_province,b.add_city,b.add_region,b.add_detail_address
+        FROM td_ht_memb_invoice_history a,td_ht_memb_invoice b WHERE a.memb_ivc_id=b.memb_ivc_id AND a.memb_id=#{memb_id}
+        <if test="add_mobile_phone != null and add_mobile_phone != ''">
+            AND b.add_mobile_phone LIKE concat('%',#{add_mobile_phone}, '%')
+        </if>
+        <if test="state != null and state != ''">
+            AND a.state=#{state}
+        </if>
+        ORDER BY
+        <if test="state == ''">
+            FIELD(a.state,1,0,2,3) ASC,
+        </if>
+        a.memb_ivc_his_time DESC LIMIT #{currentPage},#{pageSize}
+    </select>
+
+    <!--通过用户开票信息id查询开票历史记录 -->
+    <select id="findIvcHisByIvcId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.member.invoice.TdHtMembInvoiceHistoryDto">
+        SELECT * FROM td_ht_memb_invoice_history WHERE memb_ivc_id=#{memb_ivc_id}
+    </select>
+
+    <!--修改用户开票历史记录状态 -->
+    <update id="updateIvcHisState" parameterType="cn.hotol.app.bean.dto.member.invoice.TdHtMembInvoiceHistoryDto">
+        UPDATE td_ht_memb_invoice_history SET state=#{state},memb_ivc_express_id=#{memb_ivc_express_id},memb_ivc_express_number=#{memb_ivc_express_number} WHERE memb_ivc_his_id=#{memb_ivc_his_id}
+    </update>
+
+</mapper>

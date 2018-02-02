@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembMonthBillRepository">
+
+    <!--查询用户未支付的非本月月结账单记录 -->
+    <select id="findMemberNoPayNotMonthBill" parameterType="cn.hotol.app.bean.dto.monthbill.TdHtMembMonthBillDto" resultType="cn.hotol.app.bean.dto.monthbill.TdHtMembMonthBillDto">
+        SELECT * FROM td_ht_memb_month_bill WHERE memb_id=#{memb_id} AND state=1 AND memb_mon_bill_month!=#{memb_mon_bill_month}
+    </select>
+
+    <!--通过月结账单id查询账单信息 -->
+    <select id="findMemberMonthBillById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.monthbill.TdHtMembMonthBillDto">
+        SELECT * FROM td_ht_memb_month_bill WHERE memb_mon_bill_id=#{memb_mon_bill_id}
+    </select>
+
+    <!--修改待支付月结账单信息 -->
+    <update id="updateWaitPayBill" parameterType="cn.hotol.app.bean.dto.monthbill.TdHtMembMonthBillDto">
+        UPDATE td_ht_memb_month_bill SET memb_mon_bill_number=#{memb_mon_bill_number},pay_channel=#{pay_channel},
+        memb_mon_bill_pay_time=#{memb_mon_bill_pay_time} WHERE memb_mon_bill_id=#{memb_mon_bill_id}
+    </update>
+
+    <!--支付成功修改月结账单 -->
+    <update id="updatePayMonthBill" parameterType="cn.hotol.app.bean.dto.monthbill.TdHtMembMonthBillDto">
+        UPDATE td_ht_memb_month_bill SET memb_mon_bill_pay_amount=#{memb_mon_bill_pay_amount},
+        state=#{state} WHERE memb_mon_bill_id=#{memb_mon_bill_id}
+    </update>
+
+    <!--查询用户月结消费数量 -->
+    <select id="findMemberMonthBillSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_month_bill WHERE memb_id=#{memb_id}
+    </select>
+
+    <!--分页查询用户月结消费记录 -->
+    <select id="findMemberMonthBillPage" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="cn.hotol.app.bean.dto.monthbill.ConsumptionRecordDto">
+        SELECT * FROM td_ht_memb_month_bill WHERE memb_id=#{id} ORDER BY memb_mon_bill_time ASC ${limit_str}
+    </select>
+
+    <!--保存新的月结账单 -->
+    <insert id="insertMemberMonthBill" parameterType="cn.hotol.app.bean.dto.monthbill.TdHtMembMonthBillDto">
+        INSERT INTO td_ht_memb_month_bill
+        (memb_id,memb_mon_bill_amount,memb_mon_bill_pay_amount,memb_mon_bill_number,memb_mon_bill_time,
+        memb_mon_bill_pay_time,state,memb_mon_bill_month,pay_channel)
+        VALUES
+        (#{memb_id},#{memb_mon_bill_amount},#{memb_mon_bill_pay_amount},#{memb_mon_bill_number},#{memb_mon_bill_time},
+        #{memb_mon_bill_pay_time},#{state},#{memb_mon_bill_month},#{pay_channel})
+    </insert>
+
+</mapper>

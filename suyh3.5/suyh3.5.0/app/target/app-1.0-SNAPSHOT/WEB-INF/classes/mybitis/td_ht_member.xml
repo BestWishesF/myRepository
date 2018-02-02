@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMemberRepository">
+
+    <!-- 根据手机号码查找用户信息 -->
+    <select id="findMemberByMembPhone" parameterType="java.lang.String"
+            resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT * from td_ht_member WHERE memb_phone=#{memb_phone}
+    </select>
+
+    <!-- 更新用户token,推送标示,推送类别 -->
+    <update id="updateMemberLogin" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member set token=#{token} ,push_token=#{push_token} ,push_type=#{push_type},
+        device_number=#{device_number},app_version=#{app_version},memb_register_longitude=#{memb_register_longitude},
+        memb_register_latitude=#{memb_register_latitude} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--根据推送信息查询用户id -->
+    <select id="findMemberIdByPush" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto"
+            resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT memb_id,push_token FROM td_ht_member WHERE push_token=#{push_token} AND push_type=#{push_type}
+    </select>
+
+    <!--更新用户已存在的推送信息 -->
+    <update id="updateExistingPushToken" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET push_token=#{push_token} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--根据手机号查询用户id和是否锁定 -->
+    <select id="findMebIdAndLockByPhone" parameterType="java.lang.String"
+            resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT memb_id,memb_islock,memb_password FROM td_ht_member WHERE memb_phone=#{memb_phone}
+    </select>
+
+    <!--保存新的注册用户 -->
+    <insert id="insertMember" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto" useGeneratedKeys="true"
+            keyProperty="memb_id">
+        INSERT INTO td_ht_member
+        (memb_phone,memb_password,memb_sex,memb_birthday,memb_nick_name,memb_head_portrait,memb_register_time,memb_register_month,
+        memb_balance,memb_name,memb_id_number,memb_islock,memb_score,memb_invite_code,memb_role,token,push_token,push_type,channel_id,
+        memb_register_client,memb_register_longitude,memb_register_latitude,memb_register_region,device_number,app_version,divide_id)
+        VALUES (#{memb_phone},#{memb_password},#{memb_sex},#{memb_birthday},#{memb_nick_name},#{memb_head_portrait},#{memb_register_time},
+        #{memb_register_month},#{memb_balance},#{memb_name},#{memb_id_number},#{memb_islock},#{memb_score},#{memb_invite_code},#{memb_role},
+        #{token},#{push_token},#{push_type},#{channel_id},#{memb_register_client},#{memb_register_longitude},#{memb_register_latitude},
+        #{memb_register_region},#{device_number},#{app_version},divide_id);
+    </insert>
+
+    <!--修改用户密码 -->
+    <update id="updateMemberPwd" parameterType="cn.hotol.app.bean.dto.member.MemberPwdDto">
+        UPDATE td_ht_member SET memb_password=#{memb_password} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--修改用户信息 -->
+    <update id="updatePersonalInfo" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_sex=#{memb_sex},memb_birthday=#{memb_birthday},memb_nick_name=#{memb_nick_name} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--修改用户积分信息 -->
+    <update id="updateMembScore" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_score=#{memb_score} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--查询用户表数据总数 -->
+    <select id="findMebCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_member WHERE memb_islock=1
+    </select>
+
+    <!--根据id查询积分小于指定用户积分的数据总数 -->
+    <select id="findMebCountByScore" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_member WHERE memb_score <![CDATA[ < ]]> ${memb_score} AND memb_islock=1
+    </select>
+
+    <!--根据用户id查找用户余额 -->
+    <update id="updateMemberBanlance" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_balance=#{memb_balance} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--通过生成的邀请码查询存在条数 -->
+    <select id="findMembNumByInvite" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_member WHERE memb_invite_code=#{memb_invite_code}
+    </select>
+
+    <!--修改用户的邀请码 -->
+    <update id="updateMembInviteCode" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_invite_code=#{memb_invite_code} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--根据id查询积分小于指定用户积分的数据总数 -->
+    <select id="findMemberBanlance" parameterType="java.lang.String"
+            resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT memb_id,memb_balance,token,memb_score FROM td_ht_member WHERE  memb_id= #{memb_id}
+    </select>
+
+    <!--修改用户头像 -->
+    <update id="updateMembHeadPortrait" parameterType="cn.hotol.app.bean.dto.member.MemberInfoDto">
+        UPDATE td_ht_member SET memb_head_portrait=#{memb_head_portrait} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--根据用户id查找用户余额和积分 -->
+    <update id="updateMemberBanlanceAndScore" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_balance=#{memb_balance},memb_score=#{memb_score} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--查询用户的推送标识 -->
+    <select id="findPushInfoByMembId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.push.PushDto">
+        SELECT push_type,push_token,app_version FROM td_ht_member WHERE memb_id=#{memb_id}
+    </select>
+
+    <!--通过id查询用户信息 -->
+    <select id="findMembByMembId" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT * FROM td_ht_member WHERE memb_id=#{memb_id}
+    </select>
+
+    <!--通过用户第三方登录信息更新用户信息 -->
+    <update id="updateMembThirdInfo" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_head_portrait=#{memb_head_portrait},memb_sex=#{memb_sex},memb_nick_name=#{memb_nick_name},
+        token=#{token} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--第三方绑定手机号 -->
+    <update id="updateMemberBindingPhone" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_phone=#{memb_phone},memb_register_longitude=#{memb_register_longitude},device_number=#{device_number},app_version=#{app_version},
+        memb_register_latitude=#{memb_register_latitude},memb_register_region=#{memb_register_region},divide_id=#{divide_id} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--删除用户信息 -->
+    <delete id="deleteThirdMemberInfo" parameterType="java.lang.Integer">
+        DELETE FROM td_ht_member WHERE memb_id=#{memb_id}
+    </delete>
+
+    <!--修改注册用户信息 -->
+    <update id="updateRegMember" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_phone=#{memb_phone},memb_password=#{memb_password},memb_register_time=#{memb_register_time},app_version=#{app_version},
+        channel_id=#{channel_id},memb_islock=#{memb_islock},memb_register_client=#{memb_register_client},memb_register_longitude=#{memb_register_longitude},
+        memb_register_latitude=#{memb_register_latitude},memb_register_region=#{memb_register_region},memb_register_month=#{memb_register_month},divide_id=#{divide_id},
+        memb_score=#{memb_score},token=#{token},push_token=#{push_token},push_type=#{push_type},device_number=#{device_number} WHERE memb_id=#{memb_id}
+    </update>
+
+    <!--通过用户角色查询不同角色用户集合 -->
+    <select id="findMemberByRole" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT * FROM td_ht_member WHERE memb_role=#{memb_role}
+    </select>
+
+    <!--修改用户设备号 -->
+    <update id="updateMembDevice" parameterType="java.lang.String">
+        UPDATE td_ht_member SET device_number='' WHERE device_number=#{device_number}
+    </update>
+
+</mapper>

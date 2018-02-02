@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>速邮汇</title>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="快递,速邮汇,寄快递,寄件,快递下单,电商件,智能快递,快递服务平台,互联网快递,批量寄件,快递前端一公里"/>
+    <meta name="description" content="速邮汇是杭州厚通网络科技有限公司旗下的网站，面向快递信息提供一站式的管理服务。旨在解决当前快递行业出现的效率低，
+    管理紊乱等问题。运用科学管理方法，更有针对性地完善快递在运输过程中落单、跑单的现象，提高快递运输的效率。同时支持在线手机查询，有独立的手机客户端随时
+    随地查快递。与多家快递公司合作，给予用户全面、便捷的快递查询服务，告别快递信息复杂、难找的困扰，为用户构建一个全新的快递管理平台。"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../lib/images/icon_32X32.ico"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../lib/js/md5.js"></script>
+    <script src="../lib/js/jquery-1.9.1.min.js"></script>
+    <script src="../lib/js/cookie.js"></script>
+    <script src="../lib/js/header.js"></script>
+    <script src="../lib/js/aes.js"></script>
+    <script src="../lib/js/mode-ecb.js"></script>
+    <script src="../lib/js/jquery.form.js"></script>
+    <script src="js/common.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link href="../lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../lib/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../lib/css/googFile/css.css"/>
+    <link rel="stylesheet" href="../lib/css/newMain.css"/>
+    <link rel="stylesheet" href="../lib/css/main.css"/>
+    <link rel="stylesheet" href="../lib/css/w13.css"/>
+    <link rel="stylesheet" href="../lib/css/custom.css"/>
+</head>
+<body style="min-width: 1100px;">
+<div id="nav" class=""
+     style="position: absolute; top: 0px; width: 100%; background-color: rgb(0, 0, 0); height: 70px; min-width: 1100px;">
+    <div>
+        <div class="top-01">
+            <div class="top-001"><a>服务热线:</a><a style="font-size:18px;">400-114-1788</a></div>
+            <div class="top-002" style="width:55%;position: relative;margin-left: 50px;">
+                <div class="top-logo"><img src="../lib/images/logo.png"></div>
+                <div class="top-nav" style="margin-top: 10px;position: absolute; right: -50px;top: 10px;">
+                    <a href="index.html" style="padding: 8% 10px;">首页</a>
+                    <a id="send" href="login.html" style="padding: 8% 10px;">大客户寄件</a>
+                    <a href="http://www.hotol.cn/merchant/html/index.html#regView" target="_blank"
+                       style="padding: 8% 10px;color:darkorange;">商户入驻</a>
+                </div>
+            </div>
+            <div class="top-003" style="margin-right: 10px;">
+                <p id="profileRegion" style="font-size: 11px;margin-top: 10px;display: none;">
+                    <a id="a1"></a>
+                    <a href="javascript:void (0)" id="logoutLink">【退出】</a>
+                </p>
+                <div class="denglu">
+                    <a id="loginLink" href="login.html" style="display: none;">用户登录</a>
+                </div>
+                <div class="zhuce">
+                    <a id="regLink" href="register.html" style="display: none;">用户注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main" class="hidenest">
+    <div>
+        <div class="top-01" style="margin-top: 60px;"></div>
+        <div class="handeast-01">
+            <div class="handeast-001" style="float: left;"><a>当前位置: 首页 &gt; 帮助中心 </a></div>
+        </div>
+        <div class="container">
+            <div class="page_warp">
+                <div class="help_center" style="position: relative;">
+                    <div class="table">
+                        <ul class="nav nav-tabs padding-12" id="myTab4">
+                            <li id="li1" class="active"><a data-toggle="tab" href="javascript:void (0)" onclick="$('#li1').addClass('active');$('#tab_1').addClass('active');$('#li2').removeClass('active');$('#tab_2').removeClass('active');$('#tab_content2').hide();$('#tab_content1').show();">您需了解的</a></li>
+                            <li id="li2" class=""><a data-toggle="tab" href="javascript:void (0)" onclick="$('#li2').addClass('active');$('#tab_2').addClass('active');$('#li1').removeClass('active');$('#tab_1').removeClass('active');$('#tab_content2').hide();$('#tab_content1').show();">您需要注意的</a></li>
+                        </ul>
+                        <a href="javascript:void (0)" style="position: absolute;top: 40px;right: 30px;" onclick="$('#tab_content1').hide();$('#tab_content2').show();">什么是特殊件？</a>
+                        <div class="tab-content" id="tab_content1">
+                            <div id="tab_1" class="tab-pane active">
+                                <ul class="tab_list">
+                                    <li id="_item_0_1"><p class="question">一、新用户如何注册会员 </p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">1进入速邮汇网站，点击顶部的“注册”按钮或者在“登录”键下方点击“立即注册”</p>
+                                        <p class="time">2按照页面提示填写基本信息（验证手机号码）</p>
+                                        <p class="time">3资料完善</p>
+                                        <p class="time">4阅读并同意《注册服务协议》</p>
+                                        <p class="time"> 5点击“同意以下协议，提交”按钮，完成会员注册</p></li>
+                                    <li id="_item_0_2"><p class="question">二、如何在线寄快递</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">
+                                            如果您有快递需要寄您可以登陆速邮汇网站或者下载速邮汇手机APP，直接进行在线寄件。您可以指定快递公司或者直接发布寄件信息，会有快递员与您联系。</p>
+                                    </li>
+                                    <li id="_item_0_3"><p class="question">三、快递员何时上门取件、收货 </p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">快递员会在收到您的寄件信息之后，在您预约的时间点之前与您取得联系，并且上门收货。</p></li>
+                                    <li id="_item_0_4"><p class="question">四、快递单何时、通过何种渠道获得 </p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">
+                                            请在快递员上门取件时向快递员索取快递单！注意，快递单是您发货的重要凭证，它是您查询快递信息，申请售后问题等情况的保单，请务必保存好。</p></li>
+                                    <li id="_item_0_5"><p class="question">五、如何查看已下的订单 </p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">您只需登录速邮汇网页，在首页中找到“个人中心”，点击“我的订单”查看您下过的网上订单。</p></li>
+                                    <li id="_item_0_6"><p class="question">六、快递怎样计价</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">快递的计价是依据物品的重量和收送的距离，具体以各大快递物流公司的标准来定。</p></li>
+                                    <li id="_item_0_7"><p class="question">七、如何查询我的快递运送状况 </p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">您只需登录速邮汇首页，点击“查件”，然后输入您的订单号和快递公司就能查到您快递的具体配送信息。</p></li>
+                                    <li id="_item_0_8"><p class="question">八、下载手机应用</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">在速邮汇登陆界面上下载手机客户端。</p></li>
+                                    <li id="_item_0_9"><p class="question">九、如何修改个人资料 </p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">登录速邮汇网站，在“个人中心”里找到“个人资料”，验证信息重新绑定手机号码或修改邮箱，以及基本信息的修改。</p></li>
+                                    <li id="_item_0_10"><p class="question">十、短信提醒功能和邮箱提醒功能设置有什么用</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">当您设置了短信/邮箱的提醒功能后，您的快递单在发货、派件、签收后都会已短信或邮箱的形式把消息及时通知您。</p></li>
+                                    <li id="_item_0_11"><p class="question">十一、设置短信/邮箱提醒功能需要收费吗</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">短信/邮箱提醒这个服务本身就是免费的，绝对不会另收取任何的费用，请您放心！</p></li>
+                                    <li id="_item_0_12"><p class="question">十二、如何开通“短信提醒”功能</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">当您设置了短信/邮箱的提醒功能后，您的快递单在发货、派件、签收后都会已短信或邮箱的形式把消息及时通知您。</p></li>
+                                    <!--<li>                                  <p class="question">十三、更多功能</p>                                  <p class="answer">答：</p>                                  <p class="time">意见反馈您在使用本软件中有任何问题，可以在“更多”中找到意见反馈提交反馈意见，我们会及时作出改进。</p>                                                    </li>-->
+                                    <li><p class="question">十三、检查更新</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">会员可以在“检查更新”中查看并更新自己的应用版本，也可以查看本应用的相关信息。</p></li>
+                                </ul>
+                                <!-- <div>                              <ul class="pagination pull-right">                                  <li class="disabled">                                      <a href="#">上一页</a>                                  </li>                                  <li class="active">                                      <a href="#">1</a>                                  </li>                                  <li>                                      <a href="#">下一页</a>                                  </li>                              </ul>                          </div> -->
+                            </div>
+                            <div id="tab_2" class="tab-pane">
+                                <ul class="tab_list">
+                                    <li id="_item_1_1"><p class="question">一、不能收送的物品</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">1）信用卡、现金卡、金砖、银条等贵重物品</p>
+                                        <p class="time">2）金融机关的存折以及现金提款卡</p>
+                                        <p class="time">3）古董、工艺品，如珍贵瓷器、文物等</p>
+                                        <p class="time">4）兴奋剂、大麻、麻药以及任何形式的违禁药物</p>
+                                        <p class="time">5）枪支、弹药、刀剑、武器，如手枪、子弹、炮弹、手榴弹、地雷、炸弹、短刀等危险物品</p>
+                                        <p class="time">6）易燃易爆、有毒性和放射性的各种危险品。如火柴、烟花、爆竹、雷管、火药、汽油、柴油、有机溶剂等</p>
+                                        <p class="time">7）易腐蚀性物品、如酒精（固体和液体）、硫酸、盐酸、农药、双氧水等危险化学用品</p>
+                                        <p class="time">8）各类危害国家安全和社会稳定以及带有黄赌毒性质的出版物、宣传品及印刷品等</p>
+                                        <p class="time">9）各种妨碍公共卫生的物品，包括动物尸骸、器官、未经药制的兽骨等</p>
+                                        <p class="time">10）国家相关法律、法规明令禁止的流通、寄递或出境的物品，如国家政府的秘密文件和资料，国家货币和伪造的假币，人体器官等</p>
+                                        <p class="time">11）各类烈性毒药。如铊、氰化物、砒霜等</p></li>
+                                    <li id="_item_1_2"><p class="question">二、查不到单号信息怎么办</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">第一：可能是您输入的单号有误，请仔细核对好单号信息。</p>
+                                        <p class="time">第二：可能是您选错了快递公司，不同的快递公司，其快递单号是不兼容的。</p>
+                                        <p class="time">第三：要注意快递单号和订单号是不同的概念，查快递配送信息需要的是快递单号而非订单号。</p></li>
+                                    <li id="_item_1_3"><p class="question">三、密码忘记怎么找回</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">
+                                            您只需在用户登录界面点击“忘记登录密码”，然后在找回密码的页面，正确填写您的手机号码，提交验证码，然后重置密码，完成找回。</p></li>
+                                    <li id="_item_1_4"><p class="question">四、怎样取消订单</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">1）如果订单的状态为“等待受理”，您可以自行在“我的中心”里找到“我的快件”进行取消操作。</p>
+                                        <p class="time">2）如果是已经受理成功，请您尽快联系快递公司客服或快递网点的电话进行取消受理手续。</p></li>
+                                    <li id="_item_1_5"><p class="question">五、快递员没有及时上门取件或态度恶劣时如何处理</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">1）如果快递员迟迟不来，您可以再次联系快递网点让快递员上门取件；</p>
+                                        <p class="time">2）您也可以登录速邮汇，在寄件信息里找到快递公司客服的QQ催促其上门取件；</p>
+                                        <p class="time">
+                                            3）如果遇到快递人员态度恶劣，请您谅解，毕竟快递人员每天工作量大，但如果其态度仍是傲慢，您可以登录速邮汇，在“我的中心”里对快递员进行评价，也可以拨打快递公司的电话进行投诉。</p>
+                                    </li>
+                                    <li id="_item_1_6"><p class="question">六、贵重物品务必要购买保险</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">一般价值2000元以上的物品，如手机
+                                            手表、电脑、照相机、首饰、高档服装、艺术品等建议要购买保险。并在保险货物名称的栏目内上正确的填写物品名称，保险金额、价值，避免理赔时产生纠纷。同时申报价值也需如实填写。有些快递运输保险是有免陪额的，如申报的保险额是5000元，但实际可能只赔4700元，其中有300元是免赔额。
+                                            因此，一定要向快递公司咨询清楚，必要时要求其请提供书面的说明。保险费率一般为1%至3%之间，如果保险费率过高，建议对比几家快递公司的价格与保险费比较后再作权衡。 </p>
+                                    </li>
+                                    <li id="_item_1_7"><p class="question">七、交接快件签名与保存运单</p>
+                                        <p class="answer">答：</p>
+                                        <p class="time">
+                                            将快件交给快递业务员时，除自己在运单签名外，务必要求其签名，签名应与佩戴的胸牌一致。这是具有法律意义的交接。运单除了是运输合同外，还是寄递快件的凭证，在送达寄件人之前务必保存好。</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="tab_content2" style="display: none;">
+                            <div id="tab_3" class="tab-pane in active">
+                                <ul class="tab_list">
+                                    <li id="_item_0_1_1"><h2 class="question" align="center">特殊件的定义</h2>
+                                        <p class="question">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;特殊件就是与普通快件在一些
+                                            方面存在差异的、具有特别的性质或需要特别的运送方式的快件。作为特殊件，它具有以下一些特征：</p>
+                                        <p class="question">一、身高</p>
+                                        <p class="question">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您的快件长度超过（包含）80cm，那么，它就是一个特殊件。</p>
+                                        <p class="question">二、体重</p>
+                                        <p class="question">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您的快件重量超过（包含）20kg，那么，它就是一个特殊件。</p>
+                                        <p class="question">三、体态</p>
+                                        <p class="question">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您的快件体积超过（包含）0.5m³，那么，它就是一个特殊件。</p>
+                                        <p class="question">四、特点</p>
+                                        <p class="question">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您的快件存在易碎怕压、防潮、向上等特点，那么，它就是一个特殊件。</p>
+                                        <p class="question">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您的快件具备以上四点中
+                                            的一个或多个特征，请您在提交订单之前选择快件重量为特殊件，以便于我们能够将您的快件安全的送到。</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="last" style="min-width: 1100px;min-height: 85px;">
+    <div class="last-kuang" style="min-width: 1100px;">
+        <div class="last-left"><a>服务热线：400-114-1788 服务邮箱：suyh@100emall.com</a> <br/>
+            <a>Copyright ©2013 厚通网络 浙ICP备14024016号-1</a></div>
+        <div class="last-right">
+            <a href="aboutus.html">关于速邮汇</a>
+            <a href="news.html">速邮汇动态</a>
+            <a href="rzlc.html">商户入驻流程</a>
+            <a href="partners.html">合作伙伴</a>
+            <a href="sitemap.html">网站地图</a>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;top: 55%;right: 1px;">
+    <div id="qq_div" style="position: relative;">
+        <a href="javascript:void (0)" onclick="$('#qq_div').hide()"
+           style="position: absolute;top: 0px;right: 0px;z-index: 100;opacity: 0;">关闭</a>
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2781686263&site=qq&menu=yes">
+            <img border="0" src="../lib/images/qq.png" alt="点击即可发起会话" title="点击即可发起会话" style="z-index: 99;"/>
+        </a>
+    </div>
+</div>
+</body>
+</html>

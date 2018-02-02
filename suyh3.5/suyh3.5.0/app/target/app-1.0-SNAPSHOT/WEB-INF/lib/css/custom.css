@@ -1,0 +1,85 @@
+/* feature_tour */
+.feature_tour {
+    width: 940px;
+    margin: 20px auto 0 auto;
+}
+
+.feature_tour .tab {
+    background: url(../images/daohang.png) no-repeat;
+    width: 940px;
+    height: 70px;
+    overflow: hidden;
+}
+
+.feature_tour .tab a {
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+    float: left;
+    width: 33%;
+    color: #999;
+    text-indent: 20px;
+    line-height: 79px;
+    height: 79px;
+    text-shadow: 0px 1px 0px #fff;
+}
+
+.feature_tour .tab a.current {
+    color: #fff;
+    text-shadow: 0px 1px 0px #788e21
+}
+
+.feature_tour .mask {
+    margin: 20px 0px 0px 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 6px 6px 6px 6px;
+}
+
+.feature_tour .mask .maskcon {
+    width: 5000px
+}
+
+.feature_tour .mask .maskcon .innercon {
+    float: left;
+    width: 940px;
+}
+
+.feature_tour .nav {
+    margin: 20px 0px 0px 0px;
+}
+
+.feature_tour .nav p {
+    margin: 0 auto;
+    width: 90px;
+    height: 36px;
+    overflow: hidden;
+}
+
+.feature_tour .nav p a {
+    display: block;
+    float: left;
+    width: 45px;
+    height: 36px;
+    overflow: hidden;
+}
+
+.feature_tour .nav p a.prev {
+    background: url(../images/feature_tours_navigation.png) no-repeat left 0px
+}
+
+.feature_tour .nav p a.prev:hover {
+    background-position: 0px -36px
+}
+
+.feature_tour .nav p a.next {
+    background: url(../images/feature_tours_navigation.png) no-repeat right 0px
+}
+
+.feature_tour .nav p a.next:hover {
+    background-position: right -72px
+}

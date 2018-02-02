@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentRepository">
+
+    <!--通过代理人id查询代理人信息 -->
+    <select id="findAgentById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT * FROM td_ht_agent WHERE agent_id=#{agent_id}
+    </select>
+
+    <!--通过区域id查询代理人  AND area_id=#{area_id}-->
+    <select id="findPushRegistrationId" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto"
+            resultType="cn.hotol.app.bean.dto.push.PushDto">
+        SELECT a.push_type,a.push_token,a.app_version FROM td_ht_agent a,ts_ht_dict b WHERE a.agent_state=4 AND a.push_token!=''
+        AND b.parent_id=#{area_id} AND a.area_id=b.dict_id
+        <if test="agent_type > 0">
+            AND a.agent_type=#{agent_type}
+        </if>
+        GROUP BY a.push_token
+    </select>
+
+    <!--通过手机号查询代理人帐号 -->
+    <select id="findAgentByPhone" parameterType="java.lang.String"
+            resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT agent_id,agent_name,agent_sex,agent_phone,agent_id_number,agent_state,agent_longitude,agent_latitude,agent_register_time,agent_register_month,
+        agent_adopt_time,agent_password,agent_spare_phone,area_id,total_income,agent_balance,agent_head_portrait,agent_birthday,agent_email,agent_address,
+        agent_pay_type,agent_pay_account,push_type,push_token,token FROM td_ht_agent WHERE agent_phone=#{agent_phone}
+    </select>
+
+    <!--代理人注册 -->
+    <insert id="insertAgent" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto" useGeneratedKeys="true"
+            keyProperty="agent_id">
+        INSERT INTO td_ht_agent (agent_name,agent_sex,agent_phone,agent_id_number,agent_state,agent_longitude,agent_latitude,agent_register_time,
+        agent_register_month,agent_adopt_time,agent_password,agent_spare_phone,area_id,total_income,agent_balance,agent_head_portrait,agent_birthday,agent_email,
+        agent_address,agent_pay_type,agent_pay_account,push_type,push_token,token)
+        VALUES(#{agent_name},#{agent_sex},#{agent_phone},#{agent_id_number},#{agent_state},#{agent_longitude},#{agent_latitude},#{agent_register_time},
+        #{agent_register_month},#{agent_adopt_time},#{agent_password},#{agent_spare_phone},#{area_id},#{total_income},#{agent_balance},#{agent_head_portrait},
+        #{agent_birthday},#{agent_email},#{agent_address},#{agent_pay_type},#{agent_pay_account},#{push_type},#{push_token},#{token})
+    </insert>
+
+    <!--修改代理人的密码 -->
+    <update id="updateAgentPassword" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_password=#{agent_password} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--修改代理人个人邮箱 -->
+    <update id="updateAgentEmail" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_email=#{agent_email} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--修改代理人备用电话 -->
+    <update id="updateAgentSparePhone" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_spare_phone=#{agent_spare_phone} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--通过代理人推送信息查询id -->
+    <select id="findAgentIdByPush" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto"
+            resultType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        SELECT agent_id,push_token FROM td_ht_agent WHERE push_token=#{push_token} AND push_type=#{push_type}
+    </select>
+
+    <!--修改代理人推送信息 -->
+    <update id="updateAgentPushToken" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET push_token=#{push_token} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--代理人登录修改信息 -->
+    <update id="updateAgentLogin" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET push_token=#{push_token},push_type=#{push_type},token=#{token},agent_state=#{agent_state},app_version=#{app_version} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--查询代理人备用电话存在数量 -->
+    <select id="findAgentCountBySpare" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_agent WHERE agent_spare_phone=#{agent_spare_phone}
+    </select>
+
+    <!--修改代理人申请信息 -->
+    <update id="updateAgentApplyInfo" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_name=#{agent_name},agent_sex=#{agent_sex},agent_id_number=#{agent_id_number},agent_state=#{agent_state},
+        area_id=#{area_id},agent_head_portrait=#{agent_head_portrait},agent_birthday=#{agent_birthday},agent_address=#{agent_address},
+        agent_pay_type=#{agent_pay_type},agent_pay_account=#{agent_pay_account} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--查询代理人状态 -->
+    <select id="findAgentStateById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT agent_state FROM td_ht_agent WHERE agent_id=#{agent_id}
+    </select>
+
+    <!--更新代理人的坐标 -->
+    <update id="updateAgentCoordinates" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_longitude=#{agent_longitude},agent_latitude=#{agent_latitude} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--查询代理人的推送信息 -->
+    <select id="findAgentPushInfo" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.push.PushDto">
+        SELECT push_token,push_type,app_version FROM td_ht_agent WHERE agent_id=#{agent_id}
+    </select>
+
+    <!--更新代理人的余额 -->
+    <update id="updateAgentBalance" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_balance=#{agent_balance} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--更新代理人状态 -->
+    <update id="updateSetStateAgent" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_agent SET agent_state=#{agent_state} WHERE agent_id=#{agent_id}
+    </update>
+
+    <!--通过划分区域id查询代理人推送信息 -->
+    <select id="findAgentPushByDivide" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto" resultType="cn.hotol.app.bean.dto.push.PushDto">
+        SELECT a.push_type,a.push_token,a.app_version FROM td_ht_agent a,ts_ht_dict b WHERE a.agent_state=4 AND a.push_token!=''
+        AND b.parent_id=#{area_id} AND a.area_id=b.dict_id AND divide_id IN (0,#{divide_id}) GROUP BY a.push_token
+    </select>
+
+</mapper>

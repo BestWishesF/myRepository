@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../lib/css/reset.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../lib/css/common.css1" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../lib/css/home-menu-6.css" media="all"/>
+    <script type="text/javascript" src="../lib/js/jQuery.js"></script>
+    <title>速邮汇-合作伙伴</title>
+</head>
+<body>
+<div style="width: 100%;text-align: center;">
+    <img src="../lib/images/partners2.jpg">
+    <a href="http://www.lingla.com?fromothersite=wbsyh" style="text-decoration: none;">
+        <img src="../lib/images/partners3.jpg" style="border: solid 0px;margin-top: 30px;">
+    </a>
+</div>
+</body>
+</html>

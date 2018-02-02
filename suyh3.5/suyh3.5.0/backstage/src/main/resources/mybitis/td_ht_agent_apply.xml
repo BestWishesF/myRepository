@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAgentApplyRepository">
+
+
+    <!-- 查找代理人申请记录数量 -->
+    <select id="findAgentApplySize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) from td_ht_agent_apply  WHERE   apply_state = #{apply_state}
+        <if test="agent_province > 0">
+            AND agent_province=#{agent_province}
+        </if>
+        <if test="agent_city > 0">
+            AND agent_city=#{agent_city}
+        </if>
+        <if test="agent_region > 0">
+            AND agent_region=#{agent_region}
+        </if>
+        <if test="divide_id > 0">
+            AND divide_id=#{divide_id}
+        </if>
+    </select>
+    <!-- 分页查找代理人申请记录 -->
+    <select id="findAgentApplyPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.agent.apply.TdHtAgentApplyDto">
+        SELECT * from td_ht_agent_apply WHERE   apply_state = #{apply_state}
+        <if test="agent_province > 0">
+            AND agent_province=#{agent_province}
+        </if>
+        <if test="agent_city > 0">
+            AND agent_city=#{agent_city}
+        </if>
+        <if test="agent_region > 0">
+            AND agent_region=#{agent_region}
+        </if>
+        <if test="divide_id > 0">
+            AND divide_id=#{divide_id}
+        </if>
+        ORDER BY apply_id DESC limit #{currentPage},#{pageSize}
+    </select>
+    <!-- 根据id查找代理人申请记录 -->
+    <select id="findAgentApplyById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.agent.apply.TdHtAgentApplyDto">
+        SELECT * from td_ht_agent_apply WHERE   apply_id = #{apply_id}
+    </select>
+    <!-- 修改审核记录表 -->
+    <update id="updateAgentApply" parameterType="cn.hotol.app.bean.dto.agent.apply.TdHtAgentApplyDto">
+        UPDATE td_ht_agent_apply set apply_state = #{apply_state},apply_fail_reason = #{apply_fail_reason},divide_id=#{divide_id} WHERE   apply_id = #{apply_id}
+    </update>
+</mapper>

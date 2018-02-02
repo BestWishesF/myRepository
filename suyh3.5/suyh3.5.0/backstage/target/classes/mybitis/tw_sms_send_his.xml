@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TwSmsSendHisRepository">
+
+    <!--查找短信发送数量 -->
+    <select id="findSendHisSize" resultType="java.lang.Integer">
+        SELECT COUNT(*) from tw_sms_send_his
+    </select>
+    <!--分页查找短信发送记录 -->
+    <select id="findSendHisPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.sendhis.TwSmsSendHisDto">
+        SELECT * from tw_sms_send_his  ORDER BY sms_his_id DESC limit #{currentPage},#{pageSize}
+    </select>
+
+    <!--保存短信发送记录 -->
+    <insert id="insertSMSRecord" parameterType="cn.hotol.app.bean.dto.sendhis.TwSmsSendHisDto">
+        INSERT INTO tw_sms_send_his (sms_provider_id,phoneno,sms_type,template_id,yyyymmdd,send_time,send_content)
+        VALUES(#{sms_provider_id},#{phoneno},#{sms_type},#{template_id},#{yyyymmdd},#{send_time},#{send_content})
+    </insert>
+</mapper>

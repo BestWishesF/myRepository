@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembFoundChangeRepository">
+	<!-- 查找用户资金变化记录数量 -->
+	<select id="findMemberFoundSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_found_change WHERE memb_id = #{memb_id}
+    </select>
+	<!--   分页查找用户资金变化记录-->
+	<select id="findMemberFoundPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		 SELECT * FROM td_ht_memb_found_change WHERE memb_id = #{memb_id} ORDER BY mfchg_id DESC   limit #{currentPage},#{pageSize}
+	</select>
+
+	<!--   添加资金变动记录-->
+	<insert id="insertMemberFoundChange" parameterType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		INSERT into td_ht_memb_found_change(memb_id,mfchg_change_amount,mfchg_front_amount,mfchg_back_amount,mfchg_type,mfchg_time,mfchg_month,
+		mfchg_name,mfchg_state,mfchg_number,mfchg_channel,exp_ord_id,memb_mon_bill_id,memb_ivc_his_id,memb_goods_id)
+		VALUES (#{memb_id},#{mfchg_change_amount},#{mfchg_front_amount},#{mfchg_back_amount},#{mfchg_type},now(),#{mfchg_month},#{mfchg_name},
+		#{mfchg_state},#{mfchg_number},#{mfchg_channel},#{exp_ord_id},#{memb_mon_bill_id},#{memb_ivc_his_id},#{memb_goods_id})
+	</insert>
+
+	<!--查询订单的支付记录 -->
+	<select id="findFoundByOrder" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		SELECT * FROM td_ht_memb_found_change WHERE exp_ord_id=#{exp_ord_id} AND mfchg_state=0
+	</select>
+
+	<!--查询支付记录通过id -->
+	<select id="findFoundById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		SELECT * FROM td_ht_memb_found_change WHERE mfchg_id=#{mfchg_id}
+	</select>
+
+</mapper>

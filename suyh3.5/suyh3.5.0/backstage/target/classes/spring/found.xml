@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tdHtMembFoundChangeRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TdHtMembFoundChangeRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="foundService" class="cn.hotol.app.service.member.found.FoundServiceImpl">
+		<property name="tdHtMembFoundChangeRepository" ref="tdHtMembFoundChangeRepository"></property>
+	</bean>
+
+</beans>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>选择地址</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="../css/chooseMapAddress.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+        <script src="../js/cookie.js"></script>
+        <script src="../js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.form.js"></script>
+        <script type="text/javascript" src="../js/md5.js"></script>
+        <script src="../js/lib/aes.js"></script>
+        <script src="../js/lib/mode-ecb.js"></script>
+        <script src="../js/lib/header.js"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IstZcZGxIWMgybcvDntmTbvM"></script>
+        <meta http-equiv="Access-Control-Allow-Origin" content="*">
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    </head>
+    <body>
+        <!----------------------------------header-------------------------------------->
+        <header class="head">
+            <a href="adder.html"><img src="../img/order/1.png"></a>
+            <a id="jumpcity" href="chooseAddress.html"></a>
+            <p id="choise">选择地址</p>
+        </header>
+        <!----------------------------------search-------------------------------------->
+        <input type="text" id="search_address" placeholder="搜索地点" style="background: url('../img/index/cj.png') no-repeat; line-height: 30px;height: 30px;background-size:15px 15px;padding-left: 25px;background-position: 5px 7px;border: solid lightgrey 1px;border-radius: 5px;width: 85%;margin-top: 5px;margin-bottom: 5px;" />
+        <input type="hidden" id="choose_city" />
+        <!----------------------------------map-------------------------------------->
+        <section id="map">
+
+        </section>
+        <!----------------------------------result-------------------------------------->
+        <section id="result">
+            <ul>
+            </ul>
+        </section>
+
+    </body>
+    <script src="../js/judge.js" ></script>
+    <script src="../js/chooseMapAddress.js"></script>
+</html>

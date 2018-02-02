@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择快递</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="../css/goodsType.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script src="../js/lib/aes.js"></script>
+    <script src="../js/lib/header.js"></script>
+    <script src="../js/lib/mode-ecb.js"></script>
+    <script type="text/javascript" src="../js/jquery.form.js"></script>
+    <script type="text/javascript" src="../js/md5.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+<body>
+<!----------------------------------header-------------------------------------->
+<header class="head">
+    <a href="send.html"><img src="../img/order/1.png"></a>
+    <p>选择快递</p>
+</header>
+<!----------------------------------list-------------------------------------->
+<section class="list">
+    <div class="long">
+        <input id="a" type="radio" checked="" name="opt" class="input" value="不限" />
+        <label for="a" class="radio"><span>不限</span></label>
+    </div>
+    <div class="long">
+        <input id="b" type="radio" checked="" name="opt" class="input" value="速邮汇" />
+        <label for="b" class="radio"><span>速邮汇</span></label>
+    </div>
+    <div class="long">
+        <input id="c" type="radio" checked="" name="opt" class="input" value="德邦快递" />
+        <label for="c" class="radio select"><span>德邦快递</span></label>
+        <div class="pull">
+        </div>
+    </div>
+    <div class="long">
+        <input id="d" type="radio" name="opt" class="input" value="京东快递" />
+        <label for="d" class="radio select"><span>京东快递</span></label>
+        <div class="pull tele"></div>
+    </div>
+    <div class="long">
+        <input id="e" type="radio" name="opt" class="input" value="天天快递" />
+        <label for="e" class="radio select"><span>天天快递</span></label>
+        <div class="pull tele"></div>
+    </div>
+</section>
+<!----------------------------------footer-------------------------------------->
+<footer>
+    <button id="preserved">确认</button>
+</footer>
+</body>
+<script src="../js/homeTime.js"></script>
+<script src="../js/judge.js"></script>
+</body>
+</html>

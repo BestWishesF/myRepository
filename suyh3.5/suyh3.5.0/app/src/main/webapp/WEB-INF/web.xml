@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0" metadata-complete="true">
+
+
+    <!--指定spring配置文件-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/applicationContext.xml,classpath:spring/applicationContext-quartz.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <!--servlet名字，随意-->
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/applicationContext-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>kaptcha</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>kaptcha</servlet-name>
+        <url-pattern>/kaptcha.jpg</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <!--servlet名字-->
+        <servlet-name>spring</servlet-name>
+        <!--拦截所有请求，对静态文件会有问题，在springxml/*.xml中解决-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- gzip start-->
+    <filter>
+        <filter-name>gzipresponse</filter-name>
+        <filter-class>
+            cn.hotol.app.common.filter.GZIPFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>gzipresponse</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipresponse</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipresponse</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>gzipresponse</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>gzipresponse</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <!--gzip end-->
+    <!--参数加密 start-->
+    <filter>
+        <filter-name>sign</filter-name>
+        <filter-class>cn.hotol.app.common.filter.SignFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>sign</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+    <!--参数加密 end-->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>

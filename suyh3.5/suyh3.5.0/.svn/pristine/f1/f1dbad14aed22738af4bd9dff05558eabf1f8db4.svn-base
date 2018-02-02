@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtAgentWorkTimeRepository">
+
+	<!--查询所有的代理人工作时间 -->
+	<select id="findAllAgentWorkTime" resultType="cn.hotol.app.bean.dto.agent.work.TsHtAgentWorkTimeDto">
+		SELECT * FROM ts_ht_agent_work_time WHERE state=0
+	</select>
+
+</mapper>

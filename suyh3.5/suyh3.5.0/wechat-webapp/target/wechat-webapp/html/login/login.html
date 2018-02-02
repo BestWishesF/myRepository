@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <script type="text/javascript" src="http://localhost:8080/weChat/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/weChat/js/jquery.form.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/weChat/js/md5.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" href="../../css/send.css">
+</head>
+<body>
+<button class="btn btn-lg btn-confirm" id="submit_bt">登录</button>
+</br>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#submit_bt").click(function(){
+            var time = Date.parse(new Date());
+            var hash = hex_md5(time +"hotol");
+            $.ajax({
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    "token":"971dc055-5cf5-46db-889d-0ceab81a3089",
+                    "version":"3",
+                    "client_type":"3",
+                    "Timestamp":time,
+                    "SignInfo":hash,
+                    "page_size":"10",
+                    "page_no":"1",
+                    "Access-Control-Allow-Origin":"*"
+                },
+                type:'post',
+                url:'http://localhost:8080/suyh/app/3/findAcceptInExp',
+                dataType : 'json',
+                accpet:"application/json",
+                success:function(data){
+                    console.log(data);
+                    alert(data.mark);
+                    if(data.mark=="0"){
+                        alert(data.tip);
+                    }else{
+                        alert(data.tip);
+                    }
+                }
+
+            });
+        });
+    });
+</script>
+</html>

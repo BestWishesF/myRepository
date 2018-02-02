@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtAdminDivideRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtAdminDivideRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tdHtAdminDivideGridRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtAdminDivideGridRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="divideService" class="cn.hotol.app.service.admin.divide.DivideServiceImpl">
+        <property name="tdHtAdminDivideRepository" ref="tdHtAdminDivideRepository"></property>
+        <property name="tdHtAdminDivideGridRepository" ref="tdHtAdminDivideGridRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+    </bean>
+
+</beans>

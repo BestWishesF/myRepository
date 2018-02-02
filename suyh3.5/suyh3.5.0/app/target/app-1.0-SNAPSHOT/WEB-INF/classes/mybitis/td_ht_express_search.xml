@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtExpressSearchRepository">
+
+    <!--通过运单号、快递公司、用户id查询查件记录 -->
+    <select id="findExpressSearchByWaybill" parameterType="cn.hotol.app.bean.TdHtExpressSearch"
+            resultType="cn.hotol.app.bean.TdHtExpressSearch">
+        SELECT exp_sea_id,memb_id,exp_number,exp_name,exp_sea_time,exp_state,exp_sea_month,exp_detailed FROM td_ht_express_search WHERE exp_number=#{exp_number} AND exp_name=#{exp_name} AND memb_id=#{memb_id}
+    </select>
+
+    <!--更新快件查询记录 -->
+    <update id="updateExpressSearch" parameterType="cn.hotol.app.bean.TdHtExpressSearch">
+        UPDATE td_ht_express_search SET exp_sea_time=#{exp_sea_time},exp_state=#{exp_state},exp_sea_month=#{exp_sea_month},exp_detailed=#{exp_detailed},exp_code=#{exp_code} WHERE exp_sea_id=#{exp_sea_id}
+    </update>
+
+    <!--添加快件查询记录 -->
+    <insert id="insertExpressSearch" parameterType="cn.hotol.app.bean.TdHtExpressSearch">
+        INSERT INTO td_ht_express_search(memb_id,exp_number,exp_name,exp_sea_time,exp_state,exp_sea_month,exp_detailed,exp_code)
+        VALUES(#{memb_id},#{exp_number},#{exp_name},#{exp_sea_time},#{exp_state},#{exp_sea_month},#{exp_detailed},#{exp_code})
+    </insert>
+
+    <!-- 根据用户id查询查件记录 -->
+    <select id="findTdHtExpressSearch" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.logistics.TdHtExpressSearchDto">
+        SELECT exp_sea_id,exp_number,exp_name,exp_sea_time,exp_state,exp_sea_month,exp_detailed,exp_code FROM
+        td_ht_express_search WHERE memb_id=#{memb_id} ORDER BY exp_sea_time DESC LIMIT 0,10
+    </select>
+
+</mapper>

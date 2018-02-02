@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="../../js/lib/jquery-1.8.2.js"></script>
+    <script src="../../js/views/login.js"></script>
+</head>
+<body>
+<div style="width:100%;height: auto;margin: 0;">
+    <div style="width: 60%;margin-left: 20%;margin-top: 100px;border: solid 1px beige;">
+        <table style="width: 100%;border: solid 1px black;">
+            <tr>
+                <td colspan="3" style="text-align: center;width: 100%;">用户登录</td>
+            </tr>
+            <tr>
+                <td>帐号：</td>
+                <td align="left">
+                    <input id="userName" type="text" style="padding-left: 3px;" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td align="left">
+                    <input id="userPass" type="text" style="padding-left: 3px;" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <input id="doLogin" type="button" style="border: 0px;padding: 3px 10px;text-align: center;" value="登  录" onclick="doLogin()" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

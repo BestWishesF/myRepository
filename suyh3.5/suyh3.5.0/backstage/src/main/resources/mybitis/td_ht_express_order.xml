@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtExpressOrderRepository">
+
+    <!-- 根据状态查找快递订单数量 -->
+    <select id="findExpressOrderByStateSize" parameterType="java.util.Map"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order  WHERE exp_ord_state=#{exp_ord_state}
+        <if test="memb_type>0">
+            AND memb_type=#{memb_type}
+        </if>
+        <if test="memb_type==0">
+            AND memb_type != 4
+        </if>
+        <if test="add_province > 0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city > 0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region > 0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id > 0">
+            AND divide_id=#{divide_id}
+        </if>
+    </select>
+
+    <!-- 根据状态查找快递订单分页 -->
+    <select id="findExpressOrderByStatePage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE exp_ord_state=#{exp_ord_state}
+        <if test="memb_type>0">
+            AND memb_type=#{memb_type}
+        </if>
+        <if test="memb_type==0">
+            AND memb_type != 4
+        </if>
+        <if test="add_province > 0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city > 0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region > 0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id > 0">
+            AND divide_id=#{divide_id}
+        </if>
+        ORDER BY exp_ord_id DESC   limit #{currentPage},#{pageSize}
+    </select>
+
+    <!--根据订单id查询订单信息 -->
+    <select id="findTdHtExpressOrderDtoById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--修改入库订单状态 -->
+    <update id="updateStorageExpressOrder" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET storge_time=#{storge_time},exp_ord_state=#{exp_ord_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--保存订单 -->
+    <insert id="insertExpressOrder" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto"
+            useGeneratedKeys="true" keyProperty="exp_ord_id">
+        INSERT INTO td_ht_express_order(memb_id,agent_id,add_id,add_name,add_mobile_phone,add_id_number,add_detail_address,add_province,add_city,
+        add_region,add_telephone,add_longitude,add_latitude,express_id,exp_ord_time,exp_ord_taking_time,door_start_time,door_end_time,collect_time,
+        pay_time,storge_time,exp_ord_state,exp_ord_size,exp_ord_demand,exp_ord_weight,exp_ord_number,exp_ord_pay_amount,exp_ord_amount,exp_ord_month,
+        exp_ord_gratuity,agent_note,exp_ord_type,divide_id,import_marker)
+        VALUES(#{memb_id},#{agent_id},#{add_id},#{add_name},#{add_mobile_phone},#{add_id_number},#{add_detail_address},#{add_province},#{add_city},
+        #{add_region},#{add_telephone},#{add_longitude},#{add_latitude},#{express_id},#{exp_ord_time},#{exp_ord_taking_time},#{door_start_time},
+        #{door_end_time},#{collect_time},#{pay_time},#{storge_time},#{exp_ord_state},#{exp_ord_size},#{exp_ord_demand},#{exp_ord_weight},
+        #{exp_ord_number},#{exp_ord_pay_amount},#{exp_ord_amount},#{exp_ord_month},#{exp_ord_gratuity},#{agent_note},#{exp_ord_type},#{divide_id},#{import_marker})
+    </insert>
+
+    <!-- 根据状态查找快递订单数量 -->
+    <select id="findExpressOrderBySearchSize" parameterType="java.util.Map"
+            resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT a.exp_ord_id) FROM td_ht_express_order a,td_ht_express_order_collect b  WHERE a.exp_ord_id=b.exp_ord_id AND a.exp_ord_state=#{exp_ord_state}
+        <if test="add_mobile_phone != null and add_mobile_phone != '' ">
+            and (a.add_mobile_phone LIKE concat('%',#{add_mobile_phone}, '%') OR a.add_telephone LIKE concat('%',#{add_mobile_phone}, '%'))
+        </if>
+        <if test="ht_number != null and ht_number != '' ">
+            and b.ht_number LIKE concat('%',#{ht_number}, '%')
+        </if>
+        <if test="express_number != null and express_number != '' ">
+            and b.express_number LIKE concat('%',#{express_number}, '%')
+        </if>
+        <if test="memb_type>0">
+            AND a.memb_type=#{memb_type}
+        </if>
+        <if test="memb_type==0">
+            AND a.memb_type != 4
+        </if>
+        <if test="add_province > 0">
+            AND a.add_province=#{add_province}
+        </if>
+        <if test="add_city > 0">
+            AND a.add_city=#{add_city}
+        </if>
+        <if test="add_region > 0">
+            AND a.add_region=#{add_region}
+        </if>
+        <if test="divide_id > 0">
+            AND a.divide_id=#{divide_id}
+        </if>
+    </select>
+
+    <!-- 根据状态查找快递订单分页 -->
+    <select id="findExpressOrderBySearchPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        SELECT a.* FROM td_ht_express_order a,td_ht_express_order_collect b  WHERE a.exp_ord_id=b.exp_ord_id AND a.exp_ord_state=#{exp_ord_state}
+        <if test="add_mobile_phone != null and add_mobile_phone != '' ">
+            and (a.add_mobile_phone LIKE concat('%',#{add_mobile_phone}, '%') OR a.add_telephone LIKE concat('%',#{add_mobile_phone}, '%'))
+        </if>
+        <if test="ht_number != null and ht_number != '' ">
+            and b.ht_number LIKE concat('%',#{ht_number}, '%')
+        </if>
+        <if test="express_number != null and express_number != '' ">
+            and b.express_number LIKE concat('%',#{express_number}, '%')
+        </if>
+        <if test="memb_type>0">
+            AND a.memb_type=#{memb_type}
+        </if>
+        <if test="memb_type==0">
+            AND a.memb_type != 4
+        </if>
+        <if test="add_province > 0">
+            AND a.add_province=#{add_province}
+        </if>
+        <if test="add_city > 0">
+            AND a.add_city=#{add_city}
+        </if>
+        <if test="add_region > 0">
+            AND a.add_region=#{add_region}
+        </if>
+        <if test="divide_id > 0">
+            AND a.divide_id=#{divide_id}
+        </if>
+         GROUP BY a.exp_ord_id ORDER BY exp_ord_id DESC limit #{currentPage},#{pageSize}
+    </select>
+
+    <!--通过订单id更新订单信息 -->
+    <update id="updateExpOrdByExpOrdId" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET add_name=#{add_name},add_mobile_phone=#{add_mobile_phone},add_telephone=#{add_telephone},
+        add_province=#{add_province},add_city=#{add_city},add_region=#{add_region},add_detail_address=#{add_detail_address},
+        exp_ord_type=#{exp_ord_type} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--通过订单id更新订单状态 -->
+    <update id="updateExpOrdState" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET exp_ord_state=#{exp_ord_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--指派代理人 -->
+    <update id="updateAssignAgent" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET agent_id=#{agent_id},exp_ord_taking_time=#{exp_ord_taking_time},exp_ord_state=#{exp_ord_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询订单量 -->
+    <select id="findExpOrdCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state=5
+        <if test="add_province>0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city>0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region>0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id>0">
+            AND divide_id=#{divide_id}
+        </if>
+        <if test="start_time!=null and start_time!=''">
+            AND exp_ord_time <![CDATA[ >= ]]> #{start_time}
+        </if>
+        <if test="end_time!=null and end_time!=''">
+            AND exp_ord_time <![CDATA[ < ]]> #{end_time}
+        </if>
+        <if test="exp_ord_time!=null and exp_ord_time!=''">
+            AND TO_DAYS(exp_ord_time)=TO_DAYS(NOW())
+        </if>
+    </select>
+
+    <!--查询新客量 -->
+    <select id="findNewCustomerCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT a.memb_id) FROM (SELECT * FROM td_ht_express_order WHERE exp_ord_state=5
+        <if test="add_province>0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city>0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region>0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id>0">
+            AND divide_id=#{divide_id}
+        </if>
+        GROUP BY memb_id ORDER BY exp_ord_time ASC)AS a WHERE 1=1
+        <if test="start_time!=null and start_time!=''">
+            AND a.exp_ord_time <![CDATA[ >= ]]> #{start_time}
+        </if>
+        <if test="end_time!=null and end_time!=''">
+            AND a.exp_ord_time <![CDATA[ < ]]> #{end_time}
+        </if>
+        <if test="exp_ord_time!=null and exp_ord_time!=''">
+            AND TO_DAYS(a.exp_ord_time)=TO_DAYS(NOW())
+        </if>
+    </select>
+
+    <!--查询一定时间内每天的下单量 -->
+    <select id="statisticsOrdByCondition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT DATE_FORMAT(exp_ord_time,#{condition}) AS conditions,count(*) AS num FROM td_ht_express_order
+        WHERE exp_ord_state=5
+        <if test="add_province>0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city>0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region>0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id>0">
+            AND divide_id=#{divide_id}
+        </if>
+        <if test="start_time!=null and start_time!=''">
+            AND exp_ord_time <![CDATA[ >= ]]> #{start_time}
+        </if>
+        <if test="end_time!=null and end_time!=''">
+            AND exp_ord_time <![CDATA[ < ]]> #{end_time}
+        </if>
+        <if test="reduced!=null and reduced!=''">
+            AND DATE_FORMAT(exp_ord_time,#{condition}) <![CDATA[ > ]]> #{reduced}
+        </if>
+         group by conditions ORDER BY exp_ord_time DESC
+        <if test="size>0">
+            LIMIT 0,#{size}
+        </if>
+    </select>
+
+    <!--查询一定时间内每天的新客量 -->
+    <select id="statisticsCustomByCondition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT DATE_FORMAT(a.exp_ord_time,#{condition}) AS conditions,count(*) AS num FROM
+        (SELECT * FROM td_ht_express_order WHERE exp_ord_state=5
+        <if test="add_province>0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city>0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region>0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id>0">
+            AND divide_id=#{divide_id}
+        </if>
+        GROUP BY memb_id ORDER BY exp_ord_time ASC)AS a WHERE 1=1
+        <if test="start_time!=null and start_time!=''">
+            AND a.exp_ord_time <![CDATA[ >= ]]> #{start_time}
+        </if>
+        <if test="end_time!=null and end_time!=''">
+            AND a.exp_ord_time <![CDATA[ < ]]> #{end_time}
+        </if>
+        <if test="reduced!=null and reduced!=''">
+            AND DATE_FORMAT(a.exp_ord_time,#{condition}) <![CDATA[ > ]]> #{reduced}
+        </if>
+        group by conditions ORDER BY a.exp_ord_time DESC
+        <if test="size>0">
+            LIMIT 0,#{size}
+        </if>
+    </select>
+
+    <!--根据时间、地址查询订单数量 -->
+    <select id="findExpOrdByTimeSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state=5 AND DATE_FORMAT(exp_ord_time,#{condition})=#{time}
+        <if test="add_province>0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city>0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region>0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id>0">
+            AND divide_id=#{divide_id}
+        </if>
+    </select>
+
+    <!--根据时间、地址分页查询订单 -->
+    <select id="findExpOrdByTimePage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.express.ExpOrdDetailedDto">
+        SELECT * FROM td_ht_express_order WHERE exp_ord_state=5 AND DATE_FORMAT(exp_ord_time,#{condition})=#{time}
+        <if test="add_province>0">
+            AND add_province=#{add_province}
+        </if>
+        <if test="add_city>0">
+            AND add_city=#{add_city}
+        </if>
+        <if test="add_region>0">
+            AND add_region=#{add_region}
+        </if>
+        <if test="divide_id>0">
+            AND divide_id=#{divide_id}
+        </if>
+        ORDER BY exp_ord_time ASC LIMIT #{currentPage},#{pageSize}
+    </select>
+
+    <!--根据订单id查询订单信息 -->
+    <select id="findExpOrdDetailedDtoById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.ExpOrdDetailedDto">
+        SELECT * FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--查询该区未分配划分区域id的订单 -->
+    <select id="findOrderByRegion" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE add_region=#{add_region} AND divide_id=0
+    </select>
+
+    <!--修改订单的划分区域id -->
+    <update id="updateOrderDivide" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET divide_id=#{divide_id} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--根据划分区域id修改订单 -->
+    <update id="updateOrderByDivide" parameterType="java.lang.Integer">
+        UPDATE td_ht_express_order SET divide_id=0 WHERE divide_id=#{divide_id}
+    </update>
+
+    <!--修改大客户订单 -->
+    <update id="updateBigCusExp" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET exp_ord_state=#{exp_ord_state},exp_ord_type=#{exp_ord_type} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--用户开票申请失败时修改发件订单开票记录id -->
+    <update id="updateExpOrdIvcHis" parameterType="java.lang.Integer">
+        UPDATE td_ht_express_order SET memb_ivc_his_id=0 WHERE memb_ivc_his_id=#{memb_ivc_his_id}
+    </update>
+
+    <!--查询用户发件数量 -->
+    <select id="findExpOrdSizeByMemb" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE memb_id=#{memb_id} AND exp_ord_state <![CDATA[ > ]]> 0 AND
+        exp_ord_state <![CDATA[ < ]]> 6 AND import_marker=0
+    </select>
+
+    <!--查询用户被代理人接单数量 -->
+    <select id="findExpOrdNumByMembAndAgent" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE memb_id=#{memb_id} AND agent_id=#{agent_id} AND exp_ord_state=2
+    </select>
+
+    <!--查询用户30分钟内支付订单数量 -->
+    <select id="findMembPayExpOrdCount" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE memb_id=#{memb_id} AND agent_id=#{agent_id} AND
+        exp_ord_state <![CDATA[ > ]]> 3 AND exp_ord_state <![CDATA[ < ]]> 6 AND pay_time <![CDATA[ >= ]]> #{pay_time}
+    </select>
+
+</mapper>

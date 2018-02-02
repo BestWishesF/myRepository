@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../lib/css/reset.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../lib/css/common.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../lib/css/home-menu-6.css" media="all"/>
+    <script type="text/javascript" src="../lib/js/jQuery.js"></script>
+    <title>速邮汇-合作伙伴</title>
+</head>
+<body>
+<div>
+    <h3>天天快递有限公司</h3>
+    <div>
+        <div style="width: auto;position: relative;">
+            <img src="../lib/images/partner_bpic1.jpg" style="float: left;">
+            <div style="margin-left: 350px;position: absolute;top: 0px;right:0px;">
+                <p>天天快递有限公司成立于1994年，为国内第一个获得“中国驰名商标”称号的快递企业。总部位于杭州高新技术产业开发区，拥有6000多个网点，全国从业人员60000余人，网络基本覆盖全国地市级以上城市和发达地区地市县级以上城市，现已实现江浙沪无盲区派送，形成了以长江三角洲、珠江三角洲、环渤海地区为重点的快递网络布局。</p>
+                <p>公司目前在全网拥有班车15000辆以上，航空线路超过200条。服务客户30万余家，其中世界500强客户100多家，客户群体遍及电子商务、纺织服装、医药化工、高科技IT产业、贸代企业、进出口贸易、制造业等多个领域。公司拥有500以上坐席的高端全封闭客服服务中心，可以为客户提供货物查询、在线下单、业务查询、服务投诉等基础功能，同时还拥有客户留言、服务满意度调查等功能。</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

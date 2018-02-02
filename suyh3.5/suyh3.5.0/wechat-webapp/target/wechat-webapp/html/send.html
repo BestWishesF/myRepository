@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>寄件</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/send.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/lib/aes.js"></script>
+		<script src="../js/lib/header.js"></script>
+		<script src="../js/lib/mode-ecb.js"></script>
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<!--<script src="../js/lib/token.js"></script>-->
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<!--<script src="../js/lib/wxJSSDK.js"></script>-->
+	</head>
+	<body>
+		<!----------------------------------header------------------------------------------>
+		<header class="head">
+			<a></a>
+			<p>寄件</p>
+		</header>
+		<!----------------------------------site-------------------------------------------->
+		<section class="site">
+			<div class="back">
+				<div class="background">
+				<div class="sq" id="sq">
+					<span class="mr">请输入寄件地址</span>
+				</div>
+				<div class="right">
+					<a href="sender.html"><span>地址薄</span></a>
+				</div>
+					</div>
+				<div class="ss" id="ss">
+				<span class="mr">请输入收件地址</span>
+				</div>
+				<div class="right">
+					<a href="recipients.html"><span>地址薄</span></a>
+				</div>
+			</div>
+		</section>
+		<!----------------------------------list-------------------------------------------->
+		<!--<section class="list">
+			<div class="lal">
+			</div>
+		</section>-->
+		<!----------------------------------time-------------------------------------------->
+        <section class="time">
+			<div class="daily">
+				<span>物品类型</span>
+				<span id="goods_type" class="binc">
+					<a class="goods_type" href="#"></a>
+					<input type="hidden" id="goods_type_id" value="0" />
+				</span>
+			</div>
+            <div class="daily">
+                <span>上门时间</span>
+                <span class="binc timenr"><a class="date" href="homeTime.html">2小时取件</a>
+				<input id="timean" type="hidden" value="2小时取件">
+				</span>
+            </div>
+            <div class="daily">
+                <span>快递公司</span>
+                <span class="binc"><a class="courier" href="#">请选择快递</a></span>
+            </div>
+            <div class="daily">
+                <span>估计重量(KG)</span>
+                <i class="biao">
+                    <button class="button" id="minus"><img src="../img/minus.png"></button>
+                    <input type="text" id="txt" value="1公斤">
+                    <button class="button" id="plus"><img src="../img/plus.png"></button>
+                </i>
+            </div>
+        </section>
+		<!----------------------------------needs------------------------------------------->
+		<section class="needs">
+			<p><i>需求</i></p>
+			<div class="lal">
+			</div>
+		</section>
+		<!----------------------------------monthly------------------------------------------->
+		<section class="monthly">
+			<p class="top">
+				<span id="total_" class="left">预估价:&nbsp;<em id="total">0</em>&nbsp;元</span>
+				<span id="preefera" class="right">优惠价:&nbsp;<em id="prefer">0</em>&nbsp;元</span>
+				<span class="consult">仅供参考</span>
+			</p>
+			<p class="botom" id="botom">
+				<span>厚通编号：<input id="number" type="text" value=""></span>
+				<img src="../img/index/sm.png" id="code" alt="">
+			</p>
+		</section>
+		<!----------------------------------footer------------------------------------------>
+		<footer>
+			<div class="clause">
+				<input class="checked" type="radio" checked="checked" value=""><a href="http://hotol.cn/suyh/article/detail?arti_id=2">同意并接受《寄件承诺》</a></div>
+			<button id="btn">提交</button>
+		</footer>
+	</body>
+	<!--<script src="../js/test.js" ></script>-->
+    <script src="../js/send.js" ></script>
+	<script src="../js/judge.js"></script>
+	<script>
+	</script>
+</html>

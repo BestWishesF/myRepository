@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembAddressRepository">
+
+    <!-- 根据用户id查询地址信息 -->
+    <select id="findAddressByMember" parameterType="cn.hotol.app.bean.TdHtMembAddress"
+            resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE memb_id=#{memb_id} AND add_type=#{add_type} and add_state=0 ORDER BY add_is_default ASC,add_express_size DESC,add_id DESC
+    </select>
+
+    <!-- 根据用户id查询地址条数 -->
+    <select id="findMemberDefaultAddress" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE memb_id=#{memb_id} AND add_type=1 AND add_state=0 AND add_is_default=0
+    </select>
+    <!--  **************************************查询止********************************************************************** -->
+
+    <!-- 添加收发件地址 -->
+    <insert id="insertAddress" parameterType="cn.hotol.app.bean.TdHtMembAddress" useGeneratedKeys="true"
+            keyProperty="add_id">
+       INSERT INTO td_ht_memb_address(memb_id,add_name,add_detail_address,add_province,add_city,add_region,add_label,add_telephone,
+          add_longitude,add_latitude,add_mobile_phone,add_id_number,add_is_default,add_type,add_state,add_express_size)
+      VALUES(#{memb_id},#{add_name},#{add_detail_address},#{add_province},#{add_city},#{add_region},#{add_label},#{add_telephone},
+      #{add_longitude},#{add_latitude},#{add_mobile_phone},#{add_id_number},#{add_is_default},#{add_type},#{add_state},#{add_express_size})
+    </insert>
+
+    <!-- 修改收发件地址 -->
+    <update id="updateAddress" parameterType="cn.hotol.app.bean.TdHtMembAddress">
+        UPDATE td_ht_memb_address SET add_name=#{add_name},add_detail_address=#{add_detail_address},add_province=#{add_province},
+        add_city=#{add_city},add_region=#{add_region},add_label=#{add_label},add_telephone=#{add_telephone},add_longitude=#{add_longitude},
+        add_latitude=#{add_latitude},add_mobile_phone=#{add_mobile_phone},add_id_number=#{add_id_number},add_type=#{add_type} WHERE add_id=#{add_id}
+    </update>
+
+    <!-- 修改默认地址为非默认地址 -->
+    <update id="updateDefault" parameterType="cn.hotol.app.bean.TdHtMembAddress">
+        UPDATE td_ht_memb_address SET add_is_default=1 WHERE add_type=#{add_type} AND memb_id=#{memb_id}
+    </update>
+
+    <!-- 修改收发件地址 -->
+    <update id="deleteAddress" parameterType="cn.hotol.app.bean.TdHtMembAddress">
+       UPDATE td_ht_memb_address SET add_state=1 WHERE add_id=#{add_id}
+    </update>
+
+    <!-- 修改非默认地址为默认地址 -->
+    <update id="updateDefaultAddress" parameterType="java.lang.Integer">
+        UPDATE td_ht_memb_address SET add_is_default=0 WHERE add_id=#{add_id}
+    </update>
+
+    <!--查询用户地址数量 -->
+    <select id="findMemberAddressCount" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_address WHERE memb_id=#{id} AND add_type=#{type} AND add_state=0
+    </select>
+
+    <!--查询用户地址列表 -->
+    <select id="findMemberAddress" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE memb_id=#{id} AND add_type=#{type} AND add_state=0 ORDER BY add_is_default ASC, add_express_size DESC,add_id DESC ${limit_str}
+    </select>
+
+    <!--通过地址id查询地址信息 -->
+    <select id="findMemberAddressById" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE add_id = #{add_id} and  add_state=0
+    </select>
+
+    <!--更新用户地址发件次数 -->
+    <update id="updateAddressSendExpressSize" parameterType="java.lang.Integer">
+        UPDATE td_ht_memb_address SET add_express_size=add_express_size+1 WHERE add_id=#{add_id}
+    </update>
+
+    <!--根据条件查询用户的收件地址数量 -->
+    <select id="findMembAddByBeanSize" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_address WHERE add_type=2 AND add_state=0 AND memb_id=#{id} AND
+        (add_name LIKE concat('%',#{query_criteria}, '%') OR add_mobile_phone LIKE concat('%',#{query_criteria}, '%') OR
+        add_telephone LIKE concat('%',#{query_criteria}, '%') OR add_detail_address LIKE concat('%',#{query_criteria}, '%'));
+    </select>
+
+    <!--根据条件查询用户的收件地址列表 -->
+    <select id="findMembAddByBeanPage" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE add_type=2 AND add_state=0 AND memb_id=#{id} AND
+        (add_name LIKE concat('%',#{query_criteria}, '%') OR add_mobile_phone LIKE concat('%',#{query_criteria}, '%') OR
+        add_telephone LIKE concat('%',#{query_criteria}, '%') OR add_detail_address LIKE concat('%',#{query_criteria}, '%'));
+    </select>
+</mapper>

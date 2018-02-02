@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtAdminRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtAdminRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="tdHtRoleRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtRoleRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="adminService" class="cn.hotol.app.service.admin.AdminServiceImpl">
+        <property name="tdHtAdminRepository" ref="tdHtAdminRepository"></property>
+        <property name="tdHtLoginLogRepository" ref="tdHtLoginLogRepository"></property>
+        <property name="tdHtAdminDivideRepository" ref="tdHtAdminDivideRepository"></property>
+        <property name="tdHtAdminDivideGridRepository" ref="tdHtAdminDivideGridRepository"></property>
+        <property name="tdHtRoleRepository" ref="tdHtRoleRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+    </bean>
+
+</beans>

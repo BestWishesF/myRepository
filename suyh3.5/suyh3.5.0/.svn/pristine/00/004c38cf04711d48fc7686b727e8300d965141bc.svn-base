@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembScoreRepository">
+
+    <!--查找用户积分变化记录数量 -->
+    <select id="findMemberScoreSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_score WHERE memb_id = #{memb_id}
+    </select>
+    <!--分页查找用户积分变化记录 -->
+    <select id="findMemberScorePage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.score.TdHtMembScoreDto">
+        SELECT * FROM td_ht_memb_score WHERE memb_id = #{memb_id} ORDER BY score_id DESC   limit #{currentPage},#{pageSize}
+    </select>
+
+</mapper>

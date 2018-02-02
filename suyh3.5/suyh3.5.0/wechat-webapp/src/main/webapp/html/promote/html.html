@@ -1,0 +1,188 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>速邮汇活动</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="../../css/promote.css" />
+    <script src="../../js/jquery-1.9.1.min.js"></script>
+    <script src="../../js/lib/aes.js"></script>
+    <script src="../../js/lib/mode-ecb.js"></script>
+    <script src="../../js/lib/header.js"></script>
+    <script type="text/javascript" src="../../js/md5.js"></script>
+</head>
+<body>
+<!--&lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;header&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<header class="head">
+
+</header>
+<!------------------------------------banner------------------------------------------->
+<section class="banner">
+    <div class="phone">
+        <input class="input" type="text" id="phone" value="" placeholder="请输入手机号码" />
+        <input class="input" type="password" id="password" value="" placeholder="请输入密码" />
+    </div>
+    <div class="code">
+        <input class="input" type="text" id="code" value="" placeholder="请输入验证码" />
+        <span id="btn_code" class="btn_code" onclick="getCode()">获取验证码</span>
+    </div>
+    <button class="btn" onclick="register()">提交注册</button>
+</section>
+
+<div id="bg" ></div>
+<div id="show" class="show">
+    <div class="close" onclick="hidediv()"> </div>
+    <div class="dowloand" onclick="openAPP()"> </div>
+</div>
+<div id="registered" class="registered">
+     <div class="close" onclick="hideReistered()"></div>
+    <div class="dowloand" onclick="openAPP()"></div>
+</div>
+<footer>
+    <!--<span id="activity" onclick="showdiv();">活动规则</span>-->
+</footer>
+<script type="text/javascript">
+    var num = 60;
+    var flag = true;
+    var promote_code = getQueryString("promote_code");
+    if (promote_code == null) {
+        promote_code = "";
+    }
+    function getCode() {
+        if (flag) {
+            var data = {
+                "phoneno":$("#phone").val()
+            }
+            var token = "";
+            var time = Date.parse(new Date());
+            var hash = hex_md5(time + "hotol");
+            time = Encrypt(time);
+            hash = Encrypt(hash);
+            $.ajax({
+                contentType: "application/json;charset=UTF-8",
+                headers: {
+                    "token": token,
+                    "version": "7",
+                    "client_type": "3",
+                    "Timestamp": time,
+                    "SignInfo": hash,
+                    "Access-Control-Allow-Origin": "*",
+                },
+                type: 'post',
+                url: '/suyh/app/3/sendRegValidateCode',
+                dataType: 'text',
+                data: Encrypt(JSON.stringify(data)),
+                success: function (data) {
+                    var result = JSON.parse(Decrypt(data));
+                    if (result.mark == "0") {
+                        timeout()
+                        flag = false;
+                    } else {
+                        if (result.tip == "您的手机号已注册.") {
+                            $("#registered").attr("style","background:url('../../img/promote/registered.png');background-size:100% 100%;background-repeat:no-repeat;");
+                            showReistered()
+                        } else {
+                            alert(result.tip);
+                        }
+                    }
+                }
+
+            });
+        }
+    }
+    function register() {
+            var data = {
+                "memb_phone":$("#phone").val(),
+                "memb_password":$("#password").val(),
+                "verification_code":$("#code").val(),
+                "push_token":0,
+                "promote_code":promote_code
+            }
+         alert(JSON.stringify(data))
+            var token = "";
+            var time = Date.parse(new Date());
+            var hash = hex_md5(time + "hotol");
+            time = Encrypt(time);
+            hash = Encrypt(hash);
+            $.ajax({
+                contentType: "application/json;charset=UTF-8",
+                headers: {
+                    "token": token,
+                    "version": "7",
+                    "client_type": "3",
+                    "Timestamp": time,
+                    "SignInfo": hash,
+                    "Access-Control-Allow-Origin": "*",
+                },
+                type: 'post',
+                url: '/suyh/app/3/register',
+                dataType: 'text',
+                data: Encrypt(JSON.stringify(data)),
+                success: function (data) {
+                    var result = JSON.parse(Decrypt(data));
+                    if (result.mark == "0") {
+                        $("#show").attr("style","background:url('../../img/promote/success.png');background-size:100% 100%;background-repeat:no-repeat;");
+                        showdiv()
+                    } else {
+                        if (result.tip == "您的手机号已注册.") {
+                            $("#registered").attr("style","background:url('../../img/promote/registered.png');background-size:100% 100%;background-repeat:no-repeat;");
+                            showReistered()
+                        } else {
+                            alert(result.tip);
+                        }
+
+
+                    }
+                }
+
+            });
+    }
+    function timeout() {
+        if (num == 0) {
+            flag = true;
+            num = 60;
+            $("#btn_code").html("重发").attr("onclick","getCode()");
+            $("#btn_code").css("background","")
+        }else{
+            num--;
+            setTimeout(timeout, 1000);
+            $("#btn_code").html("(" + num + ")");
+            $("#btn_code").css("background","#ccc")
+        }
+    }
+
+
+
+
+    $(document).ready(function(){
+
+
+    });
+    function openAPP() {
+        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.hotol.suyh";
+    }
+    function showdiv() {
+        document.getElementById("bg").style.display ="block";
+        document.getElementById("show").style.display ="block";
+    }
+    function showReistered() {
+        document.getElementById("bg").style.display ="block";
+        document.getElementById("registered").style.display ="block";
+    }
+    function hidediv() {
+        document.getElementById("bg").style.display ='none';
+        document.getElementById("show").style.display ='none';
+    }
+    function hideReistered() {
+        document.getElementById("bg").style.display ='none';
+        document.getElementById("registered").style.display ='none';
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+</script>
+</body>
+<script src="../../js/judge.js" ></script>
+</html>

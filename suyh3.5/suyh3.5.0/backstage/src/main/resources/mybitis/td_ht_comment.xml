@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtCommentRepository">
+
+    <!-- 查找评论 -->
+    <select id="findCommentSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_comment a,td_ht_express_order b WHERE a.exp_ord_id=b.exp_ord_id
+        <if test="add_province > 0">
+            AND b.add_province=#{add_province}
+        </if>
+        <if test="add_city > 0">
+            AND b.add_city=#{add_city}
+        </if>
+        <if test="add_region > 0">
+            AND b.add_region=#{add_region}
+        </if>
+        <if test="divide_id > 0">
+            AND b.divide_id=#{divide_id}
+        </if>
+    </select>
+    <!--   评论分页-->
+    <select id="findCommentPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.comment.TdHtCommentDto">
+        SELECT * FROM td_ht_comment a,td_ht_express_order b WHERE a.exp_ord_id=b.exp_ord_id
+        <if test="add_province > 0">
+            AND b.add_province=#{add_province}
+        </if>
+        <if test="add_city > 0">
+            AND b.add_city=#{add_city}
+        </if>
+        <if test="add_region > 0">
+            AND b.add_region=#{add_region}
+        </if>
+        <if test="divide_id > 0">
+            AND b.divide_id=#{divide_id}
+        </if>
+        ORDER BY a.com_id DESC   limit #{currentPage},#{pageSize}
+    </select>
+</mapper>

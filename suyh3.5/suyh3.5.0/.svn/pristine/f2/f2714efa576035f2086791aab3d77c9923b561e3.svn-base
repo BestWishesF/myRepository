@@ -1,0 +1,8 @@
+ds.driver_class=com.mysql.jdbc.Driver
+ds.username=root
+ds.password=qaz1234567
+ds.url=jdbc\:mysql\://192.168.17.226\:3306/w13_dev?characterEncoding\=utf-8&amp;zeroDateTimeBehavior\=convertToNull
+
+
+system.model=test
+storage.root=/storage/w13_docs/portal/storage

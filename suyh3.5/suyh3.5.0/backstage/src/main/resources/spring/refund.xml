@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tdHtMembRefundChangeRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TdHtMembRefundChangeRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="refundService" class="cn.hotol.app.service.member.refund.RefundServiceImpl">
+		<property name="tdHtMembRefundChangeRepository" ref="tdHtMembRefundChangeRepository"></property>
+		<property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+		<property name="tdHtExpressCollectRepository" ref="tdHtExpressCollectRepository"></property>
+		<property name="tdHtMemberRepository" ref="tdHtMemberRepository"></property>
+		<property name="tdHtMembFoundChangeRepository" ref="tdHtMembFoundChangeRepository"></property>
+	</bean>
+
+</beans>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TwSmsSendHisRepository">
+
+    <!--保存短信发送记录 -->
+    <insert id="insertSMSRecord" parameterType="cn.hotol.app.bean.dto.message.TwSmsSendHisDto">
+        INSERT INTO tw_sms_send_his (sms_provider_id,phoneno,sms_type,template_id,yyyymmdd,send_time,send_content)
+        VALUES(#{sms_provider_id},#{phoneno},#{sms_type},#{template_id},#{yyyymmdd},#{send_time},#{send_content})
+    </insert>
+</mapper>

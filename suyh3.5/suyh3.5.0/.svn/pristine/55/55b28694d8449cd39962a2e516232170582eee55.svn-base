@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="tsHtExpressOpenNumberRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TsHtExpressOpenNumberRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="expressOpenNumberService" class="cn.hotol.app.service.express.open.number.ExpressOpenNumberServiceImpl">
+        <property name="tsHtExpressOpenNumberRepository" ref="tsHtExpressOpenNumberRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtAgentRepository" ref="tdHtAgentRepository"></property>
+    </bean>
+
+</beans>

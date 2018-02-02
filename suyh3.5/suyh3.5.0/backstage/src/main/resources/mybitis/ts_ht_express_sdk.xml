@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtExpressSdkRepository">
+	<!-- 通过快递公司开通区域表id查询快递接口配置 -->
+	<select id="findExpressSdkByEoa" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+    	SELECT exp_sdk_id,eoa_id,dot_name,dot_number,customer_name,customer_number,customer_password,sdkj_itf_type,sdk_itf_url,app_key,
+    	app_secret,access_token,sdk_code FROM ts_ht_express_sdk WHERE eoa_id=#{eoa_id}
+    </select>
+
+	<!--通过接口类型和开通快递区域表id查询快递接口配置 -->
+	<select id="findExpressSdkByBen" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+		SELECT exp_sdk_id,eoa_id,dot_name,dot_number,customer_name,customer_number,customer_password,sdkj_itf_type,sdk_itf_url,app_key,
+		app_secret,access_token,sdk_code FROM ts_ht_express_sdk WHERE eoa_id=#{eoa_id} AND sdkj_itf_type=#{sdkj_itf_type}
+	</select>
+
+	<!--根据快递公司开通区域查询快递公司接口配置数量 -->
+	<select id="findExpressSdkSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ts_ht_express_sdk WHERE eoa_id=#{eoa_id}
+	</select>
+
+	<!--根据快递公司开通区域查询快递公司接口配置信息 -->
+	<select id="findExpressSdkPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+		SELECT * FROM ts_ht_express_sdk WHERE eoa_id=#{eoa_id} ORDER BY exp_sdk_id limit ${currentPage},${pageSize}
+	</select>
+
+	<!--通过id查询快递公司接口配置 -->
+	<select id="findExpressSdkById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+		SELECT * FROM ts_ht_express_sdk WHERE exp_sdk_id=#{exp_sdk_id}
+	</select>
+
+	<!--通过开通区域id和接口类别查询接口配置信息 -->
+	<select id="findExpSdkByEoaType" parameterType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto" resultType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+		SELECT * FROM ts_ht_express_sdk WHERE eoa_id=#{eoa_id} AND sdkj_itf_type=#{sdkj_itf_type}
+	</select>
+
+	<!--新增快递接口配置 -->
+	<insert id="insertExpressSdk" parameterType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+		INSERT INTO ts_ht_express_sdk (eoa_id,dot_name,dot_number,customer_name,customer_number,customer_password,
+		sdkj_itf_type,sdk_itf_url,app_key,app_secret,access_token,sdk_code)
+		VALUES (#{eoa_id},#{dot_name},#{dot_number},#{customer_name},#{customer_number},#{customer_password},
+		#{sdkj_itf_type},#{sdk_itf_url},#{app_key},#{app_secret},#{access_token},#{sdk_code})
+	</insert>
+
+	<!--修改快递接口配置 -->
+	<update id="updateExpressSdk" parameterType="cn.hotol.app.bean.dto.expresssdk.TsHtExpressSdkDto">
+		UPDATE ts_ht_express_sdk SET dot_name=#{dot_name},dot_number=#{dot_number},customer_name=#{customer_name},
+		customer_number=#{customer_number},customer_password=#{customer_password},sdkj_itf_type=#{sdkj_itf_type},
+		sdk_itf_url=#{sdk_itf_url},app_key=#{app_key},app_secret=#{app_secret},access_token=#{access_token},
+		sdk_code=#{sdk_code} WHERE exp_sdk_id=#{exp_sdk_id}
+	</update>
+</mapper>

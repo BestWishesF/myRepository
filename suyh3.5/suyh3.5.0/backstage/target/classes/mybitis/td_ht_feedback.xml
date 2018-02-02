@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtFeedbackRepository">
+	<!-- 根据类别查找用户反馈 -->
+	<select id="findFeedbackByTypeSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM td_ht_feedback a
+		<if test="table_name != null and table_name != ''">
+			,${table_name}
+			<if test="province > 0 and city == 0">
+				,ts_ht_dict c,ts_ht_dict r
+			</if>
+			<if test="city > 0 and region == 0">
+				,ts_ht_dict r
+			</if>
+		</if>
+		WHERE user_cate = #{user_cate}
+		<if test="table_name != null and table_name != ''">
+			AND a.user_id=${table_name}.${field_name}
+			<if test="province > 0 and city == 0">
+				AND ${table_name}.${region_name}=r.dict_id AND r.parent_id=c.dict_id AND c.parent_id=#{province}
+			</if>
+			<if test="city > 0 and region == 0">
+				AND ${table_name}.${region_name}=r.dict_id AND r.parent_id=#{city}
+			</if>
+			<if test="region > 0">
+				AND ${table_name}.${region_name}=#{region}
+			</if>
+			<if test="divide_id > 0">
+				AND ${table_name}.divide_id=#{divide_id}
+			</if>
+		</if>
+	</select>
+	<!--   根据类别查找用户反馈分页-->
+	<select id="findFeedbackByTypePage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.feedback.TdHtFeedbackDto">
+		SELECT * FROM td_ht_feedback a
+		<if test="table_name != null and table_name != ''">
+			,${table_name}
+			<if test="province > 0 and city == 0">
+				,ts_ht_dict c,ts_ht_dict r
+			</if>
+			<if test="city > 0 and region == 0">
+				,ts_ht_dict r
+			</if>
+		</if>
+		WHERE user_cate = #{user_cate}
+		<if test="table_name != null and table_name != ''">
+			AND a.user_id=${table_name}.${field_name}
+			<if test="province > 0 and city == 0">
+				AND ${table_name}.${region_name}=r.dict_id AND r.parent_id=c.dict_id AND c.parent_id=#{province}
+			</if>
+			<if test="city > 0 and region == 0">
+				AND ${table_name}.${region_name}=r.dict_id AND r.parent_id=#{city}
+			</if>
+			<if test="region > 0">
+				AND ${table_name}.${region_name}=#{region}
+			</if>
+			<if test="divide_id > 0">
+				AND ${table_name}.divide_id=#{divide_id}
+			</if>
+		</if>
+		ORDER BY a.feed_id DESC   limit #{currentPage},#{pageSize}
+	</select>
+</mapper>

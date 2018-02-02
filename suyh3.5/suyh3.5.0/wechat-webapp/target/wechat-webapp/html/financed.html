@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>支付订单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/financed.css"/>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.form.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/lib/aes.js"></script>
+		<script src="../js/lib/header.js"></script>
+		<script src="../js/lib/mode-ecb.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	</head>
+	<body>
+		<!----------------------------------header-------------------------------------->
+		<header class="head">
+			<a href="order.html"><img src="../img/order/1.png"></a>
+			<p>支付订单</p>
+		</header>
+		<section class="site">
+			<div class="box">
+				<span>订单名称：快件支付</span></br>
+				<span class="loan"></span>
+			</div>
+		</section>
+		<!----------------------------------pay-------------------------------------->
+		<section class="pay">
+			<div class="box">
+				<p>
+					<i class="dd" id="coupon">优惠券</i>
+                    <a href="#" id="name"><i class="aa">选择优惠券</i></a>
+				</p>
+			</div>
+		</section>
+        <p class="need"><span>还需支付：<i class="num">￥0元</i></span></p>
+	<div id="main"><button id="but">确认</button></div>
+	<div id="fullbg"></div>
+	<div id="dialog">
+		<div class="title">
+			<span id="left">取消</span>
+			<span id="center">优惠券</span>
+			<span id="right">确定</span>
+		</div>
+		<div class="box">
+			<div class="Discount">
+
+			</div>
+	 </div>
+	</div>
+	</body>
+	<script src="../js/judge.js"></script>
+	<script src="../js/financed.js"></script>
+</html>

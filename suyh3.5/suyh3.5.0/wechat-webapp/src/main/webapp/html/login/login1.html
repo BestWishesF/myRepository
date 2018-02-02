@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.form.js"></script>
+    <script type="text/javascript" src="../../js/md5.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+<body>
+<button class="btn btn-lg btn-confirm" id="submit_bt">登录</button>
+</br>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+       function GetJsonData() {
+            var json = {
+                "memb_phone":"15810869740",
+                /*"memb_phone":"13676943287",*/
+                /* "memb_phone":"18317318630",*/
+                  /*"memb_phone":"18268045554",*///方亮 月结
+                "memb_password":"123456",
+                "push_token":"dftyvbujhgdytvbku"
+            };
+            return json;
+        }
+            var time = Date.parse(new Date());
+            var hash = hex_md5(time +"hotol")
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                "token":"",
+                "version":"3",
+                "client_type":"3",
+                "Timestamp":time,
+                "SignInfo":hash,
+                "Access-Control-Allow-Origin":"*",
+            },
+            type:'post',
+            url:'/suyh/app/3//monthlyLogin',
+            dataType : 'json',
+            data: JSON.stringify(GetJsonData()),
+            accpet:"application/json",
+            success:function(data){
+                console.log(data)
+                /*            var str=data.obj;
+                 html=[];
+                 html+='<i >'+data.obj+'元'+'</i>';
+                 $(".coupon").html(html)*/
+            }
+        });
+        });
+</script>
+</html>

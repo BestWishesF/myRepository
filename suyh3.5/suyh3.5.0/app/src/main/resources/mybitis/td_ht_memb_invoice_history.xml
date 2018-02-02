@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembInvoiceHistoryRepository">
+
+    <!--保存用户开票历史记录信息 -->
+    <insert id="insertMembInvoiceHis" parameterType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto" useGeneratedKeys="true"
+            keyProperty="memb_ivc_his_id">
+        INSERT INTO
+        td_ht_memb_invoice_history (memb_id,memb_inc_amount,memb_ivc_express_id,memb_ivc_express_number,
+        state,memb_ivc_his_time,memb_ivc_his_pay_time,memb_ivc_his_audit_time,memb_ivc_id)
+        VALUES (#{memb_id},#{memb_inc_amount},#{memb_ivc_express_id},#{memb_ivc_express_number},
+        #{state},#{memb_ivc_his_time},#{memb_ivc_his_pay_time},#{memb_ivc_his_audit_time},#{memb_ivc_id})
+    </insert>
+
+    <!--通过id查询用户开票历史记录信息 -->
+    <select id="findMembInvoiceHisById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto">
+        SELECT * FROM td_ht_memb_invoice_history WHERE memb_ivc_his_id=#{memb_ivc_his_id}
+    </select>
+
+    <!--通过id修改用户开票历史记录信息状态 -->
+    <update id="updateMembInvoiceHisById" parameterType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto">
+        UPDATE td_ht_memb_invoice_history SET state=#{state},memb_ivc_his_pay_time=#{memb_ivc_his_pay_time} WHERE memb_ivc_his_id=#{memb_ivc_his_id}
+    </update>
+
+    <!--查询用户的开票历史记录数量 -->
+    <select id="findMembInvoiceHisSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_invoice_history WHERE memb_id=#{memb_id}
+    </select>
+
+    <!--分页查询用户的开票历史记录 -->
+    <select id="findMembInvoiceHisPage" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto">
+        SELECT * FROM td_ht_memb_invoice_history WHERE memb_id=#{id} ORDER BY memb_ivc_his_time DESC ${limit_str}
+    </select>
+
+    <!--通过开票信息id查询用户开票历史记录信息 -->
+    <select id="findMembIvcHisByIvcId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto">
+        SELECT * FROM td_ht_memb_invoice_history WHERE memb_ivc_id=#{memb_ivc_id}
+    </select>
+
+    <!--查询一定时间前的不同状态的开票历史记录 -->
+    <select id="findMembIvcHisByTime" parameterType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto" resultType="cn.hotol.app.bean.dto.invoice.history.TdHtMembInvoiceHistoryDto">
+        SELECT * FROM td_ht_memb_invoice_history WHERE memb_ivc_his_time <![CDATA[ < ]]> #{memb_ivc_his_time} AND state=#{state}
+    </select>
+
+    <!--批量修改开票状态 -->
+    <update id="batchUpdateMembIvcHisState" parameterType="java.util.Map">
+        UPDATE td_ht_memb_invoice_history SET state=#{state} WHERE memb_ivc_his_id IN
+        <foreach collection="memb_ivc_his_ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

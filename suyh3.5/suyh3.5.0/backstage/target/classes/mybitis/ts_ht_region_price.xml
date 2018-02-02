@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtRegionPriceRepository">
+
+    <!--查找所有的快递公司开通区域 -->
+    <select id="findExpRegionPrice" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.price.TsHtRegionPriceDto" >
+        SELECT rp_id,express_id,collect_province_id,send_province_id,state,first_amount,first_weight,add_amount,add_weight
+        FROM ts_ht_region_price WHERE express_id=#{express_id} AND state=0
+    </select>
+
+</mapper>

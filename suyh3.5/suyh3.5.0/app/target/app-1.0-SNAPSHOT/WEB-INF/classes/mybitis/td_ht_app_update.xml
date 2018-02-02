@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAppUpdateRepository">
+
+    <!--根据APP类别和系统类别查找最新版本 -->
+    <select id="findAppUpdateByType" parameterType="java.util.Map"
+            resultType="cn.hotol.app.bean.dto.appupdate.TdHtAppUpdateDto">
+        SELECT app_version,is_force,app_dowload_url,app_update_description FROM td_ht_app_update WHERE app_type=#{app_type} and app_system_type=#{app_system_type}
+    </select>
+</mapper>

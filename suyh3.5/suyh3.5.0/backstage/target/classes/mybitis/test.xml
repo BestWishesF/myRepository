@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TestRepository">
+
+    <select id="findUser" resultType="cn.hotol.app.bean.test.User">
+        SELECT * FROM `user`
+    </select>
+
+    <!--通过生成的邀请码查询存在条数 -->
+    <select id="findMembNumByInvite" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_member WHERE memb_invite_code=#{memb_invite_code}
+    </select>
+
+    <!--修改用户的邀请码 -->
+    <update id="updateMembInviteCode" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        UPDATE td_ht_member SET memb_invite_code=#{memb_invite_code} WHERE memb_id=#{memb_id}
+    </update>
+
+    <select id="findPushByUser" parameterType="java.lang.Long" resultType="cn.hotol.app.bean.test.Push">
+        SELECT * FROM push WHERE user_id=#{user_id}
+    </select>
+
+    <!--保存新的注册用户 -->
+    <insert id="insertMember" parameterType="cn.hotol.app.bean.dto.member.TdHtMemberDto" useGeneratedKeys="true"
+            keyProperty="memb_id">
+        INSERT INTO td_ht_member
+        (memb_phone,memb_password,memb_sex,memb_birthday,memb_nick_name,memb_head_portrait,memb_register_time,memb_register_month,
+        memb_balance,memb_name,memb_id_number,memb_islock,memb_score,memb_invite_code,memb_role,token,push_token,push_type)
+        VALUES (#{memb_phone},#{memb_password},#{memb_sex},#{memb_birthday},#{memb_nick_name},#{memb_head_portrait},#{memb_register_time},
+        #{memb_register_month},#{memb_balance},#{memb_name},#{memb_id_number},#{memb_islock},#{memb_score},#{memb_invite_code},#{memb_role},
+        #{token},#{push_token},#{push_type});
+    </insert>
+
+    <select id="findBalanceByUser" parameterType="java.lang.Long" resultType="java.lang.Double">
+        SELECT surplus_money FROM user_wallet WHERE user_id=#{user_id}
+    </select>
+
+    <select id="findWeUserByUser" parameterType="java.lang.String" resultType="cn.hotol.app.bean.test.WeUser">
+        SELECT * FROM we_chat_user a,we_user b WHERE a.open_id=b.opid AND b.mobilenum=#{mobilenum}
+    </select>
+
+    <!--添加第三方用户登录信息 -->
+    <insert id="insertMembThirdLogin" parameterType="cn.hotol.app.bean.TdHtMembThirdLogin">
+        INSERT INTO td_ht_memb_third_login
+        (thr_type,third_id,thr_token,thr_head_poration,thr_nick_name,thr_sex,thr_register_time,thr_register_month,memb_id)
+        VALUES
+        (#{thr_type},#{third_id},#{thr_token},#{thr_head_poration},#{thr_nick_name},#{thr_sex},#{thr_register_time},#{thr_register_month},#{memb_id})
+    </insert>
+
+    <select id="findSendAddress" parameterType="java.lang.Long" resultType="cn.hotol.app.bean.test.SendAddress">
+        SELECT * FROM send_contact WHERE user_id=#{user_id} AND deleted=0
+    </select>
+
+    <select id="findRevAddress" parameterType="java.lang.Long" resultType="cn.hotol.app.bean.test.RevAddress">
+        SELECT * FROM recipient_contact WHERE user_id=#{user_id} AND deleted=0
+    </select>
+
+    <!-- 添加收发件地址 -->
+    <insert id="insertAddress" parameterType="cn.hotol.app.bean.TdHtMembAddress" useGeneratedKeys="true"
+            keyProperty="add_id">
+        INSERT INTO td_ht_memb_address(memb_id,add_name,add_detail_address,add_province,add_city,add_region,add_label,add_telephone,
+        add_longitude,add_latitude,add_mobile_phone,add_id_number,add_is_default,add_type,add_state,add_express_size)
+        VALUES(#{memb_id},#{add_name},#{add_detail_address},#{add_province},#{add_city},#{add_region},#{add_label},#{add_telephone},
+        #{add_longitude},#{add_latitude},#{add_mobile_phone},#{add_id_number},#{add_is_default},#{add_type},#{add_state},#{add_express_size})
+    </insert>
+
+    <select id="findExpressRequestBuUser" parameterType="java.lang.Long" resultType="cn.hotol.app.bean.test.ExpressRequest">
+        SELECT * FROM express_request WHERE user_id=#{user_id}
+    </select>
+
+    <select id="findExpressByRequest" parameterType="java.lang.Long" resultType="cn.hotol.app.bean.test.Express">
+        SELECT * FROM express WHERE express_request_id=#{express_request_id}
+    </select>
+
+    <insert id="insertExpressOrder" parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderDto"
+            useGeneratedKeys="true" keyProperty="exp_ord_id">
+        INSERT INTO td_ht_express_order(memb_id,agent_id,add_id,add_name,add_mobile_phone,add_id_number,add_detail_address,add_province,add_city,
+        add_region,add_telephone,add_longitude,add_latitude,express_id,exp_ord_time,exp_ord_taking_time,door_start_time,door_end_time,collect_time,
+        pay_time,storge_time,exp_ord_state,exp_ord_size,exp_ord_demand,exp_ord_weight,exp_ord_number,exp_ord_pay_amount,exp_ord_amount,exp_ord_month,
+        exp_ord_gratuity,agent_note)
+        VALUES(#{memb_id},#{agent_id},#{add_id},#{add_name},#{add_mobile_phone},#{add_id_number},#{add_detail_address},#{add_province},#{add_city},
+        #{add_region},#{add_telephone},#{add_longitude},#{add_latitude},#{express_id},#{exp_ord_time},#{exp_ord_taking_time},#{door_start_time},
+        #{door_end_time},#{collect_time},#{pay_time},#{storge_time},#{exp_ord_state},#{exp_ord_size},#{exp_ord_demand},#{exp_ord_weight},
+        #{exp_ord_number},#{exp_ord_pay_amount},#{exp_ord_amount},#{exp_ord_month},#{exp_ord_gratuity},#{agent_note})
+    </insert>
+
+    <insert id="insertExpressOrderCollect"
+            parameterType="cn.hotol.app.bean.dto.express.TdHtExpressOrderCollectDto">
+        INSERT INTO td_ht_express_order_collect(exp_ord_id,exp_ord_category,exp_ord_clt_height,add_id,add_name,add_mobile_phone,add_detail_address,
+        add_province,add_city,add_region,add_telephone,add_longitude,add_latitude,exp_ord_clt_state,express_number,ht_number,sign_time,send_time,
+        delivery_time,express_id,category_id,express_name,express_price)
+        VALUES(#{exp_ord_id},#{exp_ord_category},#{exp_ord_clt_height},#{add_id},#{add_name},#{add_mobile_phone},#{add_detail_address},#{add_province},#{add_city},
+        #{add_region},#{add_telephone},#{add_longitude},#{add_latitude},#{exp_ord_clt_state},#{express_number},#{ht_number},#{sign_time},
+        #{send_time},#{delivery_time},#{express_id},#{category_id},#{express_name},#{express_price})
+    </insert>
+
+    <select id="findAgency" resultType="cn.hotol.app.bean.test.Agency">
+        SELECT * FROM agency_user
+    </select>
+
+    <select id="findPushByAgency" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.test.Push">
+        SELECT * FROM push WHERE agency_id=#{agency_id}
+    </select>
+
+    <insert id="insertAgent" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto" useGeneratedKeys="true"
+            keyProperty="agent_id">
+        INSERT INTO td_ht_agent (agent_name,agent_sex,agent_phone,agent_id_number,agent_state,agent_longitude,agent_latitude,agent_register_time,
+        agent_register_month,agent_adopt_time,agent_password,agent_spare_phone,area_id,total_income,agent_balance,agent_head_portrait,agent_birthday,agent_email,
+        agent_address,agent_pay_type,agent_pay_account,push_type,push_token,token)
+        VALUES(#{agent_name},#{agent_sex},#{agent_phone},#{agent_id_number},#{agent_state},#{agent_longitude},#{agent_latitude},#{agent_register_time},
+        #{agent_register_month},#{agent_adopt_time},#{agent_password},#{agent_spare_phone},#{area_id},#{total_income},#{agent_balance},#{agent_head_portrait},
+        #{agent_birthday},#{agent_email},#{agent_address},#{agent_pay_type},#{agent_pay_account},#{push_type},#{push_token},#{token})
+    </insert>
+
+    <update id="updateExpOrdAgent" parameterType="cn.hotol.app.bean.dto.agent.TdHtAgentDto">
+        UPDATE td_ht_express_order SET agent_id=#{agent_id} WHERE agent_id=#{agent_id}
+    </update>
+    
+    <select id="findTT" resultType="cn.hotol.app.bean.test.ExpressNo">
+        SELECT * FROM  service_waybill_tiantian
+    </select>
+
+    <select id="findDB" resultType="cn.hotol.app.bean.test.ExpressNo">
+        SELECT * FROM  service_waybill_debangwuliu
+    </select>
+
+    <insert id="insertExpressNo" parameterType="cn.hotol.app.bean.dto.express.number.TsHtExpressOpenNumberDto">
+        INSERT INTO ts_ht_express_open_number (express_id,agent_id,express_number,exp_open_state,region_id)
+          VALUES
+         (#{express_id},#{agent_id},#{express_number},#{exp_open_state},#{region_id})
+    </insert>
+
+    <select id="findMembAddress" resultType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        SELECT * FROM td_ht_memb_address WHERE add_longitude=0
+    </select>
+
+    <update id="updateMembAddress" parameterType="cn.hotol.app.bean.dto.address.TdHtMembAddressDto">
+        UPDATE td_ht_memb_address SET add_longitude=#{add_longitude},add_latitude=#{add_latitude} WHERE add_id=#{add_id}
+    </update>
+
+    <select id="findAllMember" resultType="cn.hotol.app.bean.dto.member.TdHtMemberDto">
+        SELECT * FROM td_ht_member
+    </select>
+
+</mapper>

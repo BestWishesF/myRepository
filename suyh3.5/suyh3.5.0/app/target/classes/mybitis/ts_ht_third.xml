@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TsHtThirdRepository">
+
+    <!--查询微信配置 -->
+    <select id="findAllThird" resultType="cn.hotol.app.bean.dto.thirdparty.TsHtThirdDto">
+        SELECT * FROM ts_ht_third
+    </select>
+
+    <!--修改微信配置 -->
+    <update id="updateThirdById" parameterType="cn.hotol.app.bean.dto.thirdparty.TsHtThirdDto">
+        UPDATE ts_ht_third SET accesstoken=#{accesstoken},accesstokentime=#{accesstokentime},jsticket=#{jsticket},jstickettime=#{jstickettime} WHERE third_id=#{third_id}
+    </update>
+
+</mapper>

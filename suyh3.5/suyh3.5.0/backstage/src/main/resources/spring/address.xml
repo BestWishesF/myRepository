@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tdHtMembAddressRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TdHtMembAddressRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="addressService" class="cn.hotol.app.service.member.address.AddressServiceImpl">
+		<property name="tdHtMembAddressRepository" ref="tdHtMembAddressRepository"></property>
+	</bean>
+
+</beans>

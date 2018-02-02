@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../js/md5.js"></script>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/cookie.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+<body style="font-size: 10px;">
+<div style="width: 100%;height: auto;height: auto;">
+    <p style="margin: 0;padding: 10px;">
+        <input type="text" id="name" />
+        <input type="password" id="password" />
+        <button id="login">登录</button>
+        <button id="test">测试</button>
+    </p>
+    <p style="margin: 0;padding: 10px;">
+        <input type="text" id="api" />
+    </p>
+    <p style="margin: 0;padding: 10px;">
+        <textarea id="data"></textarea>
+    </p>
+    <p style="margin: 0;padding: 10px;">
+        <textarea id="result"></textarea>
+    </p>
+</div>
+</body>
+<script src="../js/judge.js"></script>
+<script>
+    var token="";
+    $("#login").click(function () {
+        var time = Date.parse(new Date());
+        var hash = hex_md5(time +"hotol");
+        var jsonData={
+            user_name:$("#name").val(),
+            user_pass:$("#password").val()
+        }
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                "token":token,
+                "version": "3",
+                "client_type": "3",
+                "Timestamp": time,
+                "SignInfo":hash,
+                "Access-Control-Allow-Origin": "*"
+            },
+            type: 'post',
+            data:JSON.stringify(jsonData),
+            url: '/admin/app/3/admin/login',
+            dataType: 'json',
+            accpet: "application/json",
+            success: function (data) {
+                if(data.mark=="0"){
+                    token=data.obj;
+                    alert(token+"!");
+                }else{
+                    alert(data.tip);
+                }
+            }
+        })
+    })
+
+    $("#test").click(function () {
+        var time = Date.parse(new Date());
+        var hash = hex_md5(time +"hotol");
+        var jsonData=$("#data").val();
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                "token":token,
+                "version": "3",
+                "client_type": "3",
+                "Timestamp": time,
+                "SignInfo":hash,
+                "Access-Control-Allow-Origin": "*"
+            },
+            type: 'post',
+            data:jsonData,
+            url: '/admin'+$("#api").val(),
+            dataType: 'json',
+            accpet: "application/json",
+            success: function (data) {
+                if(data.mark=="0"){
+                    $("#result").val(JSON.stringify(data))
+                }else{
+                    alert(data.tip);
+                }
+            }
+        })
+    })
+</script>
+</html>

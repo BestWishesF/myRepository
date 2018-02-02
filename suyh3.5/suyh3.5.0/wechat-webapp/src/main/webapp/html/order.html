@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="format-detection" content="telephone=no" />
+		<link rel="stylesheet" href="../css/order.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script src="../js/jquery.form.js"></script>
+		<script src="../js/md5.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/lib/aes.js"></script>
+		<script src="../js/lib/header.js"></script>
+		<script src="../js/lib/mode-ecb.js"></script>
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	</head>
+	<body>
+	<!--------------------------------header--------------------------------------->
+	<header class="head">
+		<p>我的订单</p>
+	</header>
+	<!--------------------------------list--------------------------------------->
+	<div class="nav">
+		<ul class="tab">
+			<li class="tab-item active" id="active"><em>受理中</em></li>
+			<li class="tab-item wait" id="wait"><em>待付款</em></li>
+			<li class="tab-item deliver" id="deliver"><em>投递中</em></li>
+			<li class="tab-item reach" id="reach"><em>已送达</em></li>
+		</ul>
+		<div class="products">
+			<div class="main selected">
+			<div class="accept" id="accept">
+				</div>
+				<p><img id="San" class="img" src="../img/stan.png" alt=""></p>
+				<span id="btn">暂无数据</span>
+			</div>
+			<div class="main satar">
+				<div class="want" id="want">
+				</div>
+				<p><img id="Tan" class="img" src="../img/stan.png" alt=""></p>
+				<span id="bant">加载更多</span>
+			</div>
+			<div class="main">
+				<div class="dliver" id="dliver">
+				</div>
+				<p><img id="stan" class="img" src="../img/stan.png" alt=""></p>
+				<span id="bt">加载更多</span>
+			</div>
+			<div class="main">
+				<div class="clact" id="clact">
+				</div>
+				<p><img id="an" class="img" src="../img/stan.png" alt=""></p>
+				<span id="bn">加载更多</span>
+			</div>
+		</div>
+	</div>
+	</body>
+	<script src="../js/judge.js"></script>
+  <script src="../js/order.js"></script>
+</html>

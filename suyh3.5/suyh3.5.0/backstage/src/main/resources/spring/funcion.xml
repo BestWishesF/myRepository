@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtFuncionRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtFuncionRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+
+    <bean id="funcionService" class="cn.hotol.app.service.funcion.FuncionServiceImpl">
+        <property name="tdHtFuncionRepository" ref="tdHtFuncionRepository"></property>
+        <property name="tdHtFuncroleRelRepository" ref="tdHtFuncroleRelRepository"></property>
+    </bean>
+
+</beans>

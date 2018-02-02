@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtCouponRepository">
+
+    <!--查询用户优惠券数量 -->
+    <select id="findCouponByMebamount" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="java.lang.Integer">
+        SELECT count(*) FROM td_ht_coupon WHERE state=#{state} AND memb_id=#{id} AND cou_limit_time <![CDATA[ > ]]> NOW()
+    </select>
+
+    <!--查询用户的优惠券 -->
+    <select id="findCouponByMeb" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.coupon.TdHtCouponDto">
+        SELECT * FROM td_ht_coupon WHERE state=#{state} AND memb_id=#{id} AND cou_limit_time <![CDATA[ > ]]> NOW() ORDER BY cou_receive_time ${limit_str}
+    </select>
+
+    <!--新增用户的优惠券 -->
+    <insert id="insertMembCoupon" parameterType="cn.hotol.app.bean.TdHtCoupon">
+        INSERT INTO td_ht_coupon (cou_amount,cou_limit_amount,cou_limit_time,cou_discount,cou_receive_time,
+        memb_id,cou_name,state,cou_user_time,exp_ord_id,region_id,memb_type,express_id,limit_exp_ord_id)
+        VALUES (#{cou_amount},#{cou_limit_amount},#{cou_limit_time},#{cou_discount},#{cou_receive_time},
+        #{memb_id},#{cou_name},#{state},#{cou_user_time},#{exp_ord_id},#{region_id},#{memb_type},#{express_id},#{limit_exp_ord_id})
+    </insert>
+
+    <!--通过优惠券id查询优惠券信息 -->
+    <select id="findCouponById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.TdHtCoupon">
+        SELECT * FROM td_ht_coupon WHERE cou_id=#{cou_id} AND state=0 AND cou_limit_time <![CDATA[ > ]]> NOW()
+    </select>
+
+    <!--修改优惠券的使用状态及时间、订单信息 -->
+    <update id="updateUseCoupon" parameterType="cn.hotol.app.bean.TdHtCoupon">
+        UPDATE td_ht_coupon SET exp_ord_id=#{exp_ord_id},cou_user_time=#{cou_user_time},state=#{state} WHERE cou_id=#{cou_id}
+    </update>
+
+    <!--通过订单id查询优惠券信息 -->
+    <select id="findCouponByOrder" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.TdHtCoupon">
+        SELECT * FROM td_ht_coupon WHERE exp_ord_id=#{exp_ord_id} AND state=0
+    </select>
+
+    <!--查询用户支付时可使用的优惠券 -->
+    <select id="findCouponByCondition" parameterType="cn.hotol.app.bean.TdHtCoupon" resultType="cn.hotol.app.bean.dto.coupon.TdHtCouponDto">
+        SELECT * FROM td_ht_coupon WHERE memb_id=#{memb_id} AND express_id IN (0,#{express_id}) AND memb_type IN (0,#{memb_type}) AND limit_exp_ord_id IN (0,#{limit_exp_ord_id})
+        AND region_id IN (0,#{region_id}) AND state=0 AND cou_limit_time <![CDATA[ > ]]> NOW() ORDER BY limit_exp_ord_id DESC ,cou_receive_time ASC
+    </select>
+
+    <!--修改同一个订单使用的优惠券 -->
+    <update id="updateCouponByOrder" parameterType="java.lang.Integer">
+        UPDATE td_ht_coupon SET exp_ord_id=0 WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+    <!--根据名字查找优惠券 -->
+    <select id="findCouponByName" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.coupon.TdHtCouponDto">
+        SELECT cou_amount FROM td_ht_coupon WHERE cou_name like  CONCAT('%',#{name},'%' ) and memb_id=#{memb_id} limit 0,1
+    </select>
+</mapper>

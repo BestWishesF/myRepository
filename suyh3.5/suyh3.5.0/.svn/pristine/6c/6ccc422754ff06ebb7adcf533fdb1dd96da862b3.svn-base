@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="tdHtLoginLogRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.hotol.app.repository.TdHtLoginLogRepository"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="loginLogService" class="cn.hotol.app.service.loginlog.LoginLogServiceImpl">
+		<property name="tdHtLoginLogRepository" ref="tdHtLoginLogRepository"></property>
+		<property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+	</bean>
+
+</beans>

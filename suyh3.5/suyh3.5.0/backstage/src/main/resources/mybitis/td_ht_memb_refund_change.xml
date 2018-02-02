@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembRefundChangeRepository">
+
+    <!--添加退款请求 -->
+    <insert id="insertMembRefund" parameterType="cn.hotol.app.bean.dto.refund.TdHtMembRefundChangeDto">
+        INSERT INTO td_ht_memb_refund_change
+        (memb_id,refund_amount,refund_number,refund_time,refund_month,refund_state,refund_type,mfchg_id,mfchg_number,
+        mfchg_channel,exp_ord_id,refund_failure_cause)
+        VALUES (#{memb_id},#{refund_amount},#{refund_number},#{refund_time},#{refund_month},#{refund_state},
+        #{refund_type},#{mfchg_id},#{mfchg_number},#{mfchg_channel},#{exp_ord_id},#{refund_failure_cause})
+    </insert>
+
+    <!--查询退款记录数量 -->
+    <select id="findRefundSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_refund_change WHERE refund_state=#{refund_state}
+    </select>
+
+    <!--分页查询退款记录 -->
+    <select id="findRefundPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.refund.TdHtMembRefundChangeDto">
+        SELECT * FROM td_ht_memb_refund_change WHERE refund_state=#{refund_state} ORDER BY refund_time ASC limit #{currentPage},#{pageSize}
+    </select>
+
+    <!--修改退款状态 -->
+    <update id="updateRefundState" parameterType="cn.hotol.app.bean.dto.refund.TdHtMembRefundChangeDto">
+        UPDATE td_ht_memb_refund_change SET refund_time=#{refund_time},refund_state=#{refund_state},
+        refund_failure_cause=#{refund_failure_cause} WHERE refund_id=#{refund_id}
+    </update>
+
+    <!--通过id查询退款申请 -->
+    <select id="findRefundById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.refund.TdHtMembRefundChangeDto">
+        SELECT * FROM td_ht_memb_refund_change WHERE refund_id=#{refund_id}
+    </select>
+
+    <!--通过订单id查询退款申请 -->
+    <select id="findRefundByExpOrdId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.refund.TdHtMembRefundChangeDto">
+        SELECT * FROM td_ht_memb_refund_change WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+</mapper>

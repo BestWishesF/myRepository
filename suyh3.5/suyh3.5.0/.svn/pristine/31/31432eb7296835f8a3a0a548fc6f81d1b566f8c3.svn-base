@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>速邮汇</title>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="快递,速邮汇,寄快递,寄件,快递下单,电商件,智能快递,快递服务平台,互联网快递,批量寄件,快递前端一公里"/>
+    <meta name="description" content="速邮汇是杭州厚通网络科技有限公司旗下的网站，面向快递信息提供一站式的管理服务。旨在解决当前快递行业出现的效率低，
+    管理紊乱等问题。运用科学管理方法，更有针对性地完善快递在运输过程中落单、跑单的现象，提高快递运输的效率。同时支持在线手机查询，有独立的手机客户端随时
+    随地查快递。与多家快递公司合作，给予用户全面、便捷的快递查询服务，告别快递信息复杂、难找的困扰，为用户构建一个全新的快递管理平台。"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../lib/images/icon_32X32.ico"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="../lib/js/md5.js"></script>
+    <script src="../lib/js/jquery-1.9.1.min.js"></script>
+    <script src="../lib/js/cookie.js"></script>
+    <script src="../lib/js/header.js"></script>
+    <script src="../lib/js/aes.js"></script>
+    <script src="../lib/js/mode-ecb.js"></script>
+    <script src="../lib/js/jquery.form.js"></script>
+    <script src="js/common.js"></script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link href="../lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../lib/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../lib/css/googFile/css.css"/>
+    <link rel="stylesheet" href="../lib/css/newMain.css"/>
+    <link rel="stylesheet" href="../lib/css/main.css"/>
+    <link rel="stylesheet" href="../lib/css/w13.css"/>
+    <link rel="stylesheet" href="../lib/css/custom.css"/>
+</head>
+<body style="min-width: 1100px;">
+<div id="nav" class=""
+     style="position: absolute; top: 0px; width: 100%; background-color: rgb(0, 0, 0); height: 70px; min-width: 1100px;">
+    <div>
+        <div class="top-01">
+            <div class="top-001"><a>服务热线:</a><a style="font-size:18px;">400-114-1788</a></div>
+            <div class="top-002" style="width:55%;position: relative;margin-left: 50px;">
+                <div class="top-logo"><img src="../lib/images/logo.png"></div>
+                <div class="top-nav" style="margin-top: 10px;position: absolute; right: -50px;top: 10px;">
+                    <a href="index.html" style="padding: 8% 10px;">首页</a>
+                    <a id="send" href="login.html" style="padding: 8% 10px;">大客户寄件</a>
+                    <a href="http://www.hotol.cn/merchant/html/index.html#regView" target="_blank"
+                       style="padding: 8% 10px;color:darkorange;">商户入驻</a>
+                </div>
+            </div>
+            <div class="top-003" style="margin-right: 10px;">
+                <p id="profileRegion" style="font-size: 11px;margin-top: 10px;display: none;">
+                    <a id="a1"></a>
+                    <a href="javascript:void (0)" id="logoutLink">【退出】</a>
+                </p>
+                <div class="denglu">
+                    <a id="loginLink" href="login.html" style="display: none;">用户登录</a>
+                </div>
+                <div class="zhuce">
+                    <a id="regLink" href="register.html" style="display: none;">用户注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main" class="hidenest">
+    <div>
+        <div class="top-01" style="margin-top: 60px;"></div>
+        <div class="handeast-01">
+            <div class="handeast-001" style="float: left;"><a>当前位置: 首页 &gt; 速邮汇动态 </a></div>
+        </div>
+        <div class="hidenest-01" style="width: 1060px;height: 1000px;">
+            <div class="hidenest-left">
+                <div class="hover"><br> <a href="aboutus.html">关于速邮汇</a></div>
+                <div class="hover"><br> <a href="news.html">速邮汇动态</a></div>
+                <div class="hover"><br> <a href="rzlc.html" style="padding: 10px 28px;">商户入驻流程</a></div>
+                <div class="hover"><br> <a href="partners.html" style="padding:10px 46px;">合作伙伴</a></div>
+                <div class="hover"><br> <a href="sitemap.html" style="padding:10px 46px;">网站地图</a></div>
+            </div>
+            <div id="hidenest-right" style="height: auto;">
+                <div class="right-top"><a>速邮汇动态</a></div>
+                <div class="right-nav">
+                    <div class="right-headest"><a>杭州年内建800个自助快递取货点</a></div>
+                    <div class="right-headent"><a>“最后一公里”配送是快递业发力的重点。日前，杭州市政府有关负责人在政府工作报告中表示，今年杭州将在主城区建立800个“E邮柜”公共服务站点，力图解决快递“最后一公里”配送。
+                        “E邮柜”是一种在社区、院校、写字楼等地设立，采取全自助、“人工+自助”和全人工等三种模式，提供包裹自取、二次投递及其他服务的便民设施。此外，“E邮柜”公共服务站还可以收寄信件，同时提供代售长途客运票、代收水电费、代缴电话费等便民服务。杭州邮政同时表示，站点里的“E邮柜”对所有快递公司开放，目前已有20多家快递公司注册使用。
+                        其实，快递末端配送早已受到国家政府部门和快递企业的重视。去年，国家邮政局就曾出台了《关于提升快递末端投递服务水平的指导意见》，推广经行业实践取得明显成效的一系列举措，并制定智能快递箱行业标准，对快递“最后一公里”服务进行规范和提升。
+                        此前，顺丰速运在CBD、高端社区推储物柜完善末端配送；韵达快递在上海大学新世纪大学村、颐景园地区投放了两台24小时自助快递机；京东则进一步扩展自提货柜业务，在北京、沈阳两地新增5台自提柜。</a>
+                        <br> <a style="color:#e5e5e5;">2014-02-17 09:34</a></div>
+                </div>
+                <div class="right-nav">
+                    <div class="right-headest"><a>快递行业将制定指导价</a></div>
+                    <div class="right-headent"><a>“夺命快递”案引起了社会对物流快递行业安全监管的高度关注，市人大代表、国家邮政局副局长刘君表示，国家邮政局正在研究出台快递费用指导价。刘君坦言，目前很多企业还不能够完全规范操作，比如在北京一年快递量为16亿件，品牌的快递公司只有50多个，其他都为加盟商，全国加盟快递公司达到了
+                        6000多家。 “如何对这些快递实行有效监管，确实是目前需要进一步解决的问题。”刘君表示，针对目前快递费用还没有指导价的情况，国家邮政局正在研究出
+                        台快递费用指导价。“比如北京市内快递多少钱，我们会有一个指导价格。”
+                        此外，对于目前禁邮的诸如化妆品等液体、粉末状物品，刘君表示，今后有望通过特许经营的方式，来实现禁邮物品的放开邮寄。“但确实需要一些时间，比如一些粉末状的快递物品，在收寄时要全面检验，在运输时要使用专用的车辆，这些都可能增加快递成本和延长运输时间。</a>
+                        <br> <a style="color:#e5e5e5;">2014-01-20 07:34</a></div>
+                </div>
+                <div class="right-nav">
+                    <div class="right-headest"><a>国家邮政局：快递业需借力互联网</a></div>
+                    <div class="right-headent"><a>北京商报讯（记者
+                        王运）电子商务、网络购物等新型服务业态的迅猛发展使快递服务日益大众化。全国政协委员、国家邮政局局长马军胜日前表示，拥抱互联网，快递企业才会走得更远。在业内人士看来，运用好互联网技术将有利于企业降低成本，更好地为消费者服务。
+                        在马军胜看来，虽然互联网的发展给邮政行业带来冲击，但这也是行业改革发展的内生动力，促使行业创新能力日益增强。去年全国快递量达92亿件，仅个人网购就达到1.9万亿元的规模，而2006年还只有几百亿的规模。
+                        快递物流咨询网首席顾问徐勇表示，目前快递企业已通过加强互联网思维、信息化管理推动企业发展，但在科学技术高速发展的今天，企业还需运用更多的互联网技术为消费者提供服务，利用互联网技术降低企业运营成本。
+                        统计数据显示，今年我国极有可能成为快递第一大国，但每年人均只有7件快递，仅及国际平均水平，和欧、美、日等发达国家人均30件左右的水平仍然有很大差距。目前，中国网购的网民有五六亿，经常购物的为1.3亿人，其中，70%是女同胞和35岁以下人群。
+                        马军胜指出，未来快递行业将向下发展和向专业发展。针对当前我国城乡差距过大的局面，邮政部门已启动“快递下乡”工程，支持快递企业在县一级设置更多经营网点。同时，推进“快递西进”工程，引导快递企业加大中西部市场开发力度，改善区域均衡度。此外，快递业将在标准快递和国内电商快递基础上，着力发展服务先进制造业快递和跨境电商快递等。
+                        随着网购业务的兴起，京东、苏宁、腾讯等互联网公司纷纷申请了快递经营许可证。在马军胜看来，互联网企业进入快递领域虽然给快递行业带来了跨界竞争，但也将促使快递行业服务更加精细化。</a> <br>
+                        <a style="color:#e5e5e5;">2014年03月05日 08:55</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="last" style="min-width: 1100px;min-height: 85px;">
+    <div class="last-kuang" style="min-width: 1100px;">
+        <div class="last-left"><a>服务热线：400-114-1788 服务邮箱：suyh@100emall.com</a> <br/>
+            <a>Copyright ©2013 厚通网络 浙ICP备14024016号-1</a></div>
+        <div class="last-right">
+            <a href="aboutus.html">关于速邮汇</a>
+            <a href="news.html">速邮汇动态</a>
+            <a href="rzlc.html">商户入驻流程</a>
+            <a href="partners.html">合作伙伴</a>
+            <a href="sitemap.html">网站地图</a>
+        </div>
+    </div>
+</div>
+<div style="position: fixed;top: 55%;right: 1px;">
+    <div id="qq_div" style="position: relative;">
+        <a href="javascript:void (0)" onclick="$('#qq_div').hide()"
+           style="position: absolute;top: 0px;right: 0px;z-index: 100;opacity: 0;">关闭</a>
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2781686263&site=qq&menu=yes">
+            <img border="0" src="../lib/images/qq.png" alt="点击即可发起会话" title="点击即可发起会话" style="z-index: 99;"/>
+        </a>
+    </div>
+</div>
+</body>
+</html>

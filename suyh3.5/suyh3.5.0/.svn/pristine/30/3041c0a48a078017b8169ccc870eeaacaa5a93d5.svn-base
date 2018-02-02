@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtGridChangeRepository">
+
+    <!--添加代理人经纬度变化记录 -->
+    <insert id="insertAgentCoordinates" parameterType="cn.hotol.app.bean.dto.gridchange.TdHtGridChangeDto">
+        INSERT INTO td_ht_grid_change (agent_id,grid_chg_time,agent_longitude,agent_latitude,agent_month)
+        VALUES (#{agent_id},#{grid_chg_time},#{agent_longitude},#{agent_latitude},#{agent_month})
+    </insert>
+
+</mapper>

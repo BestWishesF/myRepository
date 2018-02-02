@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtRoleRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtRoleRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="tdHtFuncroleRelRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtFuncroleRelRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="roleService" class="cn.hotol.app.service.role.RoleServiceImpl">
+        <property name="tdHtRoleRepository" ref="tdHtRoleRepository"></property>
+        <property name="tdHtFuncroleRelRepository" ref="tdHtFuncroleRelRepository"></property>
+    </bean>
+
+</beans>

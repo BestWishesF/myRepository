@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cn.xiexianbin.ueditor:UEditor-for-aliyun-OSS:1.4.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/xiexianbin/ueditor/UEditor-for-aliyun-OSS/1.4.3/UEditor-for-aliyun-OSS-1.4.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/xiexianbin/ueditor/UEditor-for-aliyun-OSS/1.4.3/UEditor-for-aliyun-OSS-1.4.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/xiexianbin/ueditor/UEditor-for-aliyun-OSS/1.4.3/UEditor-for-aliyun-OSS-1.4.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

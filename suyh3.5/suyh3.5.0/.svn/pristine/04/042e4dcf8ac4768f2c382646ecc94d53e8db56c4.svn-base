@@ -1,0 +1,8 @@
+ds.driver_class=com.mysql.jdbc.Driver
+ds.username=root
+ds.password=qaz1234567
+ds.url=jdbc\:mysql\://192.168.17.226\:3306/newsw14_dev?characterEncoding\=utf-8&amp;zeroDateTimeBehavior\=convertToNull
+
+mail.admin.address=w13_admin@limao.com
+system.model=dev
+storage.root=

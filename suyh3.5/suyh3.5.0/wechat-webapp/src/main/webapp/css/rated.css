@@ -1,0 +1,152 @@
+.site{
+	width:100%;
+	min-height:4.8rem;
+}
+.site .centent{
+	width:100%;
+	min-height:1.6rem;
+	margin:0 auto;
+	margin-bottom:0.5rem;
+}
+.site .centent .left{
+	float:left;
+	width:1.5rem;
+	height:1.5rem;
+	border:0;
+	border-radius:100%;
+	padding:0.25rem 0.4rem 0;
+}
+.site .centent .right{
+	float:right;
+	width:0.81rem;
+	height:0.81rem;
+	padding:0.5rem 0.5rem 0 0;
+}
+.site .centent input{
+	width:2.5rem;
+	height:0.6rem;
+	margin:0 0.5rem 0;
+	border:0;
+	float:left;
+	outline: none;
+}
+.site .centent .bont{
+	font-size:0.35rem;
+}
+.site .reted{
+	width:100%;
+	height:0.3rem;
+	font-size:0.2rem;
+}
+.site .reted .left{
+	float:left;
+	width:2.5rem;
+	height:0.02rem;
+	padding:0.18rem 0.2rem 0 0.5rem;
+}
+.site .reted .right{
+	height:0.02rem;
+	width:2.5rem;
+	float:left;
+	margin:0.18rem 0.3rem 0 0
+}
+
+.site .reted span{
+	width:1.1rem;
+	height:0.3rem;
+	font-size:0.25rem;
+	float:left;
+}
+.site .star{
+	width:100%;
+	height:1.8rem;
+}
+.site .star .star_top{
+	padding-left:1.5rem;
+}
+.site .star img{
+	width:0.7rem;
+	height:0.7rem;
+	float:left;
+	padding:0 0.1rem;
+}
+.site .star .star_bottom{
+	padding-right:1.7rem;
+}
+.site .star{
+	text-align:center;
+	padding-top:0.26rem;
+	line-height: 0.3rem;
+}
+.site .star span{
+	float:left;
+	font-size:0.27rem;
+	color:#ff9a0a;
+	line-height: 0.5rem;
+	margin:0.2rem 0 0 3.3rem;
+}
+.site .name{
+	font-size:0.26rem
+}
+.choose{
+	width:100%;
+	height:0.74rem;
+}
+.choose input{
+	display: none;
+}
+.choose label{
+	float:left;
+	margin:0 0.1rem;
+	width:1.12rem;
+	height:0.3rem;
+	padding:0.16rem 0.3rem;
+	border:1px solid #54ceb1;
+	font-size:0.26rem;
+	border-radius:0.25rem;
+}
+.choose .ipt{
+	margin:0 0.15rem 0 0.6rem;
+}
+footer{
+	width:100%;
+	height:7.18rem;
+	background:#f2f2f2;
+	text-align: center;
+}
+footer .leave{
+	width:7.07rem;
+	height:1.58rem;
+	background:#fff;
+	resize: none;
+	border:0;
+	margin-top: 0.4rem;
+	font-size:0.24rem;
+}
+footer button{
+	border:0;
+	width:6.9rem;
+	height:0.84rem;
+	background:#ff9a0a;
+	color:#fff;
+	font-size:0.34rem;
+	border-radius: 0.04rem;
+	margin:1.64rem 0.31rem 0;
+	outline: none;
+}
+footer div{
+	font-size:0.2rem;
+	width:3rem;
+	height:0.25rem;
+	position:relative;
+	left:2.8rem;
+	bottom:0.6rem;
+	color:#ccc;
+}
+#bont{
+	font-size:0.2rem;
+}
+
+
+
+

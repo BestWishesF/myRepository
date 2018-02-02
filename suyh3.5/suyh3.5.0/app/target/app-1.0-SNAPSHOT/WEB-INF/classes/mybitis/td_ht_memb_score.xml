@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembScoreRepository">
+
+    <!--查询积分明细条数 -->
+    <select id="findMembScoreCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_score WHERE memb_id = #{memb_id}
+    </select>
+
+    <!--查询积分明细 -->
+    <select id="findScoreTask" parameterType="cn.hotol.app.bean.dto.score.TaskPageDto"
+            resultType="cn.hotol.app.bean.dto.score.ScoreTaskDto">
+        SELECT st_name,st_synopsis,st_score,st_img FROM ts_ht_score_task WHERE st_state=0 AND st_type=#{st_type} ORDER BY st_id DESC ${limit_str}
+    </select>
+
+    <!--查询积分任务条数 -->
+    <select id="findScoreTaskCount" parameterType="java.lang.Integer"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ts_ht_score_task WHERE st_state=0 AND st_type=#{st_type}
+    </select>
+
+    <!--查询积分任务 -->
+    <select id="findMembScore" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.score.FindMembScoreDto">
+        SELECT score_change_point,score_time,score_reason,score_type FROM td_ht_memb_score WHERE memb_id = #{id} ORDER BY score_time DESC ${limit_str}
+    </select>
+
+    <!--查询积分兑换物品列表数量 -->
+    <select id="findScoreGoodsCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ts_ht_score_goods
+    </select>
+
+    <!--查询积分兑换物品列表 -->
+    <select id="findScoreGoods" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.score.ScoreGoodsDto">
+        SELECT goods_img,goods_name,goods_score,goods_state FROM ts_ht_score_goods ORDER BY goods_id DESC ${limit_str}
+    </select>
+
+    <!--添加积分表记录 -->
+    <insert id="insertMembScore" parameterType="cn.hotol.app.bean.TdHtMembScore" useGeneratedKeys="true"
+            keyProperty="score_id">
+        INSERT INTO td_ht_memb_score(memb_id,score_change_point,score_month,score_time,score_reason,score_type,score_front_point,score_back_point)
+        VALUES(#{memb_id},#{score_change_point},#{score_month},#{score_time},#{score_reason},#{score_type},#{score_front_point},#{score_back_point})
+    </insert>
+</mapper>

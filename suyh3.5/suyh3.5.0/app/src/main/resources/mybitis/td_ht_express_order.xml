@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtExpressOrderRepository">
+
+    <!-- 根据用户id查询寄件记录 -->
+    <select id="findTdHtExpressOrder" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE memb_id=#{memb_id} ORDER BY exp_ord_time LIMIT 0,10
+    </select>
+
+    <!-- 根据id查询寄件信息 -->
+    <select id="findTdHtExpressOrderById" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--添加寄件信息 -->
+    <insert id="insertExpressOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto"
+            useGeneratedKeys="true" keyProperty="exp_ord_id">
+       INSERT INTO td_ht_express_order(memb_id,agent_id,add_id,add_name,add_mobile_phone,add_id_number,add_detail_address,add_province,add_city,
+        add_region,add_telephone,add_longitude,add_latitude,express_id,exp_ord_time,exp_ord_taking_time,door_start_time,door_end_time,collect_time,
+        pay_time,storge_time,exp_ord_state,exp_ord_size,exp_ord_demand,exp_ord_weight,exp_ord_number,exp_ord_pay_amount,exp_ord_amount,exp_ord_month,
+        exp_ord_gratuity,agent_note,memb_type,memb_client,divide_id,memb_ivc_his_id,device_number,import_marker,total_amount,adjusted_amount,discount_amount,
+        coupon_amount,coupon_amount_type)
+        VALUES(#{memb_id},#{agent_id},#{add_id},#{add_name},#{add_mobile_phone},#{add_id_number},#{add_detail_address},#{add_province},#{add_city},
+        #{add_region},#{add_telephone},#{add_longitude},#{add_latitude},#{express_id},#{exp_ord_time},#{exp_ord_taking_time},#{door_start_time},
+        #{door_end_time},#{collect_time},#{pay_time},#{storge_time},#{exp_ord_state},#{exp_ord_size},#{exp_ord_demand},#{exp_ord_weight},
+        #{exp_ord_number},#{exp_ord_pay_amount},#{exp_ord_amount},#{exp_ord_month},#{exp_ord_gratuity},#{agent_note},#{memb_type},#{memb_client},
+        #{divide_id},#{memb_ivc_his_id},#{device_number},'0',#{total_amount},#{adjusted_amount},#{discount_amount},#{coupon_amount},#{coupon_amount_type})
+    </insert>
+
+    <!--更新寄件信息 -->
+    <update id="cancelExpressOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET exp_ord_state=#{exp_ord_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询待支付的订单总数量 -->
+    <select id="findToBePaidExpAmount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state = 3 AND memb_id=#{memb_id}
+    </select>
+
+    <!--分页查询待支付的订单 -->
+    <select id="findToBePaidExp" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.expressorder.ToBePaidExpDto">
+         SELECT eo.exp_ord_id,eo.add_name,eo.exp_ord_time,eo.add_province,eo.add_city,eo.add_region,eo.add_detail_address,eo.exp_ord_amount,eo.express_id,eo.exp_ord_state,
+         eo.exp_ord_number,a.agent_name,a.agent_phone,eo.exp_ord_gratuity,eo.agent_id,a.agent_head_portrait FROM td_ht_express_order eo,td_ht_agent a WHERE eo.exp_ord_state = 3 AND eo.agent_id=a.agent_id AND
+         eo.memb_id=#{id} ORDER BY eo.collect_time DESC ${limit_str}
+    </select>
+
+    <!--查询受理中的订单总数量 -->
+    <select id="findAcceptInExpAmount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order eo LEFT JOIN td_ht_agent a ON eo.agent_id = a.agent_id
+        WHERE eo.exp_ord_state <![CDATA[ > ]]> 0 AND eo.exp_ord_state <![CDATA[ <= ]]> 2 AND eo.memb_id=#{memb_id}
+    </select>
+
+    <!--分页查询受理中的订单 -->
+    <select id="findAcceptInExp" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.expressorder.AcceptInExpDto">
+       SELECT eo.exp_ord_id,eo.express_id,eo.add_name,eo.add_province,eo.add_city,eo.add_region,eo.add_detail_address,eo.exp_ord_time,
+       eo.exp_ord_state,a.agent_name,a.agent_phone,eo.exp_ord_size FROM td_ht_express_order eo LEFT JOIN td_ht_agent a ON eo.agent_id = a.agent_id WHERE
+       eo.exp_ord_state <![CDATA[ > ]]> 0 AND eo.exp_ord_state <![CDATA[ <= ]]> 2 AND eo.memb_id=#{id} ORDER BY eo.exp_ord_time DESC ${limit_str}
+    </select>
+
+    <!--通过id查询受理中的订单信息 -->
+    <select id="findAcceptOrderById" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.expressorder.AcceptOrderDto">
+        SELECT agent_id,exp_ord_time,door_start_time,door_end_time,add_name,add_telephone,add_mobile_phone,add_province,add_city,add_region,add_detail_address,exp_ord_gratuity
+        FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id};
+    </select>
+
+    <!--订单支付时更新订单状态 -->
+    <update id="payExpressOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET exp_ord_pay_amount=#{exp_ord_pay_amount},exp_ord_state=#{exp_ord_state},pay_time=#{pay_time},
+        coupon_amount=#{coupon_amount} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询区域内待接单订单数量  AND add_region=#{add_region}-->
+    <select id="findWaitForAccessCount" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order a,ts_ht_dict b WHERE a.exp_ord_state=1 AND memb_type!=4
+        AND a.add_city=b.parent_id AND b.dict_id=#{id}
+        <if test="type > 0">
+            AND a.memb_type!=#{type}
+        </if>
+    </select>
+
+    <!--查询区域内待接单订单  AND add_region=#{id}-->
+    <select id="findWaitForAccess" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.accept.WaitAccessOrderDto">
+        SELECT a.exp_ord_id,a.express_id,a.add_region,a.add_detail_address,a.add_latitude,a.add_longitude,
+        a.exp_ord_size,a.door_start_time,a.door_end_time,memb_type FROM td_ht_express_order a,ts_ht_dict b
+        WHERE a.exp_ord_state=1 AND a.add_city=b.parent_id AND a.memb_type!=4 AND b.dict_id=#{id}
+        <if test="type > 0">
+            AND a.memb_type!=#{type}
+        </if>
+        ORDER BY a.exp_ord_time DESC ${limit_str}
+    </select>
+
+    <!--查询待接单订单详情 -->
+    <select id="findWaitAccessDetail" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.accept.WaitAccessOrderDetailDto">
+        SELECT express_id,add_region,add_detail_address,add_name,add_mobile_phone,add_telephone,exp_ord_demand,door_start_time,memb_type,
+        door_end_time,exp_ord_gratuity FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--代理人接单修改订单状态 -->
+    <update id="accessExpressOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET agent_id=#{agent_id},exp_ord_taking_time=#{exp_ord_taking_time},exp_ord_state=#{exp_ord_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询代理人待揽件订单数量 -->
+    <select id="findWaitForTakeCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state=2 AND agent_id=#{agent_id}
+    </select>
+
+    <!--查询代理人待揽件订单 -->
+    <select id="findWaitForTake" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.take.WaitTakeOrderDto">
+        SELECT exp_ord_id,express_id,add_region,add_detail_address,add_name,exp_ord_size,door_start_time,door_end_time,agent_note,memb_type
+        FROM td_ht_express_order WHERE exp_ord_state=2 AND agent_id=#{id}
+        ORDER BY exp_ord_taking_time DESC ${limit_str}
+    </select>
+
+    <!--更新代理人揽件备注 -->
+    <update id="updateAgentNote" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET agent_note=#{agent_note} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询代理人待揽件订单详情 -->
+    <select id="findWaitTakeDetail" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.take.WaitTakeOrderDetailDto">
+        SELECT express_id,add_region,add_detail_address,add_name,add_mobile_phone,add_telephone,exp_ord_demand,door_end_time,memb_type
+        FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--代理人揽件修改订单状态 -->
+    <update id="takeOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET collect_time=#{collect_time},exp_ord_state=#{exp_ord_state},exp_ord_weight=#{exp_ord_weight},
+        total_amount=#{total_amount},adjusted_amount=#{adjusted_amount},discount_amount=#{discount_amount},
+        exp_ord_amount=#{exp_ord_amount},exp_ord_type=#{exp_ord_type},coupon_amount_type=#{coupon_amount_type} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询订单发件省id -->
+    <select id="findSendProvince" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT add_province,memb_id FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--查询代理人待入库订单数量 -->
+    <select id="findWaitStorgeOrderCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state IN (3,4) AND agent_id=#{agent_id}
+    </select>
+
+    <!--查询代理人待入库订单 -->
+    <select id="findWaitStorgeOrder" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.storage.WaitStorageOrderDto">
+        SELECT exp_ord_id,express_id,add_region,add_detail_address,collect_time,exp_ord_state,exp_ord_size,add_name,exp_ord_amount,exp_ord_gratuity,door_end_time,
+         exp_ord_type FROM td_ht_express_order WHERE exp_ord_state IN (3,4) AND agent_id=#{id} ORDER BY collect_time DESC ${limit_str}
+    </select>
+
+    <!--查询代理人待入库订单详情 -->
+    <select id="findStorageOrdDetail" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.storage.WaitStorageOrdDetailDto">
+        SELECT exp_ord_id,express_id,add_region,add_detail_address,add_name,add_mobile_phone,add_telephone,exp_ord_taking_time,collect_time,exp_ord_type
+        FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--代理人入库修改订单状态 -->
+    <update id="storageExpressOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET storge_time=#{storge_time},exp_ord_state=#{exp_ord_state} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询代理人已完成订单数量 -->
+    <select id="findFinishOrderCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state=5 AND agent_id=#{agent_id} AND import_marker=0
+    </select>
+
+    <!--查询代理人已完成订单 -->
+    <select id="findFinishOrder" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.finish.FinishOrderDto">
+        SELECT exp_ord_id,express_id,add_region,add_detail_address,storge_time,exp_ord_size,add_name FROM td_ht_express_order WHERE
+        exp_ord_state=5 AND agent_id=#{id} AND import_marker=0 ORDER BY storge_time DESC ${limit_str}
+    </select>
+
+    <!--查询代理人已完成订单详情 -->
+    <select id="findFinishOrdDetail" parameterType="java.lang.Integer"
+            resultType="cn.hotol.app.bean.dto.finish.FinishOrderDetailDto">
+        SELECT express_id,add_region,add_detail_address,add_name,add_mobile_phone,add_telephone,exp_ord_taking_time,collect_time
+        FROM td_ht_express_order WHERE exp_ord_id=#{exp_ord_id}
+    </select>
+
+    <!--查询代理人揽收快件数量 -->
+    <select id="findAgentTakingNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT SUM(exp_ord_size) FROM td_ht_express_order WHERE agent_id=#{agent_id} AND exp_ord_state>2
+    </select>
+
+    <!--查询代理人按时完成揽收快件数量 -->
+    <select id="findAgentFinishOnTime" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT SUM(exp_ord_size) FROM td_ht_express_order WHERE agent_id=#{agent_id} AND exp_ord_state>2 AND door_end_time>=collect_time
+    </select>
+
+    <!--查询超时件订单和推送信息 -->
+    <select id="findOvertimeOrder" parameterType="java.util.Date" resultType="cn.hotol.app.bean.dto.push.PushDto">
+        SELECT a.exp_ord_id,b.push_token,b.push_type,b.app_version FROM td_ht_express_order a,td_ht_member b WHERE a.exp_ord_state=1 AND memb_type!=4
+        AND a.exp_ord_time <![CDATA[ < ]]> #{exp_ord_time} AND a.memb_id=b.memb_id
+    </select>
+
+    <!--修改超时订单状态 -->
+    <update id="updateOvertimeOrder" parameterType="java.util.List">
+        UPDATE td_ht_express_order SET exp_ord_state=6 WHERE exp_ord_id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <!--修改订单快递公司和价格 -->
+    <update id="updateOrdExpComPrice" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET exp_ord_amount=#{exp_ord_amount},express_id=#{express_id},total_amount=#{total_amount},discount_amount=#{discount_amount},
+        exp_ord_number=#{exp_ord_number},exp_ord_type=#{exp_ord_type} WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--通过快件id查询订单信息 -->
+    <select id="findExpOrdByCltId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT a.* FROM td_ht_express_order a,td_ht_express_order_collect b WHERE a.exp_ord_id=b.exp_ord_id AND b.exp_ord_clt_id=#{exp_ord_clt_id}
+    </select>
+
+    <!--通过用户id和月份查询订单 -->
+    <select id="findExpOrdByMonthAndMemb" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto" resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE memb_id=#{memb_id} AND exp_ord_state=5 AND exp_ord_month=#{exp_ord_month} AND memb_type=2
+    </select>
+
+    <!--查询月结用户月消费订单数量 -->
+    <select id="findMonConsumeDetailsSize" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE exp_ord_state=5 AND exp_ord_month=#{exp_ord_month} AND memb_id=#{id} AND memb_type=2
+    </select>
+
+    <!--分页查询月结用户月消费订单 -->
+    <select id="findMonConsumeDetailsPage" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="cn.hotol.app.bean.dto.monthbill.ConsumptionDetailsDto">
+        SELECT exp_ord_amount,exp_ord_gratuity,exp_ord_time FROM td_ht_express_order WHERE exp_ord_state=5 AND exp_ord_month=#{exp_ord_month} AND memb_id=#{id} AND memb_type=2 ORDER BY exp_ord_time ASC ${limit_str}
+    </select>
+
+    <!--代理人揽收月结件修改订单状态 -->
+    <update id="takeMonthOrder" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        UPDATE td_ht_express_order SET collect_time=#{collect_time},exp_ord_state=#{exp_ord_state},exp_ord_weight=#{exp_ord_weight},total_amount=#{total_amount},
+        exp_ord_pay_amount=#{exp_ord_pay_amount},pay_time=#{pay_time},exp_ord_amount=#{exp_ord_amount},exp_ord_type=#{exp_ord_type},discount_amount=#{discount_amount}
+        WHERE exp_ord_id=#{exp_ord_id}
+    </update>
+
+    <!--查询用户最新待揽件订单 -->
+    <select id="findNewestWaitTakeExpOrd" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE memb_id=#{memb_id} AND exp_ord_state=2 ORDER BY exp_ord_time DESC LIMIT 0,1
+    </select>
+
+    <!--查询用户被代理人接单数量 -->
+    <select id="findExpOrdNumByMembAndAgent" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE memb_id=#{memb_id} AND agent_id=#{agent_id} AND exp_ord_state=2
+    </select>
+
+    <!--查询用户30分钟内支付订单 -->
+    <select id="findMembPayExpOrd" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto" resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE memb_id=#{memb_id} AND exp_ord_state <![CDATA[ > ]]> 3 AND exp_ord_state <![CDATA[ < ]]> 6 AND pay_time <![CDATA[ >= ]]> #{pay_time} ORDER BY exp_ord_time DESC LIMIT 0,1
+    </select>
+
+    <!--查询用户30分钟内支付订单数量 -->
+    <select id="findMembPayExpOrdCount" parameterType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE memb_id=#{memb_id} AND agent_id=#{agent_id} AND exp_ord_state <![CDATA[ > ]]> 3 AND exp_ord_state <![CDATA[ < ]]> 6 AND pay_time <![CDATA[ >= ]]> #{pay_time}
+    </select>
+
+    <!--查询用户未生成发票的订单数量 -->
+    <select id="findMembCanInvoiceExpOrdSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_express_order WHERE memb_id=#{memb_id} AND memb_ivc_his_id=0 AND exp_ord_state=5
+        AND import_marker=0 AND DATE_FORMAT(exp_ord_time,'%Y') <![CDATA[ >= ]]> 2017
+        AND exp_ord_pay_amount <![CDATA[ > ]]> 0
+    </select>
+
+    <!--分页查询用户未生成发票的订单列表 -->
+    <select id="findMembCanInvoiceExpOrdPage" parameterType="cn.hotol.app.bean.dto.page.PageDto" resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT * FROM td_ht_express_order WHERE memb_id=#{id} AND memb_ivc_his_id=0 AND exp_ord_state=5 AND import_marker=0
+        AND DATE_FORMAT(exp_ord_time,'%Y') <![CDATA[ >= ]]> 2017 AND exp_ord_pay_amount <![CDATA[ > ]]> 0 ORDER BY exp_ord_time DESC ${limit_str}
+    </select>
+
+    <!--查询开票订单支付金额总值 -->
+    <select id="findSumPayAmountByOrderList" parameterType="java.util.List" resultType="java.util.Map">
+        SELECT SUM(exp_ord_pay_amount) AS exp_ord_pay_amount,SUM(memb_ivc_his_id) AS memb_ivc_his_id FROM td_ht_express_order WHERE exp_ord_id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--修改开票订单所属开票历史记录 -->
+    <update id="updateInvoiceHisOrder" parameterType="java.util.Map">
+        UPDATE td_ht_express_order SET memb_ivc_his_id=#{memb_ivc_his_id} WHERE exp_ord_id IN
+        <foreach collection="exp_ord_ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <!--用户取消开票申请 -->
+    <update id="cancelInvoice" parameterType="java.lang.Integer">
+        UPDATE td_ht_express_order SET memb_ivc_his_id=0 WHERE memb_ivc_his_id=#{memb_ivc_his_id}
+    </update>
+
+    <!--批量取消开票申请 -->
+    <update id="batchCancelInvoice" parameterType="java.util.List">
+        UPDATE td_ht_express_order SET memb_ivc_his_id=0 WHERE memb_ivc_his_id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!--根据用户id查找用户是否有已完成寄件 -->
+    <select id="findExpressOrderIsEndByMembId" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.expressorder.TdHtExpressOrderDto">
+        SELECT exp_ord_id FROM td_ht_express_order WHERE memb_id=#{memb_id} and exp_ord_state in(4,5) limit 0,1
+    </select>
+</mapper>

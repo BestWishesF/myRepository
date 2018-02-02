@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="tdHtMemberRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="cn.hotol.app.repository.TdHtMemberRepository"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="memberService" class="cn.hotol.app.service.member.MemberServiceImpl">
+        <property name="tdHtMemberRepository" ref="tdHtMemberRepository"></property>
+        <property name="tsHtDictRepository" ref="tsHtDictRepository"></property>
+        <property name="tdHtExpressOrderRepository" ref="tdHtExpressOrderRepository"></property>
+        <property name="tdHtCouponRepository" ref="tdHtCouponRepository"></property>
+        <property name="twSmsSendHisRepository" ref="twSmsSendHisRepository"></property>
+    </bean>
+
+</beans>

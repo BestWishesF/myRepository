@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtMembFoundChangeRepository">
+
+    <!-- 查找用户资金变化记录数量 -->
+    <select id="findMemberFoundSize" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM td_ht_memb_found_change WHERE memb_id = #{memb_id} AND mfchg_state=0 AND mfchg_type IN (1,2)
+    </select>
+
+    <!--   分页查找用户资金变化记录-->
+    <select id="findMemberFoundPage" parameterType="cn.hotol.app.bean.dto.page.PageDto"
+            resultType="cn.hotol.app.bean.dto.found.MemberFinancialDetailsDto">
+		 SELECT mfchg_name,mfchg_time,mfchg_change_amount,mfchg_type,mfchg_back_amount FROM td_ht_memb_found_change WHERE
+		 mfchg_state=0 AND mfchg_type IN (1,2) AND memb_id=#{id} ORDER BY mfchg_time DESC ${limit_str}
+	</select>
+
+    <!--   添加资金变动记录-->
+    <insert id="insertMemberFoundChange" parameterType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		INSERT into td_ht_memb_found_change(memb_id,mfchg_change_amount,mfchg_front_amount,mfchg_back_amount,mfchg_type,mfchg_time,mfchg_month,
+		mfchg_name,mfchg_state,mfchg_number,mfchg_channel,exp_ord_id,memb_mon_bill_id,memb_ivc_his_id,memb_goods_id)
+		VALUES (#{memb_id},#{mfchg_change_amount},#{mfchg_front_amount},#{mfchg_back_amount},#{mfchg_type},now(),#{mfchg_month},#{mfchg_name},
+		#{mfchg_state},#{mfchg_number},#{mfchg_channel},#{exp_ord_id},#{memb_mon_bill_id},#{memb_ivc_his_id},#{memb_goods_id})
+	</insert>
+
+    <!--   根据订单号查找资金变化记录 -->
+    <select id="findfindMemberFoundByNumber" parameterType="java.lang.String"
+            resultType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		SELECT * FROM td_ht_memb_found_change WHERE mfchg_number = #{mfchg_number}
+	</select>
+
+    <!--   更新资金变化记录 -->
+    <update id="updateMemberFoundChange" parameterType="cn.hotol.app.bean.dto.found.TdHtMembFoundChangeDto">
+		UPDATE td_ht_memb_found_change set mfchg_change_amount = #{mfchg_change_amount},mfchg_front_amount = #{mfchg_front_amount},
+		mfchg_back_amount = #{mfchg_back_amount},mfchg_state = #{mfchg_state},transaction_no=#{transaction_no}
+		WHERE mfchg_id = #{mfchg_id}
+	</update>
+</mapper>

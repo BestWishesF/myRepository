@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAdminDivideGridRepository">
+
+	<!--查询划分区域的各点坐标 -->
+	<select id="findGridByDivide" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.admin.divide.grid.TdHtAdminDivideGridDto">
+		SELECT * FROM td_ht_admin_divide_grid WHERE divide_id=#{divide_id} AND grid_state=0 ORDER BY grid_sort ASC
+	</select>
+
+	<!--添加划分区域的各点坐标 -->
+	<insert id="insertDivideGrids" parameterType="cn.hotol.app.bean.dto.admin.divide.grid.TdHtAdminDivideGridDto">
+		INSERT INTO td_ht_admin_divide_grid (divide_id,grid_longitude,grid_latitude,grid_sort,grid_state) VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.divide_id},#{item.grid_longitude},#{item.grid_latitude},#{item.grid_sort},#{item.grid_state})
+		</foreach>
+	</insert>
+
+	<!--根据划分区域id修改区域坐标 -->
+	<update id="updateGridStateByDivide" parameterType="java.lang.Integer">
+		UPDATE td_ht_admin_divide_grid SET grid_state=1 WHERE divide_id=#{divide_id}
+	</update>
+
+</mapper>

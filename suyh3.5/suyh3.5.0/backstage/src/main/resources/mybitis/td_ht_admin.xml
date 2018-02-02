@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hotol.app.repository.TdHtAdminRepository">
+	<!-- 根据管理员登录用户名查找管理员 -->
+	<select id="findAdminByUserName" parameterType="java.lang.String" resultType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+    	select * from td_ht_admin where user_name=#{user_name}
+    </select>
+	<!--   更新管理员最后登陆时间IP-->
+	<update id="updateAdminLoginIp" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		update td_ht_admin set  login_ip=#{login_ip},login_time=now(),login_client=#{login_client},token=#{token} where admin_id=#{admin_id}
+	</update>
+	<!--   更新管理员密码-->
+	<update id="updateAdminPsd" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		update td_ht_admin set  user_pass=#{user_pass} where admin_id=#{admin_id}
+	</update>
+
+	<!--查询有效的管理员帐号数量 -->
+	<select id="findAllAdminSize" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto" resultType="java.lang.Integer">
+		<if test="admin_id == 1">
+			select COUNT(*) from td_ht_admin
+			WHERE  admin_id!=1 and is_valid=0 and province_id=0 and city_id=0 and region_id=0 and divide_id=0
+		</if>
+		<if test="admin_id != 1 and region_id==0">
+			select COUNT(*) from td_ht_admin admin,ts_ht_dict dict
+			WHERE  admin_id!=1 and admin.is_valid=0 and dict.status=0
+			<if test="province_id == 0">
+				and	dict.code_type="province" and dict.parent_id=0 and admin.province_id=dict.dict_id and  admin.city_id=0
+			</if>
+			<if test="province_id!=0 and city_id == 0">
+				and	dict.code_type="city" and dict.parent_id=#{province_id} and  admin.city_id=dict.dict_id  and admin.region_id=0
+			</if>
+			<if test="city_id!=0 and region_id == 0">
+				and	dict.code_type="area" and dict.parent_id=#{city_id} and admin.region_id=dict.dict_id and admin.divide_id=0
+			</if>
+		</if>
+		<if test="admin_id != 1 and region_id!=0">
+			select COUNT(*) from td_ht_admin admin
+			WHERE  admin_id!=1 and admin.is_valid=0 and admin.divide_id=#{divide_id}
+
+		</if>
+	</select>
+
+	<!--分页查询有效的管理员帐号 -->
+	<select id="findAllAdminPage" parameterType="java.util.Map" resultType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		select admin.admin_id,admin.user_name ,admin.login_ip,admin.login_time,admin.phone,admin.qq,admin.province_id,admin.city_id,admin.region_id
+		,admin.divide_id ,admin.role_id,admin.reg_time
+		<if test="admin_id == 1">
+		   from td_ht_admin admin
+		    WHERE  admin_id!=1 and is_valid=0 and province_id=0 and city_id=0 and region_id=0 and divide_id=0
+		</if>
+		<if test="admin_id != 1 and region_id==0">
+
+			from td_ht_admin admin,ts_ht_dict dict
+			WHERE  admin_id!=1 and admin.is_valid=0 and dict.status=0
+			<if test="province_id == 0">
+				and	dict.code_type="province" and dict.parent_id=0 and admin.province_id=dict.dict_id and  admin.city_id=0
+			</if>
+			<if test="province_id!=0 and city_id == 0">
+				and	dict.code_type="city" and dict.parent_id=#{province_id} and  admin.city_id=dict.dict_id  and admin.region_id=0
+			</if>
+			<if test="city_id!=0 and region_id == 0">
+				and	dict.code_type="area" and dict.parent_id=#{city_id} and admin.region_id=dict.dict_id and admin.divide_id=0
+			</if>
+
+		</if>
+		<if test="admin_id != 1 and region_id!=0">
+			from td_ht_admin admin
+			WHERE  admin_id!=1 and admin.is_valid=0 and admin.divide_id=#{divide_id}
+		</if>
+		ORDER BY reg_time DESC LIMIT #{currentPage},#{pageSize}
+	</select>
+
+	<!--创建新的管理员帐号 -->
+	<insert id="insertAdmin" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		INSERT INTO td_ht_admin
+		(user_name,user_pass,reg_time,qq,phone,login_ip,login_time,is_valid,role_id,
+		province_id,city_id,region_id,divide_id,token,login_client)
+		VALUES
+		(#{user_name},#{user_pass},#{reg_time},#{qq},#{phone},#{login_ip},#{login_time},#{is_valid},
+		#{role_id},#{province_id},#{city_id},#{region_id},#{divide_id},#{token},#{login_client})
+	</insert>
+
+	<!--修改管理员帐号信息 -->
+	<update id="updateAdmin" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		UPDATE td_ht_admin SET user_name=#{user_name},user_pass=#{user_pass},qq=#{qq},phone=#{phone},is_valid=#{is_valid},
+		role_id=#{role_id},province_id=#{province_id},city_id=#{city_id},region_id=#{region_id},divide_id=#{divide_id}
+		WHERE admin_id=#{admin_id}
+	</update>
+
+	<!--通过id查询管理员帐号信息 -->
+	<select id="findAdminById" parameterType="java.lang.Integer" resultType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		SELECT * FROM td_ht_admin WHERE admin_id=#{admin_id}
+	</select>
+
+	<!--修改管理员帐号的有效性 -->
+	<update id="updateAdminValid" parameterType="cn.hotol.app.bean.dto.admin.TdHtAdminDto">
+		update td_ht_admin set is_valid=1 where admin_id=#{admin_id}
+	</update>
+</mapper>

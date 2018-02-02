@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+	<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+	<mappers>
+
+		<mapper resource="mybitis/ts_ht_banner.xml" />
+		<mapper resource="mybitis/ts_ht_dict.xml" />
+		<mapper resource="mybitis/ts_ht_article.xml" />
+		<mapper resource="mybitis/ts_ht_express_open_region.xml" />
+		<mapper resource="mybitis/ts_ht_region_price.xml" />
+		<mapper resource="mybitis/td_ht_admin.xml" />
+		<mapper resource="mybitis/td_ht_login_log.xml" />
+		<mapper resource="mybitis/td_ht_member.xml" />
+		<mapper resource="mybitis/td_ht_memb_address.xml" />
+		<mapper resource="mybitis/td_ht_memb_score.xml" />
+		<mapper resource="mybitis/td_ht_memb_found_change.xml" />
+		<mapper resource="mybitis/ts_ht_score_goods.xml" />
+		<mapper resource="mybitis/ts_ht_score_task.xml" />
+		<mapper resource="mybitis/tw_sms_send_his.xml" />
+		<mapper resource="mybitis/td_ht_agent.xml" />
+		<mapper resource="mybitis/td_ht_agent_apply.xml" />
+		<mapper resource="mybitis/td_ht_agent_found_change.xml" />
+		<mapper resource="mybitis/td_ht_feedback.xml" />
+		<mapper resource="mybitis/td_ht_comment.xml" />
+		<!--<mapper resource="mybitis/td_ht_express_search.xml"/>-->
+		<mapper resource="mybitis/td_ht_express_order.xml"/>
+		<mapper resource="mybitis/td_ht_express_collect.xml"/>
+		<mapper resource="mybitis/ts_ht_third.xml"/>
+		<mapper resource="mybitis/ts_ht_express_open_number.xml"/>
+		<mapper resource="mybitis/ts_ht_express_sdk.xml"/>
+		<mapper resource="mybitis/test.xml"/>
+		<mapper resource="mybitis/td_ht_admin_divide.xml"/>
+		<mapper resource="mybitis/td_ht_admin_divide_grid.xml"/>
+		<mapper resource="mybitis/td_ht_role.xml"/>
+		<mapper resource="mybitis/td_ht_green_mail.xml"/>
+		<mapper resource="mybitis/td_ht_coupon.xml"/>
+		<mapper resource="mybitis/td_ht_agent_member.xml"/>
+		<mapper resource="mybitis/ts_ht_data_config.xml"/>
+		<mapper resource="mybitis/td_ht_memb_invoice.xml"/>
+		<mapper resource="mybitis/td_ht_memb_invoice_history.xml"/>
+		<mapper resource="mybitis/ts_ht_open_number.xml"/>
+		<mapper resource="mybitis/td_ht_funcion.xml"/>
+		<mapper resource="mybitis/td_ht_funcrole_rel.xml"/>
+		<mapper resource="mybitis/td_ht_memb_refund_change.xml"/>
+		<mapper resource="mybitis/ts_ht_agent_work_time.xml"/>
+	</mappers>
+
+
+</configuration>
